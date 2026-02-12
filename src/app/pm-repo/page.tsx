@@ -142,7 +142,7 @@ export default async function PMRepoPage() {
         {/* Recent Meetings */}
         <section className="section">
           <h2 className="section-title">Recent Meeting Notes</h2>
-          <div className="grid gap-6" style={{ gridTemplateColumns: "1fr 1fr" }}>
+          <div className="meetings-grid">
             <div>
               <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--color-blue)", marginBottom: "0.75rem" }}>Execution Layer (ACDE)</h3>
               {executionMeetings.length > 0 ? (

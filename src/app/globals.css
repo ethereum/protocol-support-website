@@ -25,7 +25,7 @@
   --color-text-primary: #00D4FF;
   --color-text-body: #9C9C9C;
   --color-text-secondary: #7DD3FC;
-  --color-text-muted: #6B6B6B;
+  --color-text-muted: #8A8A8A;
   --color-text-dim: #1E3A5F;
 
   --color-border: #1E3A5F;
@@ -441,12 +441,12 @@ body {
 
 /* Phase labels */
 .lc-phase-label {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-family: var(--font-mono);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-text-muted);
+  color: var(--color-text-body);
   padding: 1.25rem 0 0.5rem 2.75rem;
 }
 .lc-phase-label:first-child {
@@ -549,13 +549,12 @@ body {
   background: rgba(52, 211, 153, 0.03);
 }
 .lc-concurrent-label {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-family: var(--font-mono);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
-  opacity: 0.7;
 }
 .lc-concurrent-steps {
   display: flex;
@@ -627,6 +626,52 @@ body {
   .about-grid .coord-diagram {
     max-width: 320px;
     margin: 0 auto;
+  }
+}
+
+/* Upgrade table — notes wrap below on mobile */
+.upgrade-cell {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.upgrade-note {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+@media (max-width: 640px) {
+  .upgrade-cell {
+    flex-direction: column;
+    gap: 0;
+  }
+  .upgrade-note {
+    display: block;
+  }
+}
+
+/* Step card layout — icon left on desktop, icon above on mobile */
+.step-card-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .step-card-layout {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Meetings grid — 2 col desktop, 1 col mobile */
+.meetings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 640px) {
+  .meetings-grid {
+    grid-template-columns: 1fr;
   }
 }
 

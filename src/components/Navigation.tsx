@@ -47,6 +47,16 @@ export default function Navigation() {
     return () => { if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current); };
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileMenuOpen]);
+
   const linkStyle = (active: boolean) => ({
     fontSize: "0.8rem" as const,
     fontWeight: active ? 700 : 500,
@@ -169,52 +179,68 @@ export default function Navigation() {
           })}
         </ul>
 
-        <ThemeToggle />
+        {/* Desktop theme toggle */}
+        <div className="hidden lg:block">
+          <ThemeToggle />
+        </div>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          className="lg:hidden p-2"
-          style={{ color: "var(--color-text-muted)" }}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-expanded={mobileMenuOpen}
-          aria-label="Toggle menu"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+        {/* Mobile: theme toggle + hamburger side by side */}
+        <div className="lg:hidden flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="p-2"
+            style={{ color: "var(--color-text-muted)" }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile full-screen overlay menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden py-4" style={{ borderTop: "1px solid var(--color-border)" }}>
-          <div className="flex flex-col gap-1">
+        <div className="lg:hidden" style={{
+          position: "fixed",
+          inset: 0,
+          top: "3.5rem",
+          zIndex: 99,
+          background: "var(--color-bg)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <div className="flex flex-col items-center gap-2">
             {navLinks.map((link) => {
               if (link.children) {
                 const expanded = mobileExpanded === link.href;
                 return (
-                  <div key={link.href}>
+                  <div key={link.href} className="flex flex-col items-center">
                     <button
                       type="button"
-                      className="w-full flex items-center justify-between px-4 py-3 no-underline"
+                      className="flex items-center gap-2 no-underline"
                       style={{
                         color: isPmActive ? "var(--color-text-bright)" : "var(--color-text-muted)",
-                        fontWeight: isPmActive ? 700 : 400,
-                        fontSize: "0.85rem",
+                        fontWeight: isPmActive ? 700 : 500,
+                        fontSize: "1.25rem",
+                        letterSpacing: "0.04em",
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        textAlign: "left",
+                        padding: "0.75rem 1rem",
                       }}
                       onClick={() => setMobileExpanded(expanded ? null : link.href)}
                     >
                       {link.label}
-                      <svg width="12" height="12" viewBox="0 0 10 10" fill="none" style={{
+                      <svg width="14" height="14" viewBox="0 0 10 10" fill="none" style={{
                         stroke: "currentColor",
                         transition: "transform 0.2s ease",
                         transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
@@ -222,28 +248,29 @@ export default function Navigation() {
                         <path d="M2.5 4L5 6.5L7.5 4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </button>
-                    {expanded && link.children.map((child, i) => {
-                      const childActive = pathname === child.href;
-                      return (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-4 py-2 no-underline"
-                          style={{
-                            paddingLeft: "2rem",
-                            color: childActive ? "var(--color-blue)" : "var(--color-text-muted)",
-                            fontWeight: childActive ? 700 : 400,
-                            fontSize: "0.8rem",
-                          }}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <span style={{ color: "var(--color-text-dim)", marginRight: "0.4rem", fontSize: "0.65rem" }}>
-                            {i === 0 ? "├─" : "└─"}
-                          </span>
-                          {child.label}
-                        </Link>
-                      );
-                    })}
+                    {expanded && (
+                      <div className="flex flex-col items-center gap-1" style={{ marginBottom: "0.25rem" }}>
+                        {link.children.map((child) => {
+                          const childActive = pathname === child.href;
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className="no-underline"
+                              style={{
+                                color: childActive ? "var(--color-blue)" : "var(--color-text-muted)",
+                                fontWeight: childActive ? 700 : 400,
+                                fontSize: "1rem",
+                                padding: "0.4rem 1rem",
+                              }}
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 );
               }
@@ -253,11 +280,13 @@ export default function Navigation() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-3 no-underline"
+                  className="no-underline"
                   style={{
                     color: active ? "var(--color-text-bright)" : "var(--color-text-muted)",
-                    fontWeight: active ? 700 : 400,
-                    fontSize: "0.85rem",
+                    fontWeight: active ? 700 : 500,
+                    fontSize: "1.25rem",
+                    letterSpacing: "0.04em",
+                    padding: "0.75rem 1rem",
                   }}
                   onClick={() => setMobileMenuOpen(false)}
                 >

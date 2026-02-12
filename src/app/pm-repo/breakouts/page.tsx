@@ -69,7 +69,7 @@ export default function BreakoutsPage() {
           <h2 className="section-title">How to Schedule a Breakout Call</h2>
           <div className="flex flex-col gap-4">
             <div className="card">
-              <div className="flex items-start gap-4">
+              <div className="step-card-layout">
                 <span className="step-badge">1</span>
                 <div>
                   <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)", marginBottom: "0.4rem" }}>
@@ -107,7 +107,7 @@ export default function BreakoutsPage() {
               </div>
             </div>
             <div className="card">
-              <div className="flex items-start gap-4">
+              <div className="step-card-layout">
                 <span className="step-badge">2</span>
                 <div>
                   <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)", marginBottom: "0.4rem" }}>

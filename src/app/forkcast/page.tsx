@@ -499,13 +499,13 @@ export default function ForkcastPage() {
                     {u.name}
                   </span>
                 </span>
-                <span style={{ fontSize: "0.8rem" }}>
-                  <span style={{ color: "var(--color-text-body)" }}>{u.el}</span>
-                  {u.elNote && <span style={{ color: "var(--color-text-dim)", fontSize: "0.7rem", marginLeft: "0.4rem" }}>{u.elNote}</span>}
+                <span className="upgrade-cell">
+                  <span style={{ color: "var(--color-text-body)", fontSize: "0.8rem" }}>{u.el}</span>
+                  {u.elNote && <span className="upgrade-note">{u.elNote}</span>}
                 </span>
-                <span style={{ fontSize: "0.8rem" }}>
-                  <span style={{ color: "var(--color-text-body)" }}>{u.cl}</span>
-                  {u.clNote && <span style={{ color: "var(--color-text-dim)", fontSize: "0.7rem", marginLeft: "0.4rem" }}>{u.clNote}</span>}
+                <span className="upgrade-cell">
+                  <span style={{ color: "var(--color-text-body)", fontSize: "0.8rem" }}>{u.cl}</span>
+                  {u.clNote && <span className="upgrade-note">{u.clNote}</span>}
                 </span>
                 <span style={{
                   fontSize: "0.75rem",
