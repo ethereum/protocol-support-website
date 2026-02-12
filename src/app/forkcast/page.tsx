@@ -236,7 +236,7 @@ export default function ForkcastPage() {
               <div className="lc-content">
                 <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
                   <span className="lc-title">Security Review</span>
-                  <span className="lc-duration">14 days</span>
+                  <span className="lc-duration">30 days</span>
                 </div>
                 <span className="lc-desc">Dedicated security audit period before testnet deployment.</span>
               </div>
@@ -250,7 +250,7 @@ export default function ForkcastPage() {
               <div className="lc-content">
                 <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
                   <span className="lc-title">Permissioned Testnet</span>
-                  <span className="lc-duration">14 days</span>
+                  <span className="lc-duration">minimum 14 days</span>
                 </div>
                 <span className="lc-desc">Deployed to a controlled testnet with vetted validators.</span>
               </div>
@@ -264,7 +264,7 @@ export default function ForkcastPage() {
               <div className="lc-content">
                 <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
                   <span className="lc-title">Permissionless Testnet</span>
-                  <span className="lc-duration">30 days</span>
+                  <span className="lc-duration">minimum 14 days</span>
                 </div>
                 <span className="lc-desc">Activated on public testnets (Holesky, Sepolia) for open validation.</span>
               </div>
@@ -272,6 +272,17 @@ export default function ForkcastPage() {
 
             {/* PHASE: Deployment */}
             <div className="lc-phase-label">Deployment</div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-cyan)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <span className="lc-title">Mainnet Date Chosen</span>
+                <span className="lc-desc">A specific epoch is locked in for the network upgrade.</span>
+              </div>
+            </div>
 
             <div className="lc-step">
               <div className="lc-rail">
@@ -283,18 +294,7 @@ export default function ForkcastPage() {
                   <span className="lc-title">Buffer</span>
                   <span className="lc-duration">30 days</span>
                 </div>
-                <span className="lc-desc">Safety margin before the mainnet fork for final checks.</span>
-              </div>
-            </div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-cyan)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <span className="lc-title">Mainnet Date Chosen</span>
-                <span className="lc-desc">A specific epoch is locked in for the network upgrade.</span>
+                <span className="lc-desc">Time allocated for L2s and protocols to get ready for the fork once mainnet date announced.</span>
               </div>
             </div>
 
