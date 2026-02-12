@@ -55,11 +55,8 @@ export default function BreakoutsPage() {
             <p style={{ marginBottom: "0.5rem" }}>Examples of breakout series:</p>
             <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
               <li>ePBS (EIP-7732)</li>
-              <li>Block-Level Access Lists</li>
-              <li>PQ Interop</li>
-              <li>FOCIL</li>
               <li>PeerDAS</li>
-              <li>Stateless Implementers</li>
+              <li>FOCIL</li>
             </ul>
           </div>
         </section>
