@@ -68,13 +68,13 @@ export default function ForkcastPage() {
                 <path d="M65 108 Q65 132 130 142" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
                 <path d="M195 108 Q195 132 130 142" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
                 {/* Testing node */}
+                <text x="130" y="128" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
                 <circle cx="130" cy="142" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
-                <text x="130" y="164" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
                 {/* Testing to checkmark */}
                 <line x1="130" y1="150" x2="130" y2="182" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 {/* Checkmark node */}
                 <circle cx="130" cy="190" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
-                <text x="130" y="195" textAnchor="middle" fill="var(--color-blue)" fontSize="14" fontFamily="var(--font-mono)" fontWeight="700">{"\u2713"}</text>
+                <path d="M123 190 L128 195 L137 185" fill="none" stroke="var(--color-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 {/* Bottom trunk */}
                 <line x1="130" y1="200" x2="130" y2="212" stroke="var(--color-border)" strokeWidth="2" />
                 <text x="130" y="224" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
