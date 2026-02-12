@@ -62,8 +62,8 @@ export default function ForkcastPage() {
                 <circle cx="210" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-node" />
                 {/* Labels — bold */}
                 <text x="50" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
-                <text x="130" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
-                <text x="210" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">TEST</text>
+                <text x="130" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
+                <text x="210" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
                 {/* Work lines down */}
                 <line x1="50" y1="86" x2="50" y2="130" stroke="var(--coord-cyan)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 <line x1="130" y1="86" x2="130" y2="130" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
