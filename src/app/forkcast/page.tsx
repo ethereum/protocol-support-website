@@ -59,14 +59,14 @@ export default function ForkcastPage() {
                 <circle cx="65" cy="58" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-node" />
                 <circle cx="195" cy="58" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-node" />
                 {/* EL and CL labels */}
-                <text x="65" y="82" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
-                <text x="195" y="82" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
+                <text x="65" y="44" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
+                <text x="195" y="44" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
                 {/* Work lines down */}
                 <line x1="65" y1="66" x2="65" y2="108" stroke="var(--coord-cyan)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 <line x1="195" y1="66" x2="195" y2="108" stroke="var(--coord-green)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 {/* EL and CL merge into Testing */}
-                <path d="M65 108 Q65 128 130 138" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
-                <path d="M195 108 Q195 128 130 138" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M65 108 Q65 132 130 142" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M195 108 Q195 132 130 142" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
                 {/* Testing node */}
                 <circle cx="130" cy="142" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
                 <text x="130" y="164" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
@@ -74,7 +74,7 @@ export default function ForkcastPage() {
                 <line x1="130" y1="150" x2="130" y2="182" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 {/* Checkmark node */}
                 <circle cx="130" cy="190" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
-                <text x="130" y="194" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">{"\u2713"}</text>
+                <text x="130" y="195" textAnchor="middle" fill="var(--color-blue)" fontSize="14" fontFamily="var(--font-mono)" fontWeight="700">{"\u2713"}</text>
                 {/* Bottom trunk */}
                 <line x1="130" y1="200" x2="130" y2="212" stroke="var(--color-border)" strokeWidth="2" />
                 <text x="130" y="224" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
