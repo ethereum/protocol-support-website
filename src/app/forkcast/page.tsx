@@ -501,11 +501,11 @@ export default function ForkcastPage() {
                   </span>
                 </span>
                 <span className="upgrade-cell">
-                  <span style={{ color: "var(--color-text-body)", fontSize: "0.8rem" }}>{u.el}</span>
+                  <span style={{ color: "var(--color-text-bright)", fontSize: "0.8rem" }}>{u.el}</span>
                   {u.elNote && <span className="upgrade-note">{u.elNote}</span>}
                 </span>
                 <span className="upgrade-cell">
-                  <span style={{ color: "var(--color-text-body)", fontSize: "0.8rem" }}>{u.cl}</span>
+                  <span style={{ color: "var(--color-text-bright)", fontSize: "0.8rem" }}>{u.cl}</span>
                   {u.clNote && <span className="upgrade-note">{u.clNote}</span>}
                 </span>
                 <span style={{
