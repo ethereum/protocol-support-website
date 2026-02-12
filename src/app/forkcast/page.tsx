@@ -467,18 +467,18 @@ export default function ForkcastPage() {
               <span style={{ textAlign: "right" }}>Date</span>
             </div>
             {[
-              { name: "Hegota", el: "Bogota", elNote: "Devcon city", cl: "Heka", clNote: "Star", date: "TBD", status: "planned" },
-              { name: "Glamsterdam", el: "Amsterdam", elNote: "", cl: "Glamis", clNote: "Star", date: "TBD", status: "active" },
-              { name: "Fusaka", el: "Osaka", elNote: "Devcon 7", cl: "Fulu", clNote: "Star", date: "Dec 2025", status: "done" },
-              { name: "Pectra", el: "Prague", elNote: "Devcon 6", cl: "Electra", clNote: "Star", date: "May 2025", status: "done" },
-              { name: "Dencun", el: "Cancun", elNote: "Devcon 4", cl: "Deneb", clNote: "Star", date: "Mar 2024", status: "done" },
-              { name: "Shapella", el: "Shanghai", elNote: "Devcon 3", cl: "Capella", clNote: "Star", date: "Apr 2023", status: "done" },
-              { name: "The Merge", el: "Paris", elNote: "Devcon 2", cl: "Bellatrix", clNote: "Star", date: "Sep 2022", status: "done" },
+              { name: "Hegota", el: "Bogota", elNote: "Devcon 6", cl: "Heze", clNote: "Star", date: "TBD", status: "planned" },
+              { name: "Glamsterdam", el: "Amsterdam", elNote: "Devconnect", cl: "Gloas", clNote: "Star", date: "TBD", status: "active" },
+              { name: "Fusaka", el: "Osaka", elNote: "Devcon 5", cl: "Fulu", clNote: "Star", date: "Dec 2025", status: "done" },
+              { name: "Pectra", el: "Prague", elNote: "Devcon 4", cl: "Electra", clNote: "Star", date: "May 2025", status: "done" },
+              { name: "Dencun", el: "Cancun", elNote: "Devcon 3", cl: "Deneb", clNote: "Star", date: "Mar 2024", status: "done" },
+              { name: "Shapella", el: "Shanghai", elNote: "Devcon 2", cl: "Capella", clNote: "Star", date: "Apr 2023", status: "done" },
+              { name: "The Merge", el: "Paris", elNote: "EthCC", cl: "Bellatrix", clNote: "Star", date: "Sep 2022", status: "done" },
               { name: "London", el: "London", elNote: "Devcon 1", cl: "—", clNote: "Pre-Beacon", date: "Aug 2021", status: "done" },
               { name: "Berlin", el: "Berlin", elNote: "Devcon 0", cl: "—", clNote: "", date: "Apr 2021", status: "done" },
-              { name: "Istanbul", el: "Istanbul", elNote: "Devcon 5", cl: "—", clNote: "", date: "Dec 2019", status: "done" },
-              { name: "Constantinople", el: "—", elNote: "Ancient city", cl: "—", clNote: "", date: "Feb 2019", status: "done" },
-              { name: "Byzantium", el: "—", elNote: "Ancient city", cl: "—", clNote: "", date: "Oct 2017", status: "done" },
+              { name: "Istanbul", el: "Istanbul", elNote: "Historical", cl: "—", clNote: "", date: "Dec 2019", status: "done" },
+              { name: "Constantinople", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Feb 2019", status: "done" },
+              { name: "Byzantium", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Oct 2017", status: "done" },
               { name: "Homestead", el: "—", elNote: "", cl: "—", clNote: "", date: "Mar 2016", status: "done" },
               { name: "Frontier", el: "—", elNote: "", cl: "—", clNote: "", date: "Jul 2015", status: "done" },
             ].map((u) => (
