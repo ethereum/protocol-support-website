@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Navigation />
 
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         {/* HERO */}
         <Hero />
 
@@ -33,7 +33,7 @@ export default function Home() {
                 and mainnet readiness across every fork — from proposal to deployment.
               </p>
               <div className="flex items-center gap-4" style={{ marginBottom: "1rem" }}>
-                <div className="upgrade-timeline" style={{ flexDirection: "row", gap: "0.5rem", margin: 0 }}>
+                <div className="upgrade-timeline" style={{ flexDirection: "row", gap: "0.5rem", margin: 0, flexWrap: "wrap" }}>
                   <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-done" /><span style={{ color: "var(--color-text-secondary)" }}>Fusaka</span></div>
                   <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />
                   <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-active" /><span style={{ color: "var(--color-text-bright)", fontWeight: 600 }}>Glamsterdam</span></div>

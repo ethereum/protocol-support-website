@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center text-center" style={{ padding: "6rem 2rem 12rem" }}>
+    <section className="relative min-h-screen flex items-center justify-center text-center hero-section">
       <Image
         src="/octopus_blue.png"
         alt=""

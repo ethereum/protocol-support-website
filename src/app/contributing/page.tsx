@@ -70,7 +70,7 @@ export default function ContributingPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">Start Contributing</h1>
           <p className="page-desc">
@@ -86,7 +86,7 @@ export default function ContributingPage() {
           <p style={{ color: "var(--color-text-body)", fontSize: "0.95rem", marginBottom: "1.25rem" }}>
             Contribute directly to the tools and resources used by the Ethereum protocol community.
           </p>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             {openSourceProjects.map((project) => (
               <Card
                 key={project.href}
@@ -107,7 +107,7 @@ export default function ContributingPage() {
             Programs designed to help newcomers dive deep into Ethereum protocol
             development with mentorship and structure.
           </p>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             {fellowships.map((fellowship) => (
               <Card
                 key={fellowship.href}
@@ -124,7 +124,7 @@ export default function ContributingPage() {
         {/* Jobs */}
         <section className="section">
           <h2 className="section-title">Jobs & Community</h2>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             {jobs.map((item) => (
               <Card
                 key={item.href}
@@ -186,7 +186,7 @@ export default function ContributingPage() {
               },
             ].map((step) => (
               <div key={step.num} className="card">
-                <div className="flex items-start gap-4">
+                <div className="step-card-layout">
                   <span className="step-badge">{step.num}</span>
                   <div>
                     <h3 style={{ fontWeight: 600, color: "var(--color-text-bright)", marginBottom: "0.4rem" }}>

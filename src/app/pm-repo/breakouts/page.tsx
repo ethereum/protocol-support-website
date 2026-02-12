@@ -27,7 +27,7 @@ export default function BreakoutsPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">Breakout Calls</h1>
           <p className="page-desc">
@@ -149,7 +149,7 @@ export default function BreakoutsPage() {
             Breakout series that have had a call within the last three months.
             Each links to its coordination issue on GitHub.
           </p>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+          <div className="card-grid">
             {activeBreakouts.map((room) => (
               <a
                 key={room.href}

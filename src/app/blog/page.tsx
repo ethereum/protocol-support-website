@@ -10,7 +10,7 @@ export default function BlogPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">Blog</h1>
           <p className="page-desc">

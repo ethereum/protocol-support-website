@@ -66,9 +66,8 @@ export default function Navigation() {
 
   return (
     <>
-    <nav className="fixed top-0 left-0 right-0 z-[100] nav-backdrop" style={{
+    <nav className="fixed top-0 left-0 right-0 z-[100] nav-backdrop page-container" style={{
       borderBottom: "1px solid var(--color-border)",
-      padding: "0 2rem",
     }}>
       <div className="max-w-[1100px] mx-auto flex justify-between items-center h-14">
         <Link href="/" className="flex items-center gap-2.5 no-underline" style={{
@@ -190,7 +189,7 @@ export default function Navigation() {
           <ThemeToggle />
           <button
             type="button"
-            className="p-2"
+            className="p-3"
             style={{ color: "var(--color-text-muted)" }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
@@ -220,7 +219,7 @@ export default function Navigation() {
         alignItems: "center",
         justifyContent: "center",
       }}>
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-4">
           {navLinks.map((link) => {
             if (link.children) {
               const expanded = mobileExpanded === link.href;
@@ -251,7 +250,7 @@ export default function Navigation() {
                     </svg>
                   </button>
                   {expanded && (
-                    <div className="flex flex-col items-center gap-1" style={{ marginBottom: "0.25rem" }}>
+                    <div className="flex flex-col items-center gap-2" style={{ marginBottom: "0.25rem" }}>
                       {link.children.map((child) => {
                         const childActive = pathname === child.href;
                         return (
@@ -263,7 +262,7 @@ export default function Navigation() {
                               color: childActive ? "var(--color-blue)" : "var(--color-text-muted)",
                               fontWeight: childActive ? 700 : 400,
                               fontSize: "1rem",
-                              padding: "0.4rem 1rem",
+                              padding: "0.6rem 1rem",
                             }}
                             onClick={() => setMobileMenuOpen(false)}
                           >

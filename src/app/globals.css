@@ -90,14 +90,42 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--color-border-hover); }
 
 /* =============================================================
+   PAGE CONTAINER — responsive padding
+   ============================================================= */
+
+.page-container {
+  padding: 0 2rem;
+}
+@media (max-width: 480px) {
+  .page-container { padding: 0 1rem; }
+}
+
+/* =============================================================
+   CARD GRID — responsive auto-fill grid
+   ============================================================= */
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+/* =============================================================
    HERO
    ============================================================= */
+
+.hero-section {
+  padding: 6rem 2rem 12rem;
+}
+@media (max-width: 640px) {
+  .hero-section { padding: 4rem 1rem 6rem; }
+}
 
 .hero-bg-octopus {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(500px, 70vw, 900px);
+  width: clamp(280px, 70vw, 900px);
   height: auto;
   opacity: 0.25;
   pointer-events: none;
@@ -112,7 +140,7 @@ body {
   position: absolute;
   top: 40%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px; height: 600px;
+  width: min(800px, 100vw); height: min(600px, 100vh);
   background: radial-gradient(ellipse, rgba(0,212,255,0.06) 0%, rgba(168,85,247,0.03) 40%, transparent 70%);
   pointer-events: none;
 }
@@ -162,6 +190,9 @@ body {
   display: flex; align-items: center; gap: 1.5rem;
   padding: 7rem 0 3.5rem;
 }
+@media (max-width: 640px) {
+  .divider { padding: 4rem 0 2rem; }
+}
 .divider-line {
   flex: 1; height: 1px;
   background: linear-gradient(90deg, var(--color-border), transparent);
@@ -170,7 +201,7 @@ body {
   background: linear-gradient(90deg, transparent, var(--color-border));
 }
 .divider-text {
-  font-size: 2rem; font-weight: 700;
+  font-size: clamp(1.25rem, 4vw, 2rem); font-weight: 700;
   color: var(--color-text-bright);
   letter-spacing: -0.02em;
 }
@@ -216,6 +247,10 @@ body {
   box-shadow: 0 10px 40px rgba(0,212,255,0.08);
 }
 .card:hover::before { opacity: 1; }
+.card:active { transform: scale(0.98); }
+@media (max-width: 640px) {
+  .card { padding: 1.25rem; }
+}
 
 /* Featured card — rotating gradient border */
 @property --border-angle {
@@ -264,6 +299,7 @@ body {
   background: rgba(0,212,255,0.14);
   box-shadow: 0 0 16px rgba(0,212,255,0.1);
 }
+.card-btn:active { transform: scale(0.96); }
 
 /* Card inner elements */
 .card-tag {
@@ -291,7 +327,7 @@ body {
 .breakout-dot-past { background: var(--color-text-dim); }
 
 /* EIP flow */
-.eip-flow { display: flex; align-items: center; gap: 0.3rem; margin: auto 0; font-size: 0.8rem; font-weight: 500; }
+.eip-flow { display: flex; align-items: center; gap: 0.3rem; margin: auto 0; font-size: 0.8rem; font-weight: 500; flex-wrap: wrap; }
 .eip-stage { padding: 0.3rem 0.6rem; border-radius: 3px; white-space: nowrap; }
 .eip-stage-draft { background: rgba(59,130,160,0.2); color: var(--color-text-secondary); }
 .eip-stage-review { background: rgba(0,212,255,0.15); color: var(--color-blue); }
@@ -320,6 +356,16 @@ body {
   transition: all 0.2s;
 }
 .quick-links-grid a:hover { background: rgba(0,212,255,0.08); color: var(--color-blue); }
+.quick-links-grid a:active { transform: scale(0.98); }
+
+/* Upgrade history table — horizontal scroll on mobile */
+.upgrade-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.upgrade-table-scroll > div {
+  min-width: 500px;
+}
 
 /* =============================================================
    COORDINATION DIAGRAM
@@ -380,12 +426,18 @@ body {
   opacity: 0.8;
   transform: scale(1.15) rotate(5deg);
 }
+@media (max-width: 768px) {
+  .floating-octo { display: none; }
+}
 
 /* =============================================================
    SUBPAGE UTILITIES
    ============================================================= */
 
 .page-header { padding-top: 7rem; padding-bottom: 2rem; }
+@media (max-width: 640px) {
+  .page-header { padding-top: 5rem; }
+}
 .page-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--color-text-bright); letter-spacing: -0.02em; }
 .page-desc { color: var(--color-text-body); margin-top: 1rem; font-size: 1.05rem; line-height: 1.75; max-width: 640px; }
 .page-divider { height: 1px; background: linear-gradient(90deg, var(--color-border), transparent); margin-bottom: 3rem; }
@@ -412,7 +464,7 @@ body {
   width: 100%;
   height: 100%;
 }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .why-forkcast-grid { grid-template-columns: 1fr; }
 }
 .fork-line {
@@ -567,7 +619,7 @@ body {
 }
 
 /* Concurrent boxes stack on mobile */
-@media (max-width: 540px) {
+@media (max-width: 640px) {
   .lc-concurrent .lc-content {
     flex-direction: column !important;
   }
@@ -682,6 +734,42 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 0.8rem; font-weight: 600; color: var(--color-blue);
   flex-shrink: 0;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+
+.site-footer {
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.footer-links a:active { opacity: 0.7; }
+@media (max-width: 640px) {
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
 }
 
 /* =============================================================

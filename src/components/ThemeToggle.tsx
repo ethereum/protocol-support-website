@@ -49,7 +49,7 @@ export default function ThemeToggle() {
 
   // Render placeholder with same dimensions to avoid layout shift
   if (!mounted) {
-    return <div style={{ width: 32, height: 32 }} />;
+    return <div style={{ width: 44, height: 44 }} />;
   }
 
   return (
@@ -61,12 +61,14 @@ export default function ThemeToggle() {
         background: "none",
         border: "none",
         cursor: "pointer",
-        padding: 4,
+        padding: 13,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         color: "var(--color-text-muted)",
         transition: "color 0.2s",
+        minWidth: 44,
+        minHeight: 44,
       }}
       onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-blue)")}
       onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}

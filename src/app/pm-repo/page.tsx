@@ -21,7 +21,7 @@ export default async function PMRepoPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">The PM Repository</h1>
           <p className="page-desc">
@@ -37,7 +37,7 @@ export default async function PMRepoPage() {
         {/* What's in the PM Repo */}
         <section className="section">
           <h2 className="section-title">What&apos;s in the PM Repo?</h2>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             <Card title="AllCoreDevs Meetings" description="Notes and recordings from bi-weekly execution and consensus layer calls." href="https://github.com/ethereum/pm/tree/master/AllCoreDevs-Meetings" external icon={<CalendarIcon color="var(--coord-cyan)" />} />
             <Card title="Breakout Rooms" description="Focused technical discussions on specific topics. View active series or schedule one." href="/pm-repo/breakouts" icon={<MessageCircleIcon color="var(--coord-green)" />} />
             <Card title="Championing an EIP" description="A guide to shepherding an EIP through the process to protocol inclusion." href="https://github.com/ethereum/pm/blob/master/processes/2026_championing_an_EIP.md" external icon={<FileTextIcon color="var(--coord-yellow)" />} />

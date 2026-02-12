@@ -102,7 +102,7 @@ export default function ResourcesPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">Resources</h1>
           <p className="page-desc">
@@ -119,7 +119,7 @@ export default function ResourcesPage() {
             <p style={{ color: "var(--color-text-body)", fontSize: "0.95rem", marginBottom: "1.25rem" }}>
               {category.description}
             </p>
-            <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+            <div className="card-grid">
               {category.resources.map((resource) => (
                 <Card
                   key={resource.href}

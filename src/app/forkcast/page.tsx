@@ -13,7 +13,7 @@ export default function ForkcastPage() {
   return (
     <>
       <Navigation />
-      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+      <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         <div className="page-header">
           <h1 className="page-title">Forkcast</h1>
           <p className="page-desc">
@@ -86,7 +86,7 @@ export default function ForkcastPage() {
         {/* What Forkcast Shows — feature cards with deep links */}
         <section className="section">
           <h2 className="section-title">What Forkcast Shows</h2>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             <Card
               title="Upgrade Dashboards"
               description="See every EIP proposed, considered, or included for each fork — with status history and ACD call references."
@@ -447,6 +447,7 @@ export default function ForkcastPage() {
             upgrades are named after Devcon host cities, consensus layer upgrades after
             stars. Combined upgrades merge both into a portmanteau (e.g. Pectra = Prague + Electra).
           </p>
+          <div className="upgrade-table-scroll">
           <div style={{ display: "flex", flexDirection: "column", gap: "2px", borderRadius: "8px", overflow: "hidden" }}>
             {/* Header */}
             <div style={{
@@ -518,12 +519,13 @@ export default function ForkcastPage() {
               </div>
             ))}
           </div>
+          </div>
         </section>
 
         {/* Resources */}
         <section className="section">
           <h2 className="section-title">Related Resources</h2>
-          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          <div className="card-grid">
             <Card
               title="Protocol Upgrade Process"
               description="How Ethereum coordinates network upgrades from proposal to mainnet deployment."
