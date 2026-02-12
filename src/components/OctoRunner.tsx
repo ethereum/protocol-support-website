@@ -59,7 +59,20 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     const img = new Image();
     img.src = "/octopus_blue.png";
-    img.onload = () => { imgRef.current = img; };
+    img.onload = () => {
+      // Tint to white using offscreen canvas
+      const off = document.createElement("canvas");
+      off.width = img.width;
+      off.height = img.height;
+      const octx = off.getContext("2d")!;
+      octx.drawImage(img, 0, 0);
+      octx.globalCompositeOperation = "source-atop";
+      octx.fillStyle = "#F0F6FF";
+      octx.fillRect(0, 0, off.width, off.height);
+      const white = new Image();
+      white.src = off.toDataURL();
+      white.onload = () => { imgRef.current = white; };
+    };
     try {
       const stored = localStorage.getItem("octo-hs");
       if (stored) s.current.hi = parseInt(stored, 10);
@@ -101,7 +114,7 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
 
     const spawn = () => {
       const h = 30 + Math.random() * 40;
-      const w = 40 + Math.random() * 40;
+      const w = 20 + Math.random() * 15;
       s.current.obstacles.push({
         x: W + 20,
         w, h,
