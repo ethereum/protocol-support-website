@@ -3,8 +3,12 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import FloatingOcto from "@/components/FloatingOcto";
 import Link from "next/link";
+import { getPMStats } from "@/lib/github";
 
-export default function Home() {
+export const revalidate = 3600;
+
+export default async function Home() {
+  const stats = await getPMStats();
   return (
     <>
       <Navigation />
@@ -178,19 +182,18 @@ export default function Home() {
           {/* Stats Panel */}
           <div className="stats-panel" style={{ marginTop: "4rem" }}>
             <div className="stats-bar">
-              <h3 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--color-text-bright)", letterSpacing: "0.02em" }}>PS Statistics</h3>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--color-text-bright)", letterSpacing: "0.02em" }}>ethereum/pm</h3>
               <div className="flex items-center gap-1.5" style={{ fontSize: "0.7rem", color: "var(--color-blue)" }}>
                 <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--color-blue)", boxShadow: "0 0 6px var(--color-blue)", animation: "pulse 2s ease-in-out infinite" }} />
-                Live
+                Live from GitHub
               </div>
             </div>
             <div style={{ padding: "1rem 1.25rem" }}>
               {[
-                { label: "ACD Meetings", value: "200+", color: "var(--color-blue)" },
-                { label: "Breakout Calls", value: "50+", color: "var(--color-purple)" },
-                { label: "EIPs Coordinated", value: "100+", color: "var(--color-blue)" },
-                { label: "Avg ACD Participants", value: "~100", color: "var(--color-purple)" },
-                { label: "Tentacles Active", value: "8", color: "var(--color-blue)" },
+                { label: "ACDE Meeting Notes", value: String(stats.acdeMeetings), color: "var(--color-blue)" },
+                { label: "ACDC Meeting Notes", value: String(stats.acdcMeetings), color: "var(--color-purple)" },
+                { label: "Breakout Series", value: String(stats.breakoutSeries), color: "var(--coord-green)" },
+                { label: "Repo Forks", value: String(stats.contributors), color: "var(--coord-yellow)" },
               ].map((stat, i, arr) => (
                 <div key={stat.label} className="stat-row" style={i === arr.length - 1 ? { borderBottom: "none" } : {}}>
                   <span style={{ color: "var(--color-text-bright)" }}>{stat.label}</span>
@@ -198,19 +201,11 @@ export default function Home() {
                 </div>
               ))}
 
-              <div style={{ marginTop: "1rem", paddingTop: "1rem" }}>
-                <div className="flex justify-between" style={{ fontSize: "0.7rem", color: "var(--color-text-muted)", marginBottom: "0.4rem" }}>
-                  <span>Weekly Activity</span>
-                  <span>{"\u2191"} 23%</span>
-                </div>
+              <div style={{ marginTop: "1rem" }}>
                 <div className="activity-track">
-                  <div className="activity-seg" style={{ flex: 3, background: "var(--color-blue)" }} />
-                  <div className="activity-seg" style={{ flex: 2, background: "var(--color-purple)" }} />
-                  <div className="activity-seg" style={{ flex: 4, background: "var(--color-blue)" }} />
-                  <div className="activity-seg" style={{ flex: 1, background: "var(--color-purple)" }} />
-                  <div className="activity-seg" style={{ flex: 3, background: "var(--color-blue)" }} />
-                  <div className="activity-seg" style={{ flex: 2, background: "var(--color-purple)" }} />
-                  <div className="activity-seg" style={{ flex: 5, background: "var(--color-blue)" }} />
+                  <div className="activity-seg" style={{ flex: stats.acdeMeetings, background: "var(--color-blue)" }} />
+                  <div className="activity-seg" style={{ flex: stats.acdcMeetings, background: "var(--color-purple)" }} />
+                  <div className="activity-seg" style={{ flex: stats.breakoutSeries, background: "var(--coord-green)" }} />
                 </div>
               </div>
             </div>

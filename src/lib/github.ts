@@ -119,13 +119,70 @@ export const getMarkdownFile = unstable_cache(
   }
 );
 
+// Get PM repo stats for homepage
+export interface PMStats {
+  acdeMeetings: number;
+  acdcMeetings: number;
+  breakoutSeries: number;
+  contributors: number;
+}
+
+interface GitHubTree {
+  tree: { path: string; type: "blob" | "tree" }[];
+}
+
+interface GitHubRepo {
+  forks_count: number;
+  stargazers_count: number;
+}
+
+export const getPMStats = unstable_cache(
+  async (): Promise<PMStats> => {
+    const defaults: PMStats = { acdeMeetings: 0, acdcMeetings: 0, breakoutSeries: 0, contributors: 0 };
+    try {
+      const [tree, repo] = await Promise.all([
+        fetchFromGitHub<GitHubTree>(
+          `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/git/trees/master?recursive=1`
+        ).catch(() => ({ tree: [] }) as GitHubTree),
+        fetchFromGitHub<GitHubRepo>(
+          `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}`
+        ).catch(() => null),
+      ]);
+
+      const items = tree.tree;
+      const breakoutDirs = new Set<string>();
+      for (const f of items) {
+        if (f.path.startsWith("Breakout-Room-Meetings/") && f.type === "tree") {
+          const parts = f.path.split("/");
+          if (parts.length === 2) breakoutDirs.add(parts[1]);
+        }
+      }
+
+      return {
+        acdeMeetings: items.filter(f => f.path.startsWith("AllCoreDevs-EL-Meetings/") && f.path.endsWith(".md")).length,
+        acdcMeetings: items.filter(f => f.path.startsWith("AllCoreDevs-CL-Meetings/") && f.path.endsWith(".md")).length,
+        breakoutSeries: breakoutDirs.size,
+        contributors: repo?.forks_count ?? 0,
+      };
+    } catch (error) {
+      console.error("Failed to fetch PM stats:", error);
+      return defaults;
+    }
+  },
+  ["pm-stats"],
+  {
+    revalidate: 3600,
+    tags: ["github", "pm-stats"],
+  }
+);
+
 // Get AllCoreDevs meeting notes (most recent)
 export const getRecentMeetings = unstable_cache(
   async (layer: "execution" | "consensus", limit = 5): Promise<GitHubFile[]> => {
     try {
       const folder =
         layer === "execution"
-          ? "AllCoreDevs-Meetings"
+          ? "AllCoreDevs-EL-Meetings"
           : "AllCoreDevs-CL-Meetings";
 
       const data = await fetchFromGitHub<GitHubFile[]>(
