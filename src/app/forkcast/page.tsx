@@ -50,34 +50,34 @@ export default function ForkcastPage() {
             {/* Fork/merge illustration */}
             <div className="why-forkcast-illustration">
               <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                {/* Top trunk — short */}
-                <line x1="130" y1="0" x2="130" y2="30" stroke="var(--color-border)" strokeWidth="2" />
-                {/* Fork out to 3 branches — wider spread */}
-                <path d="M130 30 Q130 50 50 70" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
-                <path d="M130 30 Q130 50 130 70" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-line" fill="none" />
-                <path d="M130 30 Q130 50 210 70" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
-                {/* Client team nodes */}
-                <circle cx="50" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-node" />
-                <circle cx="130" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
-                <circle cx="210" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-node" />
-                {/* Labels — bold */}
-                <text x="50" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
-                <text x="130" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
-                <text x="210" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
+                {/* Top trunk */}
+                <line x1="130" y1="0" x2="130" y2="22" stroke="var(--color-border)" strokeWidth="2" />
+                {/* Fork to EL and CL */}
+                <path d="M130 22 Q130 42 65 52" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M130 22 Q130 42 195 52" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
+                {/* EL and CL nodes */}
+                <circle cx="65" cy="58" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-node" />
+                <circle cx="195" cy="58" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-node" />
+                {/* EL and CL labels */}
+                <text x="65" y="82" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
+                <text x="195" y="82" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
                 {/* Work lines down */}
-                <line x1="50" y1="86" x2="50" y2="130" stroke="var(--coord-cyan)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
-                <line x1="130" y1="86" x2="130" y2="130" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
-                <line x1="210" y1="86" x2="210" y2="130" stroke="var(--coord-green)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
-                {/* Merge back */}
-                <path d="M50 130 Q50 150 130 170" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
-                <path d="M130 130 Q130 150 130 170" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-line" fill="none" />
-                <path d="M210 130 Q210 150 130 170" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
-                {/* Merge node */}
+                <line x1="65" y1="66" x2="65" y2="108" stroke="var(--coord-cyan)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                <line x1="195" y1="66" x2="195" y2="108" stroke="var(--coord-green)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                {/* EL and CL merge into Testing */}
+                <path d="M65 108 Q65 128 130 138" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M195 108 Q195 128 130 138" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
+                {/* Testing node */}
+                <circle cx="130" cy="142" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
+                <text x="130" y="164" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
+                {/* Testing to checkmark */}
+                <line x1="130" y1="150" x2="130" y2="170" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                {/* Checkmark node */}
                 <circle cx="130" cy="178" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
-                <text x="130" y="182" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">&#x2713;</text>
-                {/* Bottom trunk — short */}
-                <line x1="130" y1="188" x2="130" y2="208" stroke="var(--color-border)" strokeWidth="2" />
-                <text x="130" y="220" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
+                <text x="130" y="182" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">{"\u2713"}</text>
+                {/* Bottom trunk */}
+                <line x1="130" y1="188" x2="130" y2="204" stroke="var(--color-border)" strokeWidth="2" />
+                <text x="130" y="216" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
               </svg>
             </div>
           </div>
