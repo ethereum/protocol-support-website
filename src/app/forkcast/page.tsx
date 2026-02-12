@@ -1,0 +1,577 @@
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import FloatingOcto from "@/components/FloatingOcto";
+import Card from "@/components/Card";
+import Link from "next/link";
+import {
+  ForkIcon, MapIcon, GitHubIcon, CalendarIcon,
+  CodeIcon, FileTextIcon, UsersIcon, MessageCircleIcon,
+  GlobeIcon, YouTubeIcon, BookIcon, ShieldIcon,
+} from "@/components/Icons";
+
+export default function ForkcastPage() {
+  return (
+    <>
+      <Navigation />
+      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+        <div className="page-header">
+          <h1 className="page-title">Forkcast</h1>
+          <p className="page-desc">
+            Tracking every Ethereum upgrade from EIP proposal to mainnet —
+            aggregating AllCoreDevs decisions, client team perspectives, and
+            testing progress so you don&apos;t have to attend every call.
+          </p>
+          <div className="flex gap-3 flex-wrap" style={{ marginTop: "1.5rem" }}>
+            <a href="https://forkcast.org" target="_blank" rel="noopener noreferrer" className="card-btn" style={{ marginTop: 0 }}>
+              Visit forkcast.org <span>{"\u2197"}</span>
+            </a>
+          </div>
+        </div>
+        <div className="page-divider" />
+
+        {/* Why Forkcast Exists */}
+        <section className="section">
+          <div className="why-forkcast-grid">
+            {/* Text */}
+            <div>
+              <h2 className="section-title">Why Forkcast?</h2>
+              <p style={{ color: "var(--color-text-body)", fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "0.75rem" }}>
+                Ethereum has no CEO who pushes the update button. Upgrades succeed only
+                when 11+ independent client teams, researchers, and the community agree to
+                change the rules simultaneously — coordinated across dozens of calls,
+                hundreds of GitHub threads, and months of testing.
+              </p>
+              <p style={{ color: "var(--color-text-body)", fontSize: "0.95rem", lineHeight: 1.7 }}>
+                Forkcast is the visual layer on top of this process. It shows which EIPs
+                are proposed, which have client support, and where each upgrade stands on
+                the path to mainnet — without requiring you to follow every meeting.
+              </p>
+            </div>
+            {/* Fork/merge illustration */}
+            <div className="why-forkcast-illustration">
+              <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                {/* Top trunk — short */}
+                <line x1="130" y1="0" x2="130" y2="30" stroke="var(--color-border)" strokeWidth="2" />
+                {/* Fork out to 3 branches — wider spread */}
+                <path d="M130 30 Q130 50 50 70" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M130 30 Q130 50 130 70" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M130 30 Q130 50 210 70" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
+                {/* Client team nodes */}
+                <circle cx="50" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-node" />
+                <circle cx="130" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
+                <circle cx="210" cy="78" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-node" />
+                {/* Labels — bold */}
+                <text x="50" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EL</text>
+                <text x="130" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">CL</text>
+                <text x="210" y="105" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">TEST</text>
+                {/* Work lines down */}
+                <line x1="50" y1="86" x2="50" y2="130" stroke="var(--coord-cyan)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                <line x1="130" y1="86" x2="130" y2="130" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                <line x1="210" y1="86" x2="210" y2="130" stroke="var(--coord-green)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                {/* Merge back */}
+                <path d="M50 130 Q50 150 130 170" stroke="var(--coord-cyan)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M130 130 Q130 150 130 170" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-line" fill="none" />
+                <path d="M210 130 Q210 150 130 170" stroke="var(--coord-green)" strokeWidth="1.5" className="fork-line" fill="none" />
+                {/* Merge node */}
+                <circle cx="130" cy="178" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
+                <text x="130" y="182" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">&#x2713;</text>
+                {/* Bottom trunk — short */}
+                <line x1="130" y1="188" x2="130" y2="208" stroke="var(--color-border)" strokeWidth="2" />
+                <text x="130" y="220" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        {/* What Forkcast Shows — feature cards with deep links */}
+        <section className="section">
+          <h2 className="section-title">What Forkcast Shows</h2>
+          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+            <Card
+              title="Upgrade Dashboards"
+              description="See every EIP proposed, considered, or included for each fork — with status history and ACD call references."
+              href="https://forkcast.org/upgrade/glamsterdam"
+              external
+              icon={<ForkIcon color="var(--coord-cyan)" />}
+            />
+            <Card
+              title="Call Summaries"
+              description="AI-generated summaries and full transcripts of AllCoreDevs calls, breakout rooms, and working groups."
+              href="https://forkcast.org/calls"
+              external
+              icon={<FileTextIcon color="var(--coord-purple)" />}
+            />
+            <Card
+              title="Client Priorities"
+              description="Published perspectives from all 11 client teams on which EIPs they support, oppose, or want more research on."
+              href="https://forkcast.org/priority"
+              external
+              icon={<UsersIcon color="var(--coord-green)" />}
+            />
+            <Card
+              title="Stakeholder Views"
+              description="Filter upgrade impact by audience — app developers, stakers, node operators, L2 teams, or end users."
+              href="https://forkcast.org/upgrade/glamsterdam/stakeholders"
+              external
+              icon={<GlobeIcon color="var(--coord-yellow)" />}
+            />
+            <Card
+              title="EIP Explorer"
+              description="Individual pages for each tracked EIP with plain-language descriptions, stakeholder impacts, and tradeoffs."
+              href="https://forkcast.org/eips"
+              external
+              icon={<BookIcon color="var(--coord-pink)" />}
+            />
+            <Card
+              title="Devnet Tracking"
+              description="Monitor which EIPs are activated on which devnets and testnets, and track client readiness across the board."
+              href="https://forkcast.org/devnets"
+              external
+              icon={<ShieldIcon color="var(--coord-cyan-alt)" />}
+            />
+          </div>
+        </section>
+
+        {/* The Upgrade Lifecycle — vertical timeline with phases */}
+        <section className="section">
+          <h2 className="section-title">The Upgrade Lifecycle</h2>
+          <div className="lifecycle-timeline">
+            {/* PHASE: Scoping — concurrent section */}
+            <div className="lc-phase-label">Scoping</div>
+
+            <div className="lc-concurrent">
+              <div className="lc-rail">
+                <div className="lc-node lc-node-fork" style={{ borderColor: "var(--coord-cyan)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content" style={{ display: "flex", gap: "6px" }}>
+                {/* Main track: choosing the features */}
+                <div className="lc-concurrent-box" style={{ flex: 1 }}>
+                  <div className="lc-concurrent-label" style={{ color: "var(--coord-cyan)" }}>Choosing the features of the fork</div>
+                  <div className="lc-concurrent-steps">
+                    <div>
+                      <span className="lc-title">Headliner Proposals</span>
+                      <span className="lc-desc">Major EIPs are proposed for inclusion in the upcoming fork.</span>
+                    </div>
+                    <div className="lc-concurrent-divider" />
+                    <div>
+                      <span className="lc-title">Headliner Selection</span>
+                      <span className="lc-desc">Core devs select the headline features that define the upgrade scope.</span>
+                    </div>
+                    <div className="lc-concurrent-divider" />
+                    <div>
+                      <span className="lc-title">Non-headliner Proposals</span>
+                      <span className="lc-desc">Smaller EIPs proposed alongside the confirmed headliners.</span>
+                    </div>
+                    <div className="lc-concurrent-divider" />
+                    <div>
+                      <span className="lc-title">Non-headliner Selections</span>
+                      <span className="lc-desc">Remaining EIPs accepted or deferred. Scope finalized.</span>
+                    </div>
+                  </div>
+                </div>
+                {/* Parallel track: EIP-specific Devnets */}
+                <div className="lc-concurrent-box lc-concurrent-box-parallel" style={{ flex: 1 }}>
+                  <div className="lc-concurrent-label" style={{ color: "var(--coord-green)" }}>Runs concurrently</div>
+                  <span className="lc-title" style={{ color: "var(--coord-green)" }}>EIP-specific Devnets</span>
+                  <span className="lc-desc" style={{ marginBottom: "0.75rem" }}>
+                    Individual EIPs tested in isolation on dedicated devnets.
+                    Begins as soon as headliners are chosen and continues
+                    through the selection process.
+                  </span>
+                  <span className="lc-desc" style={{ fontStyle: "italic", color: "var(--color-text-muted)" }}>
+                    Ends when generalized devnets begin &#8595;
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* PHASE: Implementation */}
+            <div className="lc-phase-label">Implementation</div>
+
+            <div className="lc-step lc-step-milestone">
+              <div className="lc-rail">
+                <div className="lc-node lc-node-milestone" style={{ borderColor: "var(--coord-pink)", background: "var(--coord-pink)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <span className="lc-title" style={{ color: "var(--coord-pink)" }}>Feature Freeze*</span>
+                <span className="lc-desc">No new features added. Existing features can still be removed if insufficiently ready.</span>
+              </div>
+            </div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-yellow)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
+                  <span className="lc-title">Generalized Devnets</span>
+                  <span className="lc-duration">30 days</span>
+                </div>
+                <span className="lc-desc">All EIPs tested together on combined devnets. EIP-specific devnets merge into this phase.</span>
+              </div>
+            </div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-green)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <span className="lc-title">Client Releases</span>
+                <span className="lc-desc">Client teams ship implementations of all included EIPs.</span>
+              </div>
+            </div>
+
+            {/* PHASE: Review */}
+            <div className="lc-phase-label">Review</div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-pink)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
+                  <span className="lc-title">Security Review</span>
+                  <span className="lc-duration">14 days</span>
+                </div>
+                <span className="lc-desc">Dedicated security audit period before testnet deployment.</span>
+              </div>
+            </div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-cyan-alt)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
+                  <span className="lc-title">Permissioned Testnet</span>
+                  <span className="lc-duration">14 days</span>
+                </div>
+                <span className="lc-desc">Deployed to a controlled testnet with vetted validators.</span>
+              </div>
+            </div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-cyan-alt)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
+                  <span className="lc-title">Permissionless Testnet</span>
+                  <span className="lc-duration">30 days</span>
+                </div>
+                <span className="lc-desc">Activated on public testnets (Holesky, Sepolia) for open validation.</span>
+              </div>
+            </div>
+
+            {/* PHASE: Deployment */}
+            <div className="lc-phase-label">Deployment</div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--color-text-muted)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
+                  <span className="lc-title">Buffer</span>
+                  <span className="lc-duration">30 days</span>
+                </div>
+                <span className="lc-desc">Safety margin before the mainnet fork for final checks.</span>
+              </div>
+            </div>
+
+            <div className="lc-step">
+              <div className="lc-rail">
+                <div className="lc-node" style={{ borderColor: "var(--coord-cyan)" }} />
+                <div className="lc-line" />
+              </div>
+              <div className="lc-content">
+                <span className="lc-title">Mainnet Date Chosen</span>
+                <span className="lc-desc">A specific epoch is locked in for the network upgrade.</span>
+              </div>
+            </div>
+
+            {/* Final milestone */}
+            <div className="lc-step lc-step-final">
+              <div className="lc-rail">
+                <div className="lc-node lc-node-milestone lc-node-final" style={{ borderColor: "var(--coord-cyan)", background: "var(--coord-cyan)" }} />
+              </div>
+              <div className="lc-content">
+                <span className="lc-title lc-title-final">Mainnet Fork</span>
+                <span className="lc-desc">The upgrade activates on the live Ethereum network.</span>
+              </div>
+            </div>
+          </div>
+          <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "1.5rem" }}>
+            *Features can be removed after feature freeze if insufficiently ready, but no new features should be proposed.
+            Forkcast tracks each EIP across this entire pipeline.
+          </p>
+        </section>
+
+        {/* How It Connects to ACD — redesigned with better typography */}
+        <section className="section">
+          <h2 className="section-title">How Forkcast Connects to ACD</h2>
+          <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.7, fontWeight: 500, marginBottom: "1.5rem", maxWidth: "640px" }}>
+            Forkcast is the visual layer on top of the AllCoreDevs process.
+            The <Link href="/pm-repo" className="link-blue">PM repo</Link> is
+            where the work happens; Forkcast is where you see the state of that work.
+          </p>
+          <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+            <div className="acd-quadrants">
+              {[
+                {
+                  label: "Before calls",
+                  color: "var(--coord-cyan)",
+                  text: "Client teams publish their EIP perspectives. Forkcast aggregates them so you can see the consensus landscape before discussion begins.",
+                },
+                {
+                  label: "During calls",
+                  color: "var(--coord-purple)",
+                  text: "ACD calls produce decisions — which EIPs move from Proposed to Considered for Inclusion (CFI) to Scheduled for Inclusion (SFI).",
+                },
+                {
+                  label: "After calls",
+                  color: "var(--coord-green)",
+                  text: "Forkcast records these decisions with timestamps and call references, and publishes AI-generated summaries and transcripts.",
+                },
+                {
+                  label: "Between calls",
+                  color: "var(--coord-yellow)",
+                  text: "EIP detail pages and stakeholder views let you follow progress asynchronously without attending every meeting.",
+                },
+              ].map((item, i) => (
+                <div key={item.label} className="acd-quadrant" style={{
+                  padding: "1.25rem 1.5rem",
+                }}>
+                  <div style={{
+                    fontSize: "1.15rem",
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 600,
+                    color: item.color,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    marginBottom: "0.6rem",
+                  }}>
+                    <span style={{ opacity: 0.5 }}>{i + 1}.</span> {item.label}
+                  </div>
+                  <p style={{
+                    fontSize: "0.95rem",
+                    color: "var(--color-text-body)",
+                    lineHeight: 1.6,
+                  }}>
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Propose an EIP */}
+        <section className="section" id="propose">
+          <h2 className="section-title">Propose an EIP for a Fork</h2>
+          <div className="card" style={{ borderLeft: "2px solid var(--color-blue)" }}>
+            <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+              Want your EIP tracked on Forkcast and considered for an upcoming upgrade?
+              Follow these three steps:
+            </p>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%",
+                  background: "rgba(0, 212, 255, 0.1)", border: "1px solid var(--color-blue)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.75rem", fontWeight: 700, color: "var(--color-blue)", flexShrink: 0,
+                }}>1</div>
+                <div>
+                  <strong style={{ color: "var(--color-text-bright)", fontSize: "0.95rem" }}>Write your EIP</strong>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+                    Draft your proposal following the{" "}
+                    <a href="https://eips.ethereum.org" target="_blank" rel="noopener noreferrer" className="link-blue">EIP standards</a> and
+                    get it to Draft status on ethereum/EIPs.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%",
+                  background: "rgba(0, 212, 255, 0.1)", border: "1px solid var(--color-blue)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.75rem", fontWeight: 700, color: "var(--color-blue)", flexShrink: 0,
+                }}>2</div>
+                <div>
+                  <strong style={{ color: "var(--color-text-bright)", fontSize: "0.95rem" }}>Add it to Forkcast</strong>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+                    Submit a PR adding your EIP data to the{" "}
+                    <a href="https://github.com/ethereum/forkcast/tree/main/src/data/eips" target="_blank" rel="noopener noreferrer" className="link-blue">
+                      src/data/eips/
+                    </a>{" "}
+                    directory in the Forkcast repository.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div style={{
+                  width: 24, height: 24, borderRadius: "50%",
+                  background: "rgba(0, 212, 255, 0.1)", border: "1px solid var(--color-blue)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.75rem", fontWeight: 700, color: "var(--color-blue)", flexShrink: 0,
+                }}>3</div>
+                <div>
+                  <strong style={{ color: "var(--color-text-bright)", fontSize: "0.95rem" }}>Champion it through ACD</strong>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+                    Present your EIP at an AllCoreDevs call and build consensus. See the{" "}
+                    <a href="https://github.com/ethereum/pm/blob/master/processes/2026_championing_an_EIP.md" target="_blank" rel="noopener noreferrer" className="link-blue">
+                      championing guide
+                    </a>{" "}
+                    for the full process.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Upgrade History Tracker */}
+        <section className="section">
+          <h2 className="section-title">Every Ethereum Upgrade</h2>
+          <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.7, marginBottom: "1.5rem", maxWidth: "640px" }}>
+            Names are chosen by core developers on AllCoreDevs calls. Execution layer
+            upgrades are named after Devcon host cities, consensus layer upgrades after
+            stars. Combined upgrades merge both into a portmanteau (e.g. Pectra = Prague + Electra).
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2px", borderRadius: "8px", overflow: "hidden" }}>
+            {/* Header */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "2.5fr 1.5fr 1.5fr 1fr",
+              padding: "0.6rem 1.25rem",
+              background: "var(--color-bg-elevated)",
+              fontSize: "0.65rem",
+              fontFamily: "var(--font-mono)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              color: "var(--color-text-muted)",
+            }}>
+              <span>Upgrade</span>
+              <span>Execution Layer</span>
+              <span>Consensus Layer</span>
+              <span style={{ textAlign: "right" }}>Date</span>
+            </div>
+            {[
+              { name: "Hegota", el: "Bogota", elNote: "Devcon city", cl: "Heka", clNote: "Star", date: "TBD", status: "planned" },
+              { name: "Glamsterdam", el: "Amsterdam", elNote: "", cl: "Glamis", clNote: "Star", date: "TBD", status: "active" },
+              { name: "Fusaka", el: "Osaka", elNote: "Devcon 7", cl: "Fulu", clNote: "Star", date: "Dec 2025", status: "done" },
+              { name: "Pectra", el: "Prague", elNote: "Devcon 6", cl: "Electra", clNote: "Star", date: "May 2025", status: "done" },
+              { name: "Dencun", el: "Cancun", elNote: "Devcon 4", cl: "Deneb", clNote: "Star", date: "Mar 2024", status: "done" },
+              { name: "Shapella", el: "Shanghai", elNote: "Devcon 3", cl: "Capella", clNote: "Star", date: "Apr 2023", status: "done" },
+              { name: "The Merge", el: "Paris", elNote: "Devcon 2", cl: "Bellatrix", clNote: "Star", date: "Sep 2022", status: "done" },
+              { name: "London", el: "London", elNote: "Devcon 1", cl: "—", clNote: "Pre-Beacon", date: "Aug 2021", status: "done" },
+              { name: "Berlin", el: "Berlin", elNote: "Devcon 0", cl: "—", clNote: "", date: "Apr 2021", status: "done" },
+              { name: "Istanbul", el: "Istanbul", elNote: "Devcon 5", cl: "—", clNote: "", date: "Dec 2019", status: "done" },
+              { name: "Constantinople", el: "—", elNote: "Ancient city", cl: "—", clNote: "", date: "Feb 2019", status: "done" },
+              { name: "Byzantium", el: "—", elNote: "Ancient city", cl: "—", clNote: "", date: "Oct 2017", status: "done" },
+              { name: "Homestead", el: "—", elNote: "", cl: "—", clNote: "", date: "Mar 2016", status: "done" },
+              { name: "Frontier", el: "—", elNote: "", cl: "—", clNote: "", date: "Jul 2015", status: "done" },
+            ].map((u) => (
+              <div key={u.name} style={{
+                display: "grid",
+                gridTemplateColumns: "2.5fr 1.5fr 1.5fr 1fr",
+                padding: "0.65rem 1.25rem",
+                background: u.status === "active" ? "rgba(0,212,255,0.04)" : "var(--color-bg-surface)",
+                borderLeft: u.status === "active" ? "2px solid var(--color-blue)" : "2px solid transparent",
+                alignItems: "center",
+              }}>
+                <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span className={`upgrade-pip upgrade-pip-${u.status}`} />
+                  <span style={{
+                    fontSize: "0.9rem",
+                    fontWeight: u.status === "active" ? 700 : 500,
+                    color: u.status === "active" ? "var(--color-text-bright)" : u.status === "planned" ? "var(--color-text-muted)" : "var(--color-text-bright)",
+                  }}>
+                    {u.name}
+                  </span>
+                </span>
+                <span style={{ fontSize: "0.8rem" }}>
+                  <span style={{ color: "var(--color-text-body)" }}>{u.el}</span>
+                  {u.elNote && <span style={{ color: "var(--color-text-dim)", fontSize: "0.7rem", marginLeft: "0.4rem" }}>{u.elNote}</span>}
+                </span>
+                <span style={{ fontSize: "0.8rem" }}>
+                  <span style={{ color: "var(--color-text-body)" }}>{u.cl}</span>
+                  {u.clNote && <span style={{ color: "var(--color-text-dim)", fontSize: "0.7rem", marginLeft: "0.4rem" }}>{u.clNote}</span>}
+                </span>
+                <span style={{
+                  fontSize: "0.75rem",
+                  fontFamily: "var(--font-mono)",
+                  color: u.status === "active" ? "var(--color-blue)" : "var(--color-text-muted)",
+                  textAlign: "right",
+                }}>
+                  {u.date}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Resources */}
+        <section className="section">
+          <h2 className="section-title">Related Resources</h2>
+          <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+            <Card
+              title="Protocol Upgrade Process"
+              description="How Ethereum coordinates network upgrades from proposal to mainnet deployment."
+              href="https://github.com/ethereum/pm/blob/master/processes/protocol-upgrade.md"
+              external
+              icon={<MapIcon color="var(--coord-purple)" />}
+            />
+            <Card
+              title="Championing an EIP"
+              description="Guide to shepherding an EIP through the protocol inclusion process."
+              href="https://github.com/ethereum/pm/blob/master/processes/2026_championing_an_EIP.md"
+              external
+              icon={<CodeIcon color="var(--coord-yellow)" />}
+            />
+            <Card
+              title="EIPs Website"
+              description="The canonical reference for all Ethereum Improvement Proposals — text, status, and history."
+              href="https://eips.ethereum.org"
+              external
+              icon={<GlobeIcon color="var(--coord-green)" />}
+            />
+            <Card
+              title="Forkcast Repository"
+              description="Source code and EIP data for forkcast.org. Submit PRs to add your EIP to the tracker."
+              href="https://github.com/ethereum/forkcast"
+              external
+              icon={<GitHubIcon color="var(--coord-cyan)" />}
+            />
+            <Card
+              title="Protocol YouTube"
+              description="Recordings of all AllCoreDevs calls, breakout rooms, and working group sessions."
+              href="https://www.youtube.com/@EthereumProtocol"
+              external
+              icon={<YouTubeIcon color="var(--coord-pink)" />}
+            />
+            <Card
+              title="R&D Discord"
+              description="Where core developers discuss protocol changes asynchronously between calls."
+              href="https://discord.gg/a4gm9nT3Ty"
+              external
+              icon={<MessageCircleIcon color="var(--coord-cyan-alt)" />}
+            />
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+      <FloatingOcto />
+    </>
+  );
+}

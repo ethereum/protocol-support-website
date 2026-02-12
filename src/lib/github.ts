@@ -1,0 +1,152 @@
+import { unstable_cache } from "next/cache";
+
+const GITHUB_API_BASE = "https://api.github.com";
+const PM_REPO_OWNER = "ethereum";
+const PM_REPO_NAME = "pm";
+
+interface GitHubFile {
+  name: string;
+  path: string;
+  type: "file" | "dir";
+  download_url: string | null;
+  html_url: string;
+}
+
+interface GitHubContent {
+  content: string;
+  encoding: string;
+  html_url: string;
+}
+
+async function fetchFromGitHub<T>(
+  endpoint: string,
+  options?: RequestInit
+): Promise<T> {
+  const headers: HeadersInit = {
+    Accept: "application/vnd.github.v3+json",
+    "User-Agent": "Protocol-Support-Website",
+  };
+
+  // Add auth token if available (for higher rate limits)
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
+  const response = await fetch(`${GITHUB_API_BASE}${endpoint}`, {
+    ...options,
+    headers: {
+      ...headers,
+      ...options?.headers,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+// Fetch and cache the PM repo README
+export const getPMRepoReadme = unstable_cache(
+  async (): Promise<string> => {
+    try {
+      const data = await fetchFromGitHub<GitHubContent>(
+        `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/readme`
+      );
+
+      // Decode base64 content
+      const content = Buffer.from(data.content, "base64").toString("utf-8");
+      return content;
+    } catch (error) {
+      console.error("Failed to fetch PM repo README:", error);
+      return "";
+    }
+  },
+  ["pm-repo-readme"],
+  {
+    revalidate: 3600, // Revalidate every hour
+    tags: ["github", "pm-repo"],
+  }
+);
+
+// Fetch and cache breakout room information
+export const getBreakoutRooms = unstable_cache(
+  async (): Promise<GitHubFile[]> => {
+    try {
+      const data = await fetchFromGitHub<GitHubFile[]>(
+        `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/contents/Breakout-Room-Meetings`
+      );
+
+      // Filter for directories only (each breakout room has its own folder)
+      return data.filter((item) => item.type === "dir");
+    } catch (error) {
+      console.error("Failed to fetch breakout rooms:", error);
+      return [];
+    }
+  },
+  ["breakout-rooms"],
+  {
+    revalidate: 3600,
+    tags: ["github", "breakouts"],
+  }
+);
+
+// Fetch a specific markdown file from the repo
+export const getMarkdownFile = unstable_cache(
+  async (path: string): Promise<string> => {
+    try {
+      // Validate path to prevent traversal
+      if (path.includes("..") || path.startsWith("/")) {
+        throw new Error("Invalid path");
+      }
+
+      const data = await fetchFromGitHub<GitHubContent>(
+        `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/contents/${path}`
+      );
+
+      const content = Buffer.from(data.content, "base64").toString("utf-8");
+      return content;
+    } catch (error) {
+      console.error(`Failed to fetch file ${path}:`, error);
+      return "";
+    }
+  },
+  ["markdown-file"],
+  {
+    revalidate: 3600,
+    tags: ["github"],
+  }
+);
+
+// Get AllCoreDevs meeting notes (most recent)
+export const getRecentMeetings = unstable_cache(
+  async (layer: "execution" | "consensus", limit = 5): Promise<GitHubFile[]> => {
+    try {
+      const folder =
+        layer === "execution"
+          ? "AllCoreDevs-Meetings"
+          : "AllCoreDevs-CL-Meetings";
+
+      const data = await fetchFromGitHub<GitHubFile[]>(
+        `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/contents/${folder}`
+      );
+
+      // Filter markdown files and sort by name (which includes the meeting number)
+      const meetings = data
+        .filter((item) => item.type === "file" && item.name.endsWith(".md"))
+        .sort((a, b) => b.name.localeCompare(a.name))
+        .slice(0, limit);
+
+      return meetings;
+    } catch (error) {
+      console.error(`Failed to fetch ${layer} meetings:`, error);
+      return [];
+    }
+  },
+  ["recent-meetings"],
+  {
+    revalidate: 3600,
+    tags: ["github", "meetings"],
+  }
+);

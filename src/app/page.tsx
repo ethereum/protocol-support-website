@@ -1,65 +1,226 @@
-import Image from "next/image";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import FloatingOcto from "@/components/FloatingOcto";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Navigation />
+
+      <div className="relative z-10 max-w-[1100px] mx-auto" style={{ padding: "0 2rem" }}>
+        {/* HERO */}
+        <Hero />
+
+        {/* CORE SYSTEMS */}
+        <div className="divider">
+          <div className="divider-line" />
+          <span className="divider-text">Core Systems</span>
+          <div className="divider-line" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <section>
+          <div className="bento-grid">
+            {/* Forkcast — featured, wide */}
+            <div className="card card-featured" style={{ gridColumn: "1 / 3" }}>
+              <div className="flex justify-between items-start mb-3">
+                <h3 style={{ fontSize: "1.3rem", fontWeight: 600, color: "var(--color-text-bright)" }}>Forkcast</h3>
+                <span className="card-tag">Upgrade Tracker</span>
+              </div>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem", flex: 1 }}>
+                Track Ethereum network upgrades in real time. Monitor EIP inclusion, testnet activations,
+                and mainnet readiness across every fork — from proposal to deployment.
+              </p>
+              <div className="flex items-center gap-4" style={{ marginBottom: "1rem" }}>
+                <div className="upgrade-timeline" style={{ flexDirection: "row", gap: "0.5rem", margin: 0 }}>
+                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-done" /><span style={{ color: "var(--color-text-secondary)" }}>Fusaka</span></div>
+                  <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />
+                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-active" /><span style={{ color: "var(--color-text-bright)", fontWeight: 600 }}>Glamsterdam</span></div>
+                  <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />
+                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-planned" /><span style={{ color: "var(--color-text-secondary)" }}>Hegota</span></div>
+                </div>
+              </div>
+              <Link href="/forkcast" className="card-btn">Explore Forkcast <span>&rarr;</span></Link>
+            </div>
+
+            {/* PM Repository */}
+            <div className="card">
+              <div className="flex justify-between items-start mb-3">
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)" }}>PM Repository</h3>
+                <span className="card-tag">Coordination</span>
+              </div>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem", flex: 1 }}>
+                Central hub for Ethereum protocol coordination — AllCoreDevs calls, breakout rooms, EIP championing, and governance in the open.
+              </p>
+              <Link href="/pm-repo" className="card-btn">Explore Repository <span>&rarr;</span></Link>
+            </div>
+
+            {/* EPF */}
+            <div className="card">
+              <div className="flex justify-between items-start mb-3">
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)" }}>Protocol Fellowship</h3>
+                <span className="card-tag">Fellowship</span>
+              </div>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem", flex: 1 }}>
+                A cohort-based program for developers to learn Ethereum protocol internals through mentorship and hands-on contribution to core development.
+              </p>
+              <a href="https://epf.wiki" target="_blank" rel="noopener noreferrer" className="card-btn">Explore EPF <span style={{ fontSize: "0.75rem", opacity: 0.5 }}>{"\u2197"}</span></a>
+            </div>
+
+            {/* Study Group */}
+            <div className="card">
+              <div className="flex justify-between items-start mb-3">
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)" }}>Study Group</h3>
+                <span className="card-tag">Education</span>
+              </div>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem", flex: 1 }}>
+                Weekly educational sessions covering Ethereum protocol development — from EVM fundamentals to consensus mechanisms.
+              </p>
+              <a href="https://epf.wiki/#/eps/schedule" target="_blank" rel="noopener noreferrer" className="card-btn">View Schedule <span style={{ fontSize: "0.75rem", opacity: 0.5 }}>{"\u2197"}</span></a>
+            </div>
+
+            {/* Quick Links */}
+            <div className="card">
+              <div className="flex justify-between items-start mb-3">
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-bright)" }}>Quick Links</h3>
+                <span className="card-tag">Resources</span>
+              </div>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "0.75rem" }}>
+                Essential channels and tools for protocol developers.
+              </p>
+              <div className="quick-links-grid">
+                <a href="https://www.youtube.com/@EthereumProtocol" target="_blank" rel="noopener noreferrer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" style={{ flexShrink: 0, opacity: 0.7, fill: "var(--coord-pink)" }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  Protocol YouTube <span style={{ marginLeft: "auto", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>&rarr;</span>
+                </a>
+                <a href="https://discord.gg/a4gm9nT3Ty" target="_blank" rel="noopener noreferrer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" style={{ flexShrink: 0, opacity: 0.7, fill: "var(--coord-purple)" }}><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                  R&D Discord <span style={{ marginLeft: "auto", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>&rarr;</span>
+                </a>
+                <a href="https://github.com/ethereum/pm/issues?q=label%3AEIPOfficeHr" target="_blank" rel="noopener noreferrer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, opacity: 0.7, stroke: "var(--coord-yellow)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  EIP Office Hours <span style={{ marginLeft: "auto", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>&rarr;</span>
+                </a>
+                <a href="https://ethereum.org/governance" target="_blank" rel="noopener noreferrer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, opacity: 0.7, stroke: "var(--coord-green)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  Ethereum Governance <span style={{ marginLeft: "auto", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>&rarr;</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT */}
+        <section style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
+          <div className="about-grid">
+            <div>
+              <h2 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--color-text-bright)", marginBottom: "1.5rem" }}>About Protocol Support</h2>
+              <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                Protocol Support is an Ethereum Foundation team dedicated to
+                facilitating the protocol development process. We serve as the
+                connective tissue between client teams, researchers, and the
+                broader community.
+              </p>
+              <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75, marginBottom: "1rem" }}>
+                Our octopus mascot represents the many arms reaching into
+                different areas of Ethereum development — from coordinating
+                AllCoreDevs meetings to helping newcomers navigate the complex
+                landscape of protocol governance.
+              </p>
+            </div>
+
+            {/* Coordination Diagram */}
+            <div className="coord-diagram">
+              <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+                <line className="conn-line" x1="160" y1="160" x2="160" y2="38" style={{ stroke: "var(--coord-cyan-alt)" }} strokeWidth="1.5" opacity="0.5"/>
+                <line className="conn-line" x1="160" y1="160" x2="276" y2="93" style={{ stroke: "var(--coord-purple)" }} strokeWidth="1.5" opacity="0.5"/>
+                <line className="conn-line" x1="160" y1="160" x2="276" y2="227" style={{ stroke: "var(--coord-green)" }} strokeWidth="1.5" opacity="0.5"/>
+                <line className="conn-line" x1="160" y1="160" x2="160" y2="282" style={{ stroke: "var(--coord-yellow)" }} strokeWidth="1.5" opacity="0.5"/>
+                <line className="conn-line" x1="160" y1="160" x2="44" y2="227" style={{ stroke: "var(--coord-pink)" }} strokeWidth="1.5" opacity="0.5"/>
+                <line className="conn-line" x1="160" y1="160" x2="44" y2="93" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5" opacity="0.5"/>
+
+                <circle cx="160" cy="160" r="36" className="coord-pulse" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1" opacity="0.4">
+                  <animate attributeName="r" values="36;48;36" dur="3s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+                </circle>
+
+                <circle cx="160" cy="160" r="30" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5"/>
+                <text x="160" y="164" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="14" fontWeight="700">PS</text>
+
+                <circle cx="160" cy="38" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-cyan-alt)" }} strokeWidth="1.2"/>
+                <text x="160" y="35" textAnchor="middle" style={{ fill: "var(--coord-cyan-alt)" }} fontSize="6" fontWeight="500">EL Client</text>
+                <text x="160" y="44" textAnchor="middle" style={{ fill: "var(--coord-cyan-alt)" }} fontSize="6" fontWeight="500">Teams</text>
+
+                <circle cx="276" cy="93" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-purple)" }} strokeWidth="1.2"/>
+                <text x="276" y="90" textAnchor="middle" style={{ fill: "var(--coord-purple)" }} fontSize="6" fontWeight="500">CL Client</text>
+                <text x="276" y="99" textAnchor="middle" style={{ fill: "var(--coord-purple)" }} fontSize="6" fontWeight="500">Teams</text>
+
+                <circle cx="276" cy="227" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-green)" }} strokeWidth="1.2"/>
+                <text x="276" y="224" textAnchor="middle" style={{ fill: "var(--coord-green)" }} fontSize="6" fontWeight="500">EIP</text>
+                <text x="276" y="233" textAnchor="middle" style={{ fill: "var(--coord-green)" }} fontSize="6" fontWeight="500">Authors</text>
+
+                <circle cx="160" cy="282" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-yellow)" }} strokeWidth="1.2"/>
+                <text x="160" y="279" textAnchor="middle" style={{ fill: "var(--coord-yellow)" }} fontSize="6" fontWeight="500">Developer</text>
+                <text x="160" y="288" textAnchor="middle" style={{ fill: "var(--coord-yellow)" }} fontSize="6" fontWeight="500">Community</text>
+
+                <circle cx="44" cy="227" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-pink)" }} strokeWidth="1.2"/>
+                <text x="44" y="224" textAnchor="middle" style={{ fill: "var(--coord-pink)" }} fontSize="6" fontWeight="500">EF</text>
+                <text x="44" y="233" textAnchor="middle" style={{ fill: "var(--coord-pink)" }} fontSize="6" fontWeight="500">Research</text>
+
+                <circle cx="44" cy="93" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.2"/>
+                <text x="44" y="90" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="5.5" fontWeight="500">Protocol</text>
+                <text x="44" y="99" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="5.5" fontWeight="500">Governance</text>
+              </svg>
+            </div>
+          </div>
+
+          {/* Stats Panel */}
+          <div className="stats-panel" style={{ marginTop: "4rem" }}>
+            <div className="stats-bar">
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--color-text-bright)", letterSpacing: "0.02em" }}>PS Statistics</h3>
+              <div className="flex items-center gap-1.5" style={{ fontSize: "0.7rem", color: "var(--color-blue)" }}>
+                <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--color-blue)", boxShadow: "0 0 6px var(--color-blue)", animation: "pulse 2s ease-in-out infinite" }} />
+                Live
+              </div>
+            </div>
+            <div style={{ padding: "1rem 1.25rem" }}>
+              {[
+                { label: "ACD Meetings", value: "200+", color: "var(--color-blue)" },
+                { label: "Breakout Calls", value: "50+", color: "var(--color-purple)" },
+                { label: "EIPs Coordinated", value: "100+", color: "var(--color-blue)" },
+                { label: "Avg ACD Participants", value: "~100", color: "var(--color-purple)" },
+                { label: "Tentacles Active", value: "8", color: "var(--color-blue)" },
+              ].map((stat, i, arr) => (
+                <div key={stat.label} className="stat-row" style={i === arr.length - 1 ? { borderBottom: "none" } : {}}>
+                  <span style={{ color: "var(--color-text-bright)" }}>{stat.label}</span>
+                  <span style={{ fontWeight: 600, color: stat.color }}>{stat.value}</span>
+                </div>
+              ))}
+
+              <div style={{ marginTop: "1rem", paddingTop: "1rem" }}>
+                <div className="flex justify-between" style={{ fontSize: "0.7rem", color: "var(--color-text-muted)", marginBottom: "0.4rem" }}>
+                  <span>Weekly Activity</span>
+                  <span>{"\u2191"} 23%</span>
+                </div>
+                <div className="activity-track">
+                  <div className="activity-seg" style={{ flex: 3, background: "var(--color-blue)" }} />
+                  <div className="activity-seg" style={{ flex: 2, background: "var(--color-purple)" }} />
+                  <div className="activity-seg" style={{ flex: 4, background: "var(--color-blue)" }} />
+                  <div className="activity-seg" style={{ flex: 1, background: "var(--color-purple)" }} />
+                  <div className="activity-seg" style={{ flex: 3, background: "var(--color-blue)" }} />
+                  <div className="activity-seg" style={{ flex: 2, background: "var(--color-purple)" }} />
+                  <div className="activity-seg" style={{ flex: 5, background: "var(--color-blue)" }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+
+      <FloatingOcto />
+    </>
   );
 }
