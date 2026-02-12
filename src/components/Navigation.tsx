@@ -215,7 +215,7 @@ export default function Navigation() {
         inset: 0,
         top: "3.5rem",
         zIndex: 99,
-        background: "var(--color-bg)",
+        background: "var(--color-bg-void)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
