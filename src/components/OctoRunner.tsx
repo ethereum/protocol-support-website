@@ -10,9 +10,20 @@ const JUMP = -11;
 const SIZE = 44;
 
 const PITFALLS = [
-  "NACK", "Scope Creep", "Gas Spike", "Bikeshed", "Fork Delay",
-  "Reorg", "Failed Devnet", "No Champion", "Spec Drift",
-  "Last Call", "CFI Debate", "Testnet Bug",
+  "You're on mute",
+  "EOF again",
+  "One more EIP",
+  "3hr ACD call",
+  "Verkle soon\u2122",
+  "Needs more devnets",
+  "Wrong spec",
+  "Interop fail",
+  "Geth supermajority",
+  "Blob spam",
+  "Who wrote this EIP?",
+  "Let's take it offline",
+  "Missing tests",
+  "SSZ when",
 ];
 
 const COLORS = ["#00D4FF", "#A855F7", "#34D399", "#FBBF24", "#F472B6"];
@@ -38,6 +49,7 @@ interface State {
   speed: number;
   spawnIn: number;
   frame: number;
+  killedBy: string;
 }
 
 export default function OctoRunner({ onClose }: { onClose: () => void }) {
@@ -54,6 +66,7 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
     speed: 4,
     spawnIn: 200,
     frame: 0,
+    killedBy: "",
   });
 
   useEffect(() => {
@@ -155,6 +168,7 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
       for (const o of st.obstacles) {
         if (ox < o.x + o.w && ox + ow > o.x && oy + oh > GROUND - o.h) {
           st.game = "over";
+          st.killedBy = o.label;
           if (st.score > st.hi) {
             st.hi = st.score;
             try { localStorage.setItem("octo-hs", String(st.score)); } catch {}
@@ -206,13 +220,11 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
         ctx.strokeStyle = o.color;
         ctx.lineWidth = 1.5;
         ctx.strokeRect(o.x, oy, o.w, o.h);
-        ctx.fillStyle = o.color + "15";
+        ctx.fillStyle = o.color + "18";
         ctx.fillRect(o.x, oy, o.w, o.h);
-
-        ctx.font = "bold 7px 'JetBrains Mono', monospace";
+        // top accent line
         ctx.fillStyle = o.color;
-        ctx.textAlign = "center";
-        ctx.fillText(o.label, o.x + o.w / 2, oy - 6);
+        ctx.fillRect(o.x, oy, o.w, 2);
       }
 
       // score
@@ -240,10 +252,13 @@ export default function OctoRunner({ onClose }: { onClose: () => void }) {
         ctx.textAlign = "center";
         ctx.font = "bold 16px 'JetBrains Mono', monospace";
         ctx.fillStyle = "#F0F6FF";
-        ctx.fillText("GAME OVER", W / 2, H / 2 - 10);
-        ctx.font = "11px 'JetBrains Mono', monospace";
+        ctx.fillText("GAME OVER", W / 2, H / 2 - 20);
+        ctx.font = "12px 'JetBrains Mono', monospace";
+        ctx.fillStyle = "#A855F7";
+        ctx.fillText(`taken out by: ${st.killedBy}`, W / 2, H / 2 + 4);
+        ctx.font = "10px 'JetBrains Mono', monospace";
         ctx.fillStyle = "#9C9C9C";
-        ctx.fillText("press space to retry", W / 2, H / 2 + 14);
+        ctx.fillText("press space to retry", W / 2, H / 2 + 24);
       }
     };
 
