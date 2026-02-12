@@ -47,9 +47,9 @@ export default function Hero() {
           <div className="terminal-body">
             <div className="t-line"><span className="t-prompt">&rarr;</span><span className="t-cmd">cd ethereum/pm</span></div>
             <div className="t-line"><span className="t-prompt">&rarr;</span><span className="t-cmd">./coordinate --acd-meeting 181</span></div>
-            <div className="t-out">&check; Meeting scheduled for Thursday 14:00 UTC</div>
-            <div className="t-out">&check; Agenda published to GitHub</div>
-            <div className="t-out">&check; 47 participants notified</div>
+            <div className="t-out">{"\u2713"} Meeting scheduled for Thursday 14:00 UTC</div>
+            <div className="t-out">{"\u2713"} Agenda published to GitHub</div>
+            <div className="t-out">{"\u2713"} 47 participants notified</div>
             <div className="t-line"><span className="t-prompt">&rarr;</span><span className="cursor" /></div>
           </div>
         </div>
