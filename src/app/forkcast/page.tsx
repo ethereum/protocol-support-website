@@ -49,7 +49,7 @@ export default function ForkcastPage() {
             </div>
             {/* Fork/merge illustration */}
             <div className="why-forkcast-illustration">
-              <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <svg viewBox="0 0 260 232" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                 {/* Top trunk */}
                 <line x1="130" y1="0" x2="130" y2="22" stroke="var(--color-border)" strokeWidth="2" />
                 {/* Fork to EL and CL */}
@@ -71,13 +71,13 @@ export default function ForkcastPage() {
                 <circle cx="130" cy="142" r="8" fill="var(--color-bg-surface)" stroke="var(--coord-purple)" strokeWidth="1.5" className="fork-node" />
                 <text x="130" y="164" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Testing</text>
                 {/* Testing to checkmark */}
-                <line x1="130" y1="150" x2="130" y2="170" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
+                <line x1="130" y1="150" x2="130" y2="182" stroke="var(--coord-purple)" strokeWidth="1" opacity="0.4" strokeDasharray="2 2" />
                 {/* Checkmark node */}
-                <circle cx="130" cy="178" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
-                <text x="130" y="182" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">{"\u2713"}</text>
+                <circle cx="130" cy="190" r="10" fill="var(--color-bg-surface)" stroke="var(--color-blue)" strokeWidth="2" />
+                <text x="130" y="194" textAnchor="middle" fill="var(--color-blue)" fontSize="10" fontFamily="var(--font-mono)">{"\u2713"}</text>
                 {/* Bottom trunk */}
-                <line x1="130" y1="188" x2="130" y2="204" stroke="var(--color-border)" strokeWidth="2" />
-                <text x="130" y="216" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
+                <line x1="130" y1="200" x2="130" y2="212" stroke="var(--color-border)" strokeWidth="2" />
+                <text x="130" y="224" textAnchor="middle" fill="var(--color-text-muted)" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">MAINNET</text>
               </svg>
             </div>
           </div>
