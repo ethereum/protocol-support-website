@@ -682,23 +682,7 @@ a.card:active { transform: scale(0.98); }
   }
 }
 
-/* About section — 50/50 on desktop, stacked on mobile */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
-  align-items: center;
-}
-@media (max-width: 768px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .about-grid .coord-diagram {
-    width: 100%;
-    margin: 0 auto;
-  }
-}
+/* About section — centered layout, diagram below text */
 
 /* Upgrade table — notes wrap below on mobile */
 .upgrade-cell {
@@ -927,8 +911,15 @@ a.card:active { transform: scale(0.98); }
   background: rgba(3,3,8,0.8);
   backdrop-filter: blur(16px);
 }
+.nav-logo-octo {
+  width: 22px; height: 22px; object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(60%) saturate(1000%) hue-rotate(155deg) brightness(1.1);
+}
 [data-theme="light"] .nav-backdrop {
   background: rgba(244,246,249,0.9);
+}
+[data-theme="light"] .nav-logo-octo {
+  filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(600%) hue-rotate(165deg);
 }
 
 .ps-logo-box {

@@ -74,11 +74,11 @@ export default function Navigation() {
           fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "var(--color-text-bright)",
         }}>
           <img
-            src="/ps_logo_octo_icon_grey.png"
+            src="/octopus_blue.png"
             alt="Protocol Support"
-            style={{ width: 22, height: 22, objectFit: "contain" }}
+            className="nav-logo-octo"
           />
-          <span>PROTOCOL SUPPORT</span>
+          <span style={{ transform: "translateY(1px)" }}>PROTOCOL SUPPORT</span>
         </Link>
 
         {/* Desktop links */}

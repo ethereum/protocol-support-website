@@ -137,115 +137,97 @@ export default async function Home() {
 
         {/* ABOUT */}
         <section style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
-          <div className="about-grid">
-            <div>
-              <h2 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--color-text-bright)", marginBottom: "1.5rem" }}>About Protocol Support</h2>
-              <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75, marginBottom: "1rem" }}>
-                Protocol Support is an Ethereum Foundation team dedicated to
-                facilitating the protocol development process. We serve as the
-                connective tissue between client teams, researchers, and the
-                broader community.
-              </p>
-              <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75, marginBottom: "1rem" }}>
-                Our octopus mascot represents the many arms reaching into
-                different areas of Ethereum development — from coordinating
-                AllCoreDevs meetings to helping newcomers navigate the complex
-                landscape of protocol governance.
-              </p>
-            </div>
+          <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 3rem" }}>
+            <h2 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--color-text-bright)", marginBottom: "1.25rem" }}>About Protocol Support</h2>
+            <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75, marginBottom: "1rem" }}>
+              Protocol Support is an Ethereum Foundation team dedicated to
+              facilitating the protocol development process. We serve as the
+              connective tissue between client teams, researchers, and the
+              broader community.
+            </p>
+            <p style={{ fontSize: "1.05rem", color: "var(--color-text-body)", lineHeight: 1.75 }}>
+              Our octopus mascot represents the many arms reaching into
+              different areas of Ethereum development — from coordinating
+              AllCoreDevs meetings to helping newcomers navigate the complex
+              landscape of protocol governance.
+            </p>
+          </div>
 
-            {/* Coordination Diagram — Octopus + 8 Tentacles */}
-            <div className="coord-diagram">
-              {(() => {
-                const cx = 250, cy = 210, r = 140;
-                const arms = [
-                  { label: "Call facilitation", lines: ["Call", "facilitation"], color: "var(--coord-cyan)" },
-                  { label: "Client team coordination", lines: ["Client team", "coordination"], color: "var(--coord-purple)" },
-                  { label: "Core dev onboarding", lines: ["Core dev", "onboarding"], color: "var(--coord-green)" },
-                  { label: "Researcher onboarding", lines: ["Researcher", "onboarding"], color: "var(--coord-yellow)" },
-                  { label: "Governance legibility", lines: ["Governance", "legibility"], color: "var(--coord-pink)" },
-                  { label: "Stakeholder outreach", lines: ["Stakeholder", "outreach"], color: "var(--coord-orange)" },
-                  { label: "Project management", lines: ["Project", "management"], color: "var(--coord-indigo)" },
-                  { label: "Signal curation", lines: ["Signal", "curation"], color: "var(--coord-cyan-alt)" },
-                ];
-                // 8 endpoints at 45° intervals, starting from top (-90°)
-                const pts = arms.map((_, i) => {
-                  const angle = (-90 + i * 45) * Math.PI / 180;
-                  return { x: Math.round(cx + r * Math.cos(angle)), y: Math.round(cy + r * Math.sin(angle)) };
-                });
-                // Quadratic bezier control point — offset perpendicular for organic curve
-                const ctrl = (i: number) => {
-                  const angle = (-90 + i * 45) * Math.PI / 180;
-                  const mid = r * 0.55;
-                  const perp = (i % 2 === 0 ? 1 : -1) * 35;
-                  return {
-                    x: Math.round(cx + mid * Math.cos(angle) + perp * Math.cos(angle + Math.PI / 2)),
-                    y: Math.round(cy + mid * Math.sin(angle) + perp * Math.sin(angle + Math.PI / 2)),
-                  };
+          {/* Coordination Diagram — Full-width Centered Octopus */}
+          <div className="coord-diagram" style={{ maxWidth: 700, margin: "0 auto" }}>
+            {(() => {
+              const cx = 350, cy = 250, r = 185;
+              const arms = [
+                { label: "Call facilitation", lines: ["Call", "facilitation"], color: "var(--coord-cyan)" },
+                { label: "Client team coordination", lines: ["Client team", "coordination"], color: "var(--coord-purple)" },
+                { label: "Core dev onboarding", lines: ["Core dev", "onboarding"], color: "var(--coord-green)" },
+                { label: "Researcher onboarding", lines: ["Researcher", "onboarding"], color: "var(--coord-yellow)" },
+                { label: "Governance legibility", lines: ["Governance", "legibility"], color: "var(--coord-pink)" },
+                { label: "Stakeholder outreach", lines: ["Stakeholder", "outreach"], color: "var(--coord-orange)" },
+                { label: "Project management", lines: ["Project", "management"], color: "var(--coord-indigo)" },
+                { label: "Signal curation", lines: ["Signal", "curation"], color: "var(--coord-cyan-alt)" },
+              ];
+              const pts = arms.map((_, i) => {
+                const angle = (-90 + i * 45) * Math.PI / 180;
+                return { x: Math.round(cx + r * Math.cos(angle)), y: Math.round(cy + r * Math.sin(angle)) };
+              });
+              const ctrl = (i: number) => {
+                const angle = (-90 + i * 45) * Math.PI / 180;
+                const mid = r * 0.5;
+                const perp = (i % 2 === 0 ? 1 : -1) * 45;
+                return {
+                  x: Math.round(cx + mid * Math.cos(angle) + perp * Math.cos(angle + Math.PI / 2)),
+                  y: Math.round(cy + mid * Math.sin(angle) + perp * Math.sin(angle + Math.PI / 2)),
                 };
-                return (
-                  <>
-                    <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="coord-title coord-desc">
-                      <title id="coord-title">Protocol Support Activities</title>
-                      <desc id="coord-desc">An octopus diagram showing 8 areas Protocol Support works in: {arms.map(a => a.label).join(", ")}.</desc>
+              };
+              return (
+                <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="coord-title coord-desc">
+                  <title id="coord-title">Protocol Support Activities</title>
+                  <desc id="coord-desc">An octopus diagram showing 8 areas Protocol Support works in: {arms.map(a => a.label).join(", ")}.</desc>
 
-                      {/* Tentacle paths */}
-                      {arms.map((arm, i) => {
-                        const p = pts[i], c = ctrl(i);
-                        return <path key={arm.label} className="tentacle" d={`M${cx} ${cy} Q${c.x} ${c.y} ${p.x} ${p.y}`} style={{ stroke: arm.color }} strokeWidth="2" opacity="0.6" />;
-                      })}
+                  {/* Tentacle paths */}
+                  {arms.map((arm, i) => {
+                    const p = pts[i], c = ctrl(i);
+                    return <path key={arm.label} className="tentacle" d={`M${cx} ${cy} Q${c.x} ${c.y} ${p.x} ${p.y}`} style={{ stroke: arm.color }} strokeWidth="2.5" opacity="0.6" aria-hidden="true" />;
+                  })}
 
-                      {/* Pulse ring */}
-                      <circle cx={cx} cy={cy} r="38" className="coord-pulse" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1" opacity="0.3">
-                        <animate attributeName="r" values="38;52;38" dur="3s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.3;0.08;0.3" dur="3s" repeatCount="indefinite" />
-                      </circle>
+                  {/* Pulse ring */}
+                  <circle cx={cx} cy={cy} r="46" className="coord-pulse" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1" opacity="0.3" aria-hidden="true">
+                    <animate attributeName="r" values="46;62;46" dur="3s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.3;0.08;0.3" dur="3s" repeatCount="indefinite" />
+                  </circle>
 
-                      {/* Central octopus body */}
-                      <circle cx={cx} cy={cy} r="32" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5" />
-                      {/* Simplified octopus face */}
-                      <circle cx={cx - 7} cy={cy - 10} r="2.5" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" />
-                      <circle cx={cx + 7} cy={cy - 10} r="2.5" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" />
-                      <circle cx={cx - 7} cy={cy - 10} r="1" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} />
-                      <circle cx={cx + 7} cy={cy - 10} r="1" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} />
-                      <text x={cx} y={cy + 10} textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="13" fontWeight="700" letterSpacing="0.08em">PS</text>
+                  {/* Central octopus body */}
+                  <circle cx={cx} cy={cy} r="40" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5" aria-hidden="true" />
+                  {/* Octopus face */}
+                  <circle cx={cx - 9} cy={cy - 12} r="3" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" aria-hidden="true" />
+                  <circle cx={cx + 9} cy={cy - 12} r="3" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" aria-hidden="true" />
+                  <circle cx={cx - 9} cy={cy - 12} r="1.2" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} aria-hidden="true" />
+                  <circle cx={cx + 9} cy={cy - 12} r="1.2" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} aria-hidden="true" />
+                  <text x={cx} y={cy + 14} textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="16" fontWeight="700" letterSpacing="0.08em" aria-hidden="true">PS</text>
 
-                      {/* Endpoint dots + labels */}
-                      {arms.map((arm, i) => {
-                        const p = pts[i];
-                        const angle = -90 + i * 45;
-                        // Text anchor: middle for top/bottom, end for left side, start for right
-                        const norm = ((angle % 360) + 360) % 360;
-                        const isTopBottom = (norm > 250 && norm < 290) || (norm > 70 && norm < 110);
-                        const isLeft = norm > 110 && norm < 250;
-                        const anchor = isTopBottom ? "middle" : isLeft ? "end" : "start";
-                        // Text offset from dot
-                        const rad = (angle) * Math.PI / 180;
-                        const tx = p.x + 14 * Math.cos(rad);
-                        const ty = p.y + 14 * Math.sin(rad);
-                        return (
-                          <g key={arm.label}>
-                            <circle cx={p.x} cy={p.y} r="4" style={{ fill: arm.color }} opacity="0.8" />
-                            <text x={tx} y={ty - 4} textAnchor={anchor} style={{ fill: arm.color }} fontSize="10" fontWeight="600">{arm.lines[0]}</text>
-                            <text x={tx} y={ty + 7} textAnchor={anchor} style={{ fill: arm.color }} fontSize="10" fontWeight="600">{arm.lines[1]}</text>
-                          </g>
-                        );
-                      })}
-                    </svg>
-
-                    {/* Mobile fallback list */}
-                    <div className="coord-mobile-list">
-                      {arms.map((arm) => (
-                        <div key={arm.label} className="coord-mobile-item">
-                          <div className="coord-mobile-dot" style={{ background: arm.color }} />
-                          {arm.label}
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                );
-              })()}
-            </div>
+                  {/* Endpoint dots + labels */}
+                  {arms.map((arm, i) => {
+                    const p = pts[i];
+                    const angle = -90 + i * 45;
+                    const norm = ((angle % 360) + 360) % 360;
+                    const isTopBottom = (norm > 250 && norm < 290) || (norm > 70 && norm < 110);
+                    const isLeft = norm > 110 && norm < 250;
+                    const anchor = isTopBottom ? "middle" : isLeft ? "end" : "start";
+                    const rad = (angle) * Math.PI / 180;
+                    const tx = p.x + 18 * Math.cos(rad);
+                    const ty = p.y + 18 * Math.sin(rad);
+                    return (
+                      <g key={arm.label} aria-hidden="true">
+                        <circle cx={p.x} cy={p.y} r="5" style={{ fill: arm.color }} opacity="0.8" />
+                        <text x={tx} y={ty - 5} textAnchor={anchor} style={{ fill: arm.color }} fontSize="13" fontWeight="600">{arm.lines[0]}</text>
+                        <text x={tx} y={ty + 9} textAnchor={anchor} style={{ fill: arm.color }} fontSize="13" fontWeight="600">{arm.lines[1]}</text>
+                      </g>
+                    );
+                  })}
+                </svg>
+              );
+            })()}
           </div>
 
           {/* Stats Panel */}
