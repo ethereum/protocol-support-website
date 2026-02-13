@@ -461,7 +461,11 @@ a.card:active { transform: scale(0.98); }
 .link-blue { color: var(--color-blue); text-decoration: none; transition: opacity 0.2s; }
 .link-blue:hover { text-decoration: underline; opacity: 0.85; }
 
-/* team social link styles handled via inline + Tailwind utilities in TeamMemberCard */
+/* Muted link — gray default, cyan on hover. Use on secondary/quiet links. */
+@layer components {
+  .link-muted { color: var(--color-text-muted); text-decoration: none; transition: color 0.2s; }
+  .link-muted:hover { color: var(--color-blue); }
+}
 
 /* Why Forkcast — illustration + text layout */
 .why-forkcast-grid {
@@ -773,11 +777,13 @@ a.card:active { transform: scale(0.98); }
   font-size: 0.85rem;
   color: var(--color-text-muted);
   text-decoration: none;
+  transition: color 0.2s;
   padding: 0.5rem 0;
   min-height: 44px;
   display: flex;
   align-items: center;
 }
+.footer-links a:hover { color: var(--color-blue); }
 .footer-links a:active { opacity: 0.7; }
 @media (max-width: 640px) {
   .site-footer {

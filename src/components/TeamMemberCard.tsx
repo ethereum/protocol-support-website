@@ -1,5 +1,3 @@
-"use client";
-
 interface TeamMemberCardProps {
   name: string;
   role: string;
@@ -54,10 +52,8 @@ export default function TeamMemberCard({
                 href={`https://x.com/${twitter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs no-underline transition-colors"
-                style={{ color: "var(--color-text-muted)" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--color-blue)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                className="link-muted"
+                style={{ fontSize: "0.75rem" }}
               >
                 @{twitter}
               </a>
@@ -67,10 +63,8 @@ export default function TeamMemberCard({
                 href={`https://github.com/${github}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs no-underline transition-colors"
-                style={{ color: "var(--color-text-muted)" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--color-blue)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                className="link-muted"
+                style={{ fontSize: "0.75rem" }}
               >
                 gh/{github}
               </a>

@@ -2,9 +2,9 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div style={{ fontSize: "0.75rem", color: "var(--color-text-dim)" }}>
-        <a href="https://ethereum.foundation" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>Ethereum Foundation</a>
+        <a href="https://ethereum.foundation" className="link-muted">Ethereum Foundation</a>
         {" — Protocol Support · "}
-        <a href="mailto:protocol-support@ethereum.org" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>protocol-support@ethereum.org</a>
+        <a href="mailto:protocol-support@ethereum.org" className="link-muted">protocol-support@ethereum.org</a>
       </div>
       <div className="footer-links">
         <a href="https://x.com/efprotocol" target="_blank" rel="noopener noreferrer">Twitter</a>
