@@ -381,18 +381,8 @@ a.card:active { transform: scale(0.98); }
 .tentacle { stroke-dasharray: 6 4; animation: dash-flow 2s linear infinite; stroke-linecap: round; fill: none; }
 .coord-mobile-list { display: none; }
 @media (max-width: 768px) {
-  .coord-diagram svg { display: none; }
-  .coord-mobile-list {
-    display: flex; flex-direction: column; gap: 0.5rem;
-  }
-  .coord-mobile-item {
-    display: flex; align-items: center; gap: 0.6rem;
-    font-size: 0.85rem; color: var(--color-text-secondary);
-    font-family: var(--font-mono);
-  }
-  .coord-mobile-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
+  .coord-diagram svg { display: block; width: 100%; }
+  .coord-mobile-list { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tentacle, .conn-line { animation: none; }
@@ -701,7 +691,7 @@ a.card:active { transform: scale(0.98); }
     gap: 2rem;
   }
   .about-grid .coord-diagram {
-    max-width: 320px;
+    width: 100%;
     margin: 0 auto;
   }
 }
