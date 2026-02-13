@@ -176,6 +176,78 @@ export const getPMStats = unstable_cache(
   }
 );
 
+// Fetch upgrade data from ethereum/forkcast
+export interface ForkcastUpgrade {
+  id: string;
+  name: string;
+  status: "done" | "active" | "planned";
+  activationDate: string;
+}
+
+const FORKCAST_UPGRADES_URL =
+  "https://raw.githubusercontent.com/ethereum/forkcast/main/src/data/upgrades.ts";
+
+const FORKCAST_FALLBACK: ForkcastUpgrade[] = [
+  { id: "pectra", name: "Pectra", status: "done", activationDate: "May 7, 2025" },
+  { id: "fusaka", name: "Fusaka", status: "done", activationDate: "Dec 3, 2025" },
+  { id: "glamsterdam", name: "Glamsterdam", status: "active", activationDate: "2026" },
+  { id: "hegota", name: "Hegota", status: "planned", activationDate: "TBD" },
+];
+
+export const getForkcastUpgrades = unstable_cache(
+  async (): Promise<ForkcastUpgrade[]> => {
+    try {
+      const res = await fetch(FORKCAST_UPGRADES_URL);
+      if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+      const text = await res.text();
+
+      const upgrades: ForkcastUpgrade[] = [];
+      let cur: Partial<ForkcastUpgrade & { disabled: boolean }> = {};
+
+      for (const line of text.split("\n")) {
+        const trimmed = line.trim();
+        if (trimmed === "{") { cur = {}; continue; }
+        if (trimmed.startsWith("}")) {
+          if (cur.id && cur.name && !cur.disabled) {
+            const statusMap: Record<string, ForkcastUpgrade["status"]> = {
+              Live: "done", Upcoming: "active", Planning: "planned", Research: "planned",
+            };
+            upgrades.push({
+              id: cur.id,
+              name: cur.name.replace(/ Upgrade$/, ""),
+              status: statusMap[cur.status as string] ?? "planned",
+              activationDate: cur.activationDate ?? "TBD",
+            });
+          }
+          cur = {};
+          continue;
+        }
+        const m = trimmed.match(/^(\w+):\s*'([^']*)'/);
+        if (m) {
+          const [, key, val] = m;
+          if (key === "id" || key === "name" || key === "status" || key === "activationDate") {
+            (cur as Record<string, string>)[key] = val;
+          }
+        }
+        if (trimmed.startsWith("disabled:")) {
+          cur.disabled = trimmed.includes("true");
+        }
+      }
+
+      if (!upgrades.some(u => u.status === "active" || u.status === "planned")) {
+        console.warn("getForkcastUpgrades: no active/planned upgrades found, using fallback");
+        return FORKCAST_FALLBACK;
+      }
+      return upgrades;
+    } catch (error) {
+      console.error("Failed to fetch forkcast upgrades:", error);
+      return FORKCAST_FALLBACK;
+    }
+  },
+  ["forkcast-upgrades"],
+  { revalidate: 3600, tags: ["github", "forkcast"] }
+);
+
 // Get AllCoreDevs meeting notes (most recent)
 export const getRecentMeetings = unstable_cache(
   async (layer: "execution" | "consensus", limit = 5): Promise<GitHubFile[]> => {

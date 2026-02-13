@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import Card from "@/components/Card";
 import Link from "next/link";
-import { getPMRepoReadme, getRecentMeetings } from "@/lib/github";
+import { getPMRepoReadme, getRecentMeetings, getForkcastUpgrades } from "@/lib/github";
 import {
   CalendarIcon, MessageCircleIcon, FileTextIcon,
   MapIcon, ArchiveIcon, GitHubIcon,
@@ -12,10 +12,11 @@ import {
 export const revalidate = 3600;
 
 export default async function PMRepoPage() {
-  const [readme, executionMeetings, consensusMeetings] = await Promise.all([
+  const [readme, executionMeetings, consensusMeetings, upgrades] = await Promise.all([
     getPMRepoReadme(),
     getRecentMeetings("execution", 3),
     getRecentMeetings("consensus", 3),
+    getForkcastUpgrades(),
   ]);
 
   return (
@@ -101,13 +102,15 @@ export default async function PMRepoPage() {
                 How Ethereum coordinates and ships network upgrades across all client teams.
               </p>
               <div className="upgrade-timeline" style={{ marginBottom: "1rem" }}>
-                <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-done" /><span style={{ color: "var(--color-text-secondary)" }}>Pectra</span></div>
-                <div className="upgrade-connector" />
-                <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-done" /><span style={{ color: "var(--color-text-secondary)" }}>Fusaka</span></div>
-                <div className="upgrade-connector" />
-                <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-active" /><span style={{ color: "var(--color-text-bright)", fontWeight: 600 }}>Glamsterdam</span></div>
-                <div className="upgrade-connector" />
-                <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-planned" /><span style={{ color: "var(--color-text-secondary)" }}>Hegota</span></div>
+                {upgrades.map((u, i) => (
+                  <span key={u.id} className="contents">
+                    {i > 0 && <div className="upgrade-connector" />}
+                    <div className="upgrade-item">
+                      <div className={`upgrade-pip upgrade-pip-${u.status}`} />
+                      <span style={{ color: u.status === "active" ? "var(--color-text-bright)" : "var(--color-text-secondary)", fontWeight: u.status === "active" ? 600 : 400 }}>{u.name}</span>
+                    </div>
+                  </span>
+                ))}
               </div>
               <a href="https://github.com/ethereum/pm/blob/master/processes/protocol-upgrade.md" target="_blank" rel="noopener noreferrer" className="card-btn">Upgrade Process <span style={{ fontSize: "0.75rem", opacity: 0.5 }}>{"\u2197"}</span></a>
             </div>

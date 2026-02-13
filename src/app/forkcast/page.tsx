@@ -8,8 +8,12 @@ import {
   CodeIcon, FileTextIcon, UsersIcon, MessageCircleIcon,
   GlobeIcon, YouTubeIcon, BookIcon, ShieldIcon,
 } from "@/components/Icons";
+import { getForkcastUpgrades } from "@/lib/github";
 
-export default function ForkcastPage() {
+export const revalidate = 3600;
+
+export default async function ForkcastPage() {
+  const fetched = await getForkcastUpgrades();
   return (
     <>
       <Navigation />
@@ -466,22 +470,40 @@ export default function ForkcastPage() {
               <span>Consensus Layer</span>
               <span style={{ textAlign: "right" }}>Date</span>
             </div>
-            {[
-              { name: "Hegota", el: "Bogota", elNote: "Devcon 6", cl: "Heze", clNote: "Star", date: "TBD", status: "planned" },
-              { name: "Glamsterdam", el: "Amsterdam", elNote: "Devconnect", cl: "Gloas", clNote: "Star", date: "TBD", status: "active" },
-              { name: "Fusaka", el: "Osaka", elNote: "Devcon 5", cl: "Fulu", clNote: "Star", date: "Dec 2025", status: "done" },
-              { name: "Pectra", el: "Prague", elNote: "Devcon 4", cl: "Electra", clNote: "Star", date: "May 2025", status: "done" },
-              { name: "Dencun", el: "Cancun", elNote: "Devcon 3", cl: "Deneb", clNote: "Star", date: "Mar 2024", status: "done" },
-              { name: "Shapella", el: "Shanghai", elNote: "Devcon 2", cl: "Capella", clNote: "Star", date: "Apr 2023", status: "done" },
-              { name: "The Merge", el: "Paris", elNote: "EthCC", cl: "Bellatrix", clNote: "Star", date: "Sep 2022", status: "done" },
-              { name: "London", el: "London", elNote: "Devcon 1", cl: "—", clNote: "Pre-Beacon", date: "Aug 2021", status: "done" },
-              { name: "Berlin", el: "Berlin", elNote: "Devcon 0", cl: "—", clNote: "", date: "Apr 2021", status: "done" },
-              { name: "Istanbul", el: "Istanbul", elNote: "Historical", cl: "—", clNote: "", date: "Dec 2019", status: "done" },
-              { name: "Constantinople", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Feb 2019", status: "done" },
-              { name: "Byzantium", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Oct 2017", status: "done" },
-              { name: "Homestead", el: "—", elNote: "", cl: "—", clNote: "", date: "Mar 2016", status: "done" },
-              { name: "Frontier", el: "—", elNote: "", cl: "—", clNote: "", date: "Jul 2015", status: "done" },
-            ].map((u) => (
+            {(() => {
+              const base = [
+                { id: "hegota", name: "Hegota", el: "Bogota", elNote: "Devcon 6", cl: "Heze", clNote: "Star", date: "TBD", status: "planned" },
+                { id: "glamsterdam", name: "Glamsterdam", el: "Amsterdam", elNote: "Devconnect", cl: "Gloas", clNote: "Star", date: "TBD", status: "active" },
+                { id: "fusaka", name: "Fusaka", el: "Osaka", elNote: "Devcon 5", cl: "Fulu", clNote: "Star", date: "Dec 2025", status: "done" },
+                { id: "pectra", name: "Pectra", el: "Prague", elNote: "Devcon 4", cl: "Electra", clNote: "Star", date: "May 2025", status: "done" },
+                { id: "dencun", name: "Dencun", el: "Cancun", elNote: "Devcon 3", cl: "Deneb", clNote: "Star", date: "Mar 2024", status: "done" },
+                { id: "shapella", name: "Shapella", el: "Shanghai", elNote: "Devcon 2", cl: "Capella", clNote: "Star", date: "Apr 2023", status: "done" },
+                { id: "the-merge", name: "The Merge", el: "Paris", elNote: "EthCC", cl: "Bellatrix", clNote: "Star", date: "Sep 2022", status: "done" },
+                { id: "london", name: "London", el: "London", elNote: "Devcon 1", cl: "—", clNote: "Pre-Beacon", date: "Aug 2021", status: "done" },
+                { id: "berlin", name: "Berlin", el: "Berlin", elNote: "Devcon 0", cl: "—", clNote: "", date: "Apr 2021", status: "done" },
+                { id: "istanbul", name: "Istanbul", el: "Istanbul", elNote: "Historical", cl: "—", clNote: "", date: "Dec 2019", status: "done" },
+                { id: "constantinople", name: "Constantinople", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Feb 2019", status: "done" },
+                { id: "byzantium", name: "Byzantium", el: "—", elNote: "Historical", cl: "—", clNote: "", date: "Oct 2017", status: "done" },
+                { id: "homestead", name: "Homestead", el: "—", elNote: "", cl: "—", clNote: "", date: "Mar 2016", status: "done" },
+                { id: "frontier", name: "Frontier", el: "—", elNote: "", cl: "—", clNote: "", date: "Jul 2015", status: "done" },
+              ];
+              // Overlay live status/date from forkcast
+              const rows = base.map(u => {
+                const live = fetched.find(f => f.id === u.id);
+                if (!live) return u;
+                const date = live.activationDate.replace(/\s\d{1,2},/, "");
+                return { ...u, status: live.status, date: date || u.date };
+              });
+              // Append new upgrades from forkcast not in base
+              const baseIds = new Set(base.map(b => b.id));
+              const newUpgrades = fetched
+                .filter(f => !baseIds.has(f.id))
+                .map(f => ({
+                  id: f.id, name: f.name, el: "—", elNote: "", cl: "—", clNote: "",
+                  date: f.activationDate.replace(/\s\d{1,2},/, ""), status: f.status,
+                }));
+              return [...newUpgrades, ...rows];
+            })().map((u) => (
               <div key={u.name} style={{
                 display: "grid",
                 gridTemplateColumns: "2.5fr 1.5fr 1.5fr 1fr",

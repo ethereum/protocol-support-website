@@ -3,12 +3,20 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import FloatingOcto from "@/components/FloatingOcto";
 import Link from "next/link";
-import { getPMStats } from "@/lib/github";
+import { getPMStats, getForkcastUpgrades } from "@/lib/github";
 
 export const revalidate = 3600;
 
 export default async function Home() {
-  const stats = await getPMStats();
+  const [stats, upgrades] = await Promise.all([getPMStats(), getForkcastUpgrades()]);
+  const done = upgrades.filter(u => u.status === "done").pop();
+  const active = upgrades.find(u => u.status === "active");
+  const planned = upgrades.find(u => u.status === "planned");
+  const timelineItems = [
+    done ? { name: done.name, pip: "done" } : { name: "Fusaka", pip: "done" },
+    active ? { name: active.name, pip: "active" } : { name: "Glamsterdam", pip: "active" },
+    planned ? { name: planned.name, pip: "planned" } : { name: "Hegota", pip: "planned" },
+  ];
   return (
     <>
       <Navigation />
@@ -38,11 +46,15 @@ export default async function Home() {
               </p>
               <div className="flex items-center gap-4" style={{ marginBottom: "1rem" }}>
                 <div className="upgrade-timeline" style={{ flexDirection: "row", gap: "0.5rem", margin: 0, flexWrap: "wrap" }}>
-                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-done" /><span style={{ color: "var(--color-text-secondary)" }}>Fusaka</span></div>
-                  <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />
-                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-active" /><span style={{ color: "var(--color-text-bright)", fontWeight: 600 }}>Glamsterdam</span></div>
-                  <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />
-                  <div className="upgrade-item"><div className="upgrade-pip upgrade-pip-planned" /><span style={{ color: "var(--color-text-secondary)" }}>Hegota</span></div>
+                  {timelineItems.map((item, i) => (
+                    <span key={item.name} className="flex items-center" style={{ gap: "0.5rem" }}>
+                      {i > 0 && <div style={{ width: 16, height: 1, background: "var(--color-text-dim)", alignSelf: "center" }} />}
+                      <div className="upgrade-item">
+                        <div className={`upgrade-pip upgrade-pip-${item.pip}`} />
+                        <span style={{ color: item.pip === "active" ? "var(--color-text-bright)" : "var(--color-text-secondary)", fontWeight: item.pip === "active" ? 600 : 400 }}>{item.name}</span>
+                      </div>
+                    </span>
+                  ))}
                 </div>
               </div>
               <Link href="/forkcast" className="card-btn">Explore Forkcast <span>&rarr;</span></Link>
