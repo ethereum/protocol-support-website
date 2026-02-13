@@ -109,7 +109,7 @@ export default function ForkcastPage() {
               icon={<UsersIcon color="var(--coord-green)" />}
             />
             <Card
-              title="Stakeholder Views"
+              title="Stakeholder Impacts"
               description="Filter upgrade impact by audience — app developers, stakers, node operators, L2 teams, or end users."
               href="https://forkcast.org/upgrade/glamsterdam/stakeholders"
               external

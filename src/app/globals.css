@@ -241,13 +241,14 @@ body {
   opacity: 0; transition: opacity 0.25s;
   border-radius: 8px 8px 0 0;
 }
-.card:hover {
+a.card:hover {
   border-color: var(--color-border-hover);
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(0,212,255,0.08);
+  cursor: pointer;
 }
-.card:hover::before { opacity: 1; }
-.card:active { transform: scale(0.98); }
+a.card:hover::before { opacity: 1; }
+a.card:active { transform: scale(0.98); }
 @media (max-width: 640px) {
   .card { padding: 1.25rem; }
 }
@@ -838,7 +839,7 @@ body {
 }
 
 /* --- Cards --- */
-[data-theme="light"] .card:hover {
+[data-theme="light"] a.card:hover {
   box-shadow: 0 10px 40px rgba(8,145,178,0.14);
 }
 [data-theme="light"] .card-featured {

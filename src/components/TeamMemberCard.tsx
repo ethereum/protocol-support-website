@@ -46,7 +46,7 @@ export default function TeamMemberCard({
           </h3>
           <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "0.75rem" }}>{role}</p>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-1">
             {twitter && (
               <a
                 href={`https://x.com/${twitter}`}
