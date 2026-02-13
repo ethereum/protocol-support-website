@@ -3,12 +3,20 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import FloatingOcto from "@/components/FloatingOcto";
 import Link from "next/link";
-import { getPMStats, getForkcastUpgrades } from "@/lib/github";
+import { getPMStats, getForkcastUpgrades, getLatestCallSummary, getLatestEipChange } from "@/lib/github";
+import { getAllPosts } from "@/lib/posts";
 
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [stats, upgrades] = await Promise.all([getPMStats(), getForkcastUpgrades()]);
+  const [stats, upgrades, callSummary, eipChange] = await Promise.all([
+    getPMStats(), getForkcastUpgrades(), getLatestCallSummary(), getLatestEipChange(),
+  ]);
+  const posts = getAllPosts();
+  const heroUpdates: string[] = [];
+  if (posts.length > 0) heroUpdates.push(`Blog: "${posts[0].frontmatter.title}"`);
+  if (callSummary) heroUpdates.push(callSummary);
+  if (eipChange) heroUpdates.push(eipChange);
   const done = upgrades.filter(u => u.status === "done").pop();
   const active = upgrades.find(u => u.status === "active");
   const planned = upgrades.find(u => u.status === "planned");
@@ -23,7 +31,7 @@ export default async function Home() {
 
       <div className="relative z-10 max-w-[1100px] mx-auto page-container">
         {/* HERO */}
-        <Hero />
+        <Hero updates={heroUpdates} />
 
         {/* CORE SYSTEMS */}
         <div className="divider">
@@ -146,48 +154,97 @@ export default async function Home() {
               </p>
             </div>
 
-            {/* Coordination Diagram */}
+            {/* Coordination Diagram — Octopus + 8 Tentacles */}
             <div className="coord-diagram">
-              <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
-                <line className="conn-line" x1="160" y1="160" x2="160" y2="38" style={{ stroke: "var(--coord-cyan-alt)" }} strokeWidth="1.5" opacity="0.5"/>
-                <line className="conn-line" x1="160" y1="160" x2="276" y2="93" style={{ stroke: "var(--coord-purple)" }} strokeWidth="1.5" opacity="0.5"/>
-                <line className="conn-line" x1="160" y1="160" x2="276" y2="227" style={{ stroke: "var(--coord-green)" }} strokeWidth="1.5" opacity="0.5"/>
-                <line className="conn-line" x1="160" y1="160" x2="160" y2="282" style={{ stroke: "var(--coord-yellow)" }} strokeWidth="1.5" opacity="0.5"/>
-                <line className="conn-line" x1="160" y1="160" x2="44" y2="227" style={{ stroke: "var(--coord-pink)" }} strokeWidth="1.5" opacity="0.5"/>
-                <line className="conn-line" x1="160" y1="160" x2="44" y2="93" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5" opacity="0.5"/>
+              {(() => {
+                const cx = 250, cy = 210, r = 140;
+                const arms = [
+                  { label: "Call facilitation", lines: ["Call", "facilitation"], color: "var(--coord-cyan)" },
+                  { label: "Client team coordination", lines: ["Client team", "coordination"], color: "var(--coord-purple)" },
+                  { label: "Core dev onboarding", lines: ["Core dev", "onboarding"], color: "var(--coord-green)" },
+                  { label: "Researcher onboarding", lines: ["Researcher", "onboarding"], color: "var(--coord-yellow)" },
+                  { label: "Governance legibility", lines: ["Governance", "legibility"], color: "var(--coord-pink)" },
+                  { label: "Stakeholder outreach", lines: ["Stakeholder", "outreach"], color: "var(--coord-orange)" },
+                  { label: "Project management", lines: ["Project", "management"], color: "var(--coord-indigo)" },
+                  { label: "Signal curation", lines: ["Signal", "curation"], color: "var(--coord-cyan-alt)" },
+                ];
+                // 8 endpoints at 45° intervals, starting from top (-90°)
+                const pts = arms.map((_, i) => {
+                  const angle = (-90 + i * 45) * Math.PI / 180;
+                  return { x: Math.round(cx + r * Math.cos(angle)), y: Math.round(cy + r * Math.sin(angle)) };
+                });
+                // Quadratic bezier control point — offset perpendicular for organic curve
+                const ctrl = (i: number) => {
+                  const angle = (-90 + i * 45) * Math.PI / 180;
+                  const mid = r * 0.55;
+                  const perp = (i % 2 === 0 ? 1 : -1) * 35;
+                  return {
+                    x: Math.round(cx + mid * Math.cos(angle) + perp * Math.cos(angle + Math.PI / 2)),
+                    y: Math.round(cy + mid * Math.sin(angle) + perp * Math.sin(angle + Math.PI / 2)),
+                  };
+                };
+                return (
+                  <>
+                    <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="coord-title coord-desc">
+                      <title id="coord-title">Protocol Support Activities</title>
+                      <desc id="coord-desc">An octopus diagram showing 8 areas Protocol Support works in: {arms.map(a => a.label).join(", ")}.</desc>
 
-                <circle cx="160" cy="160" r="36" className="coord-pulse" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1" opacity="0.4">
-                  <animate attributeName="r" values="36;48;36" dur="3s" repeatCount="indefinite"/>
-                  <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
-                </circle>
+                      {/* Tentacle paths */}
+                      {arms.map((arm, i) => {
+                        const p = pts[i], c = ctrl(i);
+                        return <path key={arm.label} className="tentacle" d={`M${cx} ${cy} Q${c.x} ${c.y} ${p.x} ${p.y}`} style={{ stroke: arm.color }} strokeWidth="2" opacity="0.6" />;
+                      })}
 
-                <circle cx="160" cy="160" r="30" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5"/>
-                <text x="160" y="164" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="14" fontWeight="700">PS</text>
+                      {/* Pulse ring */}
+                      <circle cx={cx} cy={cy} r="38" className="coord-pulse" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1" opacity="0.3">
+                        <animate attributeName="r" values="38;52;38" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.3;0.08;0.3" dur="3s" repeatCount="indefinite" />
+                      </circle>
 
-                <circle cx="160" cy="38" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-cyan-alt)" }} strokeWidth="1.2"/>
-                <text x="160" y="35" textAnchor="middle" style={{ fill: "var(--coord-cyan-alt)" }} fontSize="6" fontWeight="500">EL Client</text>
-                <text x="160" y="44" textAnchor="middle" style={{ fill: "var(--coord-cyan-alt)" }} fontSize="6" fontWeight="500">Teams</text>
+                      {/* Central octopus body */}
+                      <circle cx={cx} cy={cy} r="32" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.5" />
+                      {/* Simplified octopus face */}
+                      <circle cx={cx - 7} cy={cy - 10} r="2.5" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" />
+                      <circle cx={cx + 7} cy={cy - 10} r="2.5" style={{ fill: "var(--coord-cyan)" }} opacity="0.9" />
+                      <circle cx={cx - 7} cy={cy - 10} r="1" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} />
+                      <circle cx={cx + 7} cy={cy - 10} r="1" style={{ fill: "var(--color-bg-deep, #0a0a14)" }} />
+                      <text x={cx} y={cy + 10} textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="13" fontWeight="700" letterSpacing="0.08em">PS</text>
 
-                <circle cx="276" cy="93" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-purple)" }} strokeWidth="1.2"/>
-                <text x="276" y="90" textAnchor="middle" style={{ fill: "var(--coord-purple)" }} fontSize="6" fontWeight="500">CL Client</text>
-                <text x="276" y="99" textAnchor="middle" style={{ fill: "var(--coord-purple)" }} fontSize="6" fontWeight="500">Teams</text>
+                      {/* Endpoint dots + labels */}
+                      {arms.map((arm, i) => {
+                        const p = pts[i];
+                        const angle = -90 + i * 45;
+                        // Text anchor: middle for top/bottom, end for left side, start for right
+                        const norm = ((angle % 360) + 360) % 360;
+                        const isTopBottom = (norm > 250 && norm < 290) || (norm > 70 && norm < 110);
+                        const isLeft = norm > 110 && norm < 250;
+                        const anchor = isTopBottom ? "middle" : isLeft ? "end" : "start";
+                        // Text offset from dot
+                        const rad = (angle) * Math.PI / 180;
+                        const tx = p.x + 14 * Math.cos(rad);
+                        const ty = p.y + 14 * Math.sin(rad);
+                        return (
+                          <g key={arm.label}>
+                            <circle cx={p.x} cy={p.y} r="4" style={{ fill: arm.color }} opacity="0.8" />
+                            <text x={tx} y={ty - 4} textAnchor={anchor} style={{ fill: arm.color }} fontSize="10" fontWeight="600">{arm.lines[0]}</text>
+                            <text x={tx} y={ty + 7} textAnchor={anchor} style={{ fill: arm.color }} fontSize="10" fontWeight="600">{arm.lines[1]}</text>
+                          </g>
+                        );
+                      })}
+                    </svg>
 
-                <circle cx="276" cy="227" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-green)" }} strokeWidth="1.2"/>
-                <text x="276" y="224" textAnchor="middle" style={{ fill: "var(--coord-green)" }} fontSize="6" fontWeight="500">EIP</text>
-                <text x="276" y="233" textAnchor="middle" style={{ fill: "var(--coord-green)" }} fontSize="6" fontWeight="500">Authors</text>
-
-                <circle cx="160" cy="282" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-yellow)" }} strokeWidth="1.2"/>
-                <text x="160" y="279" textAnchor="middle" style={{ fill: "var(--coord-yellow)" }} fontSize="6" fontWeight="500">Developer</text>
-                <text x="160" y="288" textAnchor="middle" style={{ fill: "var(--coord-yellow)" }} fontSize="6" fontWeight="500">Community</text>
-
-                <circle cx="44" cy="227" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-pink)" }} strokeWidth="1.2"/>
-                <text x="44" y="224" textAnchor="middle" style={{ fill: "var(--coord-pink)" }} fontSize="6" fontWeight="500">EF</text>
-                <text x="44" y="233" textAnchor="middle" style={{ fill: "var(--coord-pink)" }} fontSize="6" fontWeight="500">Research</text>
-
-                <circle cx="44" cy="93" r="22" className="coord-node-bg" style={{ stroke: "var(--coord-cyan)" }} strokeWidth="1.2"/>
-                <text x="44" y="90" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="5.5" fontWeight="500">Protocol</text>
-                <text x="44" y="99" textAnchor="middle" style={{ fill: "var(--coord-cyan)" }} fontSize="5.5" fontWeight="500">Governance</text>
-              </svg>
+                    {/* Mobile fallback list */}
+                    <div className="coord-mobile-list">
+                      {arms.map((arm) => (
+                        <div key={arm.label} className="coord-mobile-item">
+                          <div className="coord-mobile-dot" style={{ background: arm.color }} />
+                          {arm.label}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
 

@@ -37,6 +37,8 @@
   --coord-purple: #A78BFA;
   --coord-green: #34D399;
   --coord-pink: #F472B6;
+  --coord-orange: #FB923C;
+  --coord-indigo: #818CF8;
 }
 
 /* =============================================================
@@ -376,6 +378,26 @@ a.card:active { transform: scale(0.98); }
 .coord-diagram svg text { font-family: var(--font-mono); }
 @keyframes dash-flow { 0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; } }
 .conn-line { stroke-dasharray: 6 4; animation: dash-flow 1.5s linear infinite; }
+.tentacle { stroke-dasharray: 6 4; animation: dash-flow 2s linear infinite; stroke-linecap: round; fill: none; }
+.coord-mobile-list { display: none; }
+@media (max-width: 768px) {
+  .coord-diagram svg { display: none; }
+  .coord-mobile-list {
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .coord-mobile-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.85rem; color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+  }
+  .coord-mobile-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tentacle, .conn-line { animation: none; }
+  .coord-pulse { animation: none; opacity: 0.2; }
+}
 
 /* =============================================================
    STATS PANEL
@@ -448,6 +470,8 @@ a.card:active { transform: scale(0.98); }
 
 .link-blue { color: var(--color-blue); text-decoration: none; transition: opacity 0.2s; }
 .link-blue:hover { text-decoration: underline; opacity: 0.85; }
+
+/* team social link styles handled via inline + Tailwind utilities in TeamMemberCard */
 
 /* Why Forkcast — illustration + text layout */
 .why-forkcast-grid {
@@ -819,6 +843,8 @@ a.card:active { transform: scale(0.98); }
   --coord-purple: #6D28D9;
   --coord-green: #047857;
   --coord-pink: #BE185D;
+  --coord-orange: #C2410C;
+  --coord-indigo: #4338CA;
 }
 
 /* --- Decorative overlays --- */

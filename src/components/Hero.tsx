@@ -1,6 +1,15 @@
 import Image from "next/image";
 
-export default function Hero() {
+interface HeroProps {
+  updates?: string[];
+}
+
+export default function Hero({ updates }: HeroProps) {
+  const lines = updates && updates.length > 0 ? updates : [
+    "Meeting scheduled for Thursday 14:00 UTC",
+    "Agenda published to GitHub",
+    "47 participants notified",
+  ];
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center hero-section">
       <Image
@@ -46,10 +55,10 @@ export default function Hero() {
           </div>
           <div className="terminal-body">
             <div className="t-line"><span className="t-prompt">&rarr;</span><span className="t-cmd">cd ethereum/pm</span></div>
-            <div className="t-line"><span className="t-prompt">&rarr;</span><span className="t-cmd">./coordinate --acd-meeting 181</span></div>
-            <div className="t-out">{"\u2713"} Meeting scheduled for Thursday 14:00 UTC</div>
-            <div className="t-out">{"\u2713"} Agenda published to GitHub</div>
-            <div className="t-out">{"\u2713"} 47 participants notified</div>
+            <div className="t-line"><span className="t-prompt">&rarr;</span><span className="t-cmd">./coordinate --updates</span></div>
+            {lines.map((line, i) => (
+              <div key={i} className="t-out">{"\u2713"} {line}</div>
+            ))}
             <div className="t-line"><span className="t-prompt">&rarr;</span><span className="cursor" /></div>
           </div>
         </div>

@@ -248,6 +248,58 @@ export const getForkcastUpgrades = unstable_cache(
   { revalidate: 3600, tags: ["github", "forkcast"] }
 );
 
+// Get latest call summary from forkcast artifacts
+export const getLatestCallSummary = unstable_cache(
+  async (): Promise<string | null> => {
+    try {
+      const [acde, acdc] = await Promise.all([
+        fetchFromGitHub<GitHubFile[]>("/repos/ethereum/forkcast/contents/public/artifacts/acde").catch(() => []),
+        fetchFromGitHub<GitHubFile[]>("/repos/ethereum/forkcast/contents/public/artifacts/acdc").catch(() => []),
+      ]);
+      const all = [
+        ...acde.filter(f => f.type === "dir").map(f => ({ name: f.name, type: "ACDE" })),
+        ...acdc.filter(f => f.type === "dir").map(f => ({ name: f.name, type: "ACDC" })),
+      ].sort((a, b) => b.name.localeCompare(a.name));
+      if (all.length === 0) return null;
+      const latest = all[0];
+      const num = latest.name.split("_")[1] ?? "";
+      return `${latest.type} #${num} call summary published`;
+    } catch {
+      return null;
+    }
+  },
+  ["latest-call-summary"],
+  { revalidate: 3600, tags: ["github", "forkcast"] }
+);
+
+// Get latest EIP stage change from forkcast API
+interface EipStageChange {
+  id: number;
+  title: string;
+  prefix: string;
+  currentStage: string;
+  lastStageChange: string;
+  lastStageChangeFork: string;
+}
+
+export const getLatestEipChange = unstable_cache(
+  async (): Promise<string | null> => {
+    try {
+      const res = await fetch("https://forkcast.org/api/eip-stage-changes.json");
+      if (!res.ok) return null;
+      const data = await res.json();
+      const eips: EipStageChange[] = data.eips ?? [];
+      if (eips.length === 0) return null;
+      const latest = eips.sort((a, b) => b.lastStageChange.localeCompare(a.lastStageChange))[0];
+      return `${latest.prefix}-${latest.id} → ${latest.currentStage} for ${latest.lastStageChangeFork}`;
+    } catch {
+      return null;
+    }
+  },
+  ["latest-eip-change"],
+  { revalidate: 3600, tags: ["forkcast"] }
+);
+
 // Get AllCoreDevs meeting notes (most recent)
 export const getRecentMeetings = unstable_cache(
   async (layer: "execution" | "consensus", limit = 5): Promise<GitHubFile[]> => {
