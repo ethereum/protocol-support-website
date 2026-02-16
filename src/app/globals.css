@@ -504,154 +504,303 @@ a.card:active { transform: scale(0.98); }
   50% { opacity: 1; }
 }
 
-/* Upgrade Lifecycle — vertical timeline */
-.lifecycle-timeline {
+/* =============================================================
+   UPGRADE LIFECYCLE — Pipeline Rail
+   A continuous vertical rail with phase-gate nodes.
+   Collapsed: compact phase headers on the rail.
+   Expanded: steps branch off like commits in a git graph.
+   ============================================================= */
+
+.pipe {
+  --pipe-color: var(--color-blue);
+  --pipe-rail-x: 14px;    /* center of the rail column */
+  --pipe-rail-w: 28px;    /* width of the rail column */
+  max-width: 600px;
   position: relative;
-  max-width: 640px;
 }
 
-/* Phase labels */
-.lc-phase-label {
-  font-size: 0.75rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-text-body);
-  padding: 1.25rem 0 0.5rem 2.75rem;
+/* Phase wrapper */
+.pipe-phase {
+  position: relative;
 }
-.lc-phase-label:first-child {
-  padding-top: 0;
-}
+.pipe-phase + .pipe-phase { margin-top: 0; }
 
-/* Each step row */
-.lc-step, .lc-concurrent {
+/* ── Gate (summary) — the always-visible row ── */
+.pipe-gate {
   display: grid;
-  grid-template-columns: 2.25rem 1fr;
-  gap: 0.75rem;
-  min-height: 3.5rem;
+  grid-template-columns: var(--pipe-rail-w) 1fr auto auto;
+  align-items: center;
+  gap: 0 0.75rem;
+  padding: 0.65rem 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  position: relative;
 }
+.pipe-gate::-webkit-details-marker { display: none; }
+.pipe-gate::marker { display: none; content: ""; }
 
-/* The vertical rail (line + node) */
-.lc-rail {
+/* Hover state */
+.pipe-gate:hover .pipe-name { color: var(--pipe-color); }
+.pipe-gate:hover .pipe-toggle { border-color: var(--pipe-color); color: var(--pipe-color); }
+
+/* ── Rail elements ── */
+.pipe-rail {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-self: center;
   position: relative;
+  height: 100%;
+  min-height: 2.5rem;
 }
-.lc-node {
-  width: 12px;
-  height: 12px;
+
+/* The phase-gate node */
+.pipe-node {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid;
+  border: 2px solid var(--pipe-color);
   background: var(--color-bg-void);
   position: relative;
-  z-index: 2;
+  z-index: 3;
   flex-shrink: 0;
-  margin-top: 0.2rem;
+  transition: all 0.2s;
 }
-.lc-node-milestone {
-  width: 14px;
-  height: 14px;
-  box-shadow: 0 0 10px currentColor;
+.pipe-phase[open] .pipe-node {
+  background: var(--pipe-color);
+  box-shadow: 0 0 8px var(--pipe-color);
 }
-.lc-node-final {
-  width: 16px;
-  height: 16px;
-  box-shadow: 0 0 14px var(--coord-cyan), 0 0 30px rgba(0,212,255,0.2);
-  animation: lc-final-pulse 2.5s ease-in-out infinite;
+.pipe-node--final {
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 12px var(--pipe-color), 0 0 24px rgba(0,212,255,0.15);
+  animation: pipe-pulse 3s ease-in-out infinite;
 }
-@keyframes lc-final-pulse {
-  0%, 100% { box-shadow: 0 0 14px var(--coord-cyan), 0 0 30px rgba(0,212,255,0.2); }
-  50% { box-shadow: 0 0 20px var(--coord-cyan), 0 0 40px rgba(0,212,255,0.3); }
+@keyframes pipe-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--pipe-color), 0 0 18px rgba(0,212,255,0.1); }
+  50% { box-shadow: 0 0 14px var(--pipe-color), 0 0 28px rgba(0,212,255,0.2); }
 }
-.lc-node-fork {
-  border-style: solid;
-}
-.lc-line {
+
+/* Connecting wire between phases */
+.pipe-wire {
   width: 1px;
   flex: 1;
   background: var(--color-border);
-  min-height: 1rem;
+  min-height: 0.5rem;
 }
+.pipe-phase:last-child > .pipe-gate .pipe-wire { display: none; }
+.pipe-phase[open]:last-child > .pipe-gate .pipe-wire { display: block; }
 
-/* Content area */
-.lc-content {
-  padding-bottom: 1.25rem;
-}
-.lc-title {
-  display: block;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-text-bright);
-  margin-bottom: 0.15rem;
-}
-.lc-title-final {
-  font-size: 1rem;
-}
-.lc-desc {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--color-text-body);
-  line-height: 1.5;
-}
-.lc-duration {
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: var(--color-text-bright);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  padding: 0.1rem 0.5rem;
-  border-radius: 3px;
-  white-space: nowrap;
-}
-
-/* Concurrent section — two stacked boxes */
-.lc-concurrent-box {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 0.85rem 1rem;
-}
-.lc-concurrent-box-parallel {
-  border-style: dashed;
-  border-color: var(--coord-green);
-  background: rgba(52, 211, 153, 0.03);
-}
-.lc-concurrent-label {
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-}
-.lc-concurrent-steps {
+/* ── Label area ── */
+.pipe-label {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.1rem;
+  min-width: 0;
 }
-.lc-concurrent-divider {
-  height: 1px;
-  background: var(--color-border);
+.pipe-tag {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-dim);
+  line-height: 1;
+}
+.pipe-phase[open] .pipe-tag { color: var(--pipe-color); opacity: 0.6; }
+
+.pipe-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-bright);
+  transition: color 0.15s;
+  line-height: 1.2;
 }
 
-/* Concurrent boxes stack on mobile */
-@media (max-width: 640px) {
-  .lc-concurrent .lc-content {
-    flex-direction: column !important;
-  }
+/* Brief summary shown when collapsed */
+.pipe-brief {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pipe-phase[open] .pipe-brief { display: none; }
+
+@media (max-width: 480px) {
+  .pipe-brief { display: none; }
 }
 
-/* Final step has no trailing line */
-.lc-step-final .lc-content {
-  padding-bottom: 0;
+/* Toggle indicator */
+.pipe-toggle {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  transition: all 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pipe-phase[open] .pipe-toggle {
+  border-color: var(--pipe-color);
+  color: var(--pipe-color);
+  background: rgba(0,212,255,0.06);
+}
+.pipe-phase[open] .pipe-toggle::after { content: "\2212"; } /* minus */
+.pipe-phase:not([open]) .pipe-toggle::after { content: "\002B"; } /* plus */
+/* hide the text node "+" from JSX — we use ::after instead */
+.pipe-toggle { font-size: 0; }
+.pipe-toggle::after { font-size: 0.8rem; }
+
+/* ── Expanded content ── */
+.pipe-expand {
+  display: grid;
+  grid-template-columns: var(--pipe-rail-w) 1fr;
+  gap: 0 0.75rem;
+  padding-bottom: 0.5rem;
 }
 
-/* Milestone step glow */
-.lc-step-milestone .lc-content {
+/* Continuation rail in expanded area */
+.pipe-rail-cont {
+  display: flex;
+  justify-content: center;
+}
+.pipe-rail-cont .pipe-wire {
+  min-height: 100%;
+}
+
+/* Steps container */
+.pipe-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0.25rem 0 0.5rem;
+  border-left: 1px solid rgba(0,212,255,0.08);
+  margin-left: -0.75rem;
+  padding-left: 0.75rem;
+}
+
+/* Individual step */
+.pipe-step {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.55rem 0;
   position: relative;
+}
+.pipe-step + .pipe-step {
+  border-top: 1px solid var(--color-border);
+}
+.pipe-step strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-bright);
+  margin-bottom: 0.15rem;
+  line-height: 1.3;
+}
+.pipe-step p {
+  font-size: 0.75rem;
+  color: var(--color-text-body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Step tick mark — small dash instead of dot */
+.pipe-tick {
+  width: 6px;
+  height: 1.5px;
+  background: var(--pipe-color);
+  flex-shrink: 0;
+  margin-top: 0.55rem;
+  opacity: 0.5;
+  border-radius: 1px;
+}
+.pipe-tick--alt {
+  background: var(--coord-purple);
+  opacity: 0.7;
+}
+.pipe-tick--gate {
+  width: 8px;
+  height: 2px;
+  background: var(--pipe-color);
+  opacity: 1;
+  box-shadow: 0 0 4px var(--pipe-color);
+}
+.pipe-tick--final {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pipe-color);
+  box-shadow: 0 0 8px var(--pipe-color), 0 0 16px rgba(0,212,255,0.15);
+  opacity: 1;
+  margin-top: 0.35rem;
+}
+
+/* Parallel/concurrent badge */
+.pipe-concurrent {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--coord-purple);
+  background: rgba(167,139,250,0.08);
+  border: 1px solid rgba(167,139,250,0.2);
+  padding: 0.05rem 0.35rem;
+  border-radius: 2px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin-left: 0.35rem;
+}
+
+/* Duration badge */
+.pipe-dur {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  padding: 0.05rem 0.35rem;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+
+/* Final step label glow */
+.pipe-final-label {
+  color: var(--pipe-color) !important;
+  font-weight: 700 !important;
+}
+
+/* Gate step highlight */
+.pipe-step--gate {
+  background: rgba(0,212,255,0.03);
+  margin: 0 -0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-radius: 3px;
+}
+
+/* Parallel step dashed left border */
+.pipe-step--parallel {
+  border-left: 1px dashed rgba(167,139,250,0.3);
+  margin-left: -0.75rem;
+  padding-left: calc(0.75rem - 1px);
+}
+
+/* ── Mobile adjustments ── */
+@media (max-width: 480px) {
+  .pipe { --pipe-rail-w: 22px; }
+  .pipe-name { font-size: 0.88rem; }
+  .pipe-step strong { font-size: 0.8rem; }
+  .pipe-step p { font-size: 0.72rem; }
 }
 
 /* ACD Quadrants — 2x2 on desktop, single column on mobile */

@@ -136,186 +136,190 @@ export default async function ForkcastPage() {
           </div>
         </section>
 
-        {/* The Upgrade Lifecycle — vertical timeline with phases */}
+        {/* The Upgrade Lifecycle — pipeline rail */}
         <section className="section">
           <h2 className="section-title">The Upgrade Lifecycle</h2>
-          <div className="lifecycle-timeline">
-            {/* PHASE: Scoping — concurrent section */}
-            <div className="lc-phase-label">Scoping</div>
+          <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "1.5rem", maxWidth: "540px" }}>
+            Every Ethereum upgrade flows through four phases. Expand any phase to see the steps inside.
+          </p>
 
-            <div className="lc-concurrent">
-              <div className="lc-rail">
-                <div className="lc-node lc-node-fork" style={{ borderColor: "var(--coord-cyan)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content" style={{ display: "flex", gap: "6px" }}>
-                {/* Main track: choosing the features */}
-                <div className="lc-concurrent-box" style={{ flex: 1 }}>
-                  <div className="lc-concurrent-label" style={{ color: "var(--coord-cyan)" }}>Choosing the features of the fork</div>
-                  <div className="lc-concurrent-steps">
+          <div className="pipe">
+            {/* ── Phase 1: Scoping ── */}
+            <details className="pipe-phase">
+              <summary className="pipe-gate">
+                <span className="pipe-rail">
+                  <span className="pipe-node" />
+                  <span className="pipe-wire" />
+                </span>
+                <span className="pipe-label">
+                  <span className="pipe-tag">Phase 01</span>
+                  <span className="pipe-name">Scoping</span>
+                </span>
+                <span className="pipe-brief">EIPs proposed &amp; selected</span>
+                <span className="pipe-toggle">+</span>
+              </summary>
+              <div className="pipe-expand">
+                <div className="pipe-rail-cont"><span className="pipe-wire" /></div>
+                <div className="pipe-steps">
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
                     <div>
-                      <span className="lc-title">Headliner Proposals</span>
-                      <span className="lc-desc">Major EIPs are proposed for inclusion in the upcoming fork.</span>
+                      <strong>Headliner Proposals</strong>
+                      <p>Major EIPs are proposed for inclusion in the upcoming fork.</p>
                     </div>
-                    <div className="lc-concurrent-divider" />
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
                     <div>
-                      <span className="lc-title">Headliner Selection</span>
-                      <span className="lc-desc">Core devs select the headline features that define the upgrade scope.</span>
+                      <strong>Headliner Selection</strong>
+                      <p>Core devs select the headline features that define the upgrade scope.</p>
                     </div>
-                    <div className="lc-concurrent-divider" />
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
                     <div>
-                      <span className="lc-title">Non-headliner Proposals</span>
-                      <span className="lc-desc">Smaller EIPs proposed alongside the confirmed headliners.</span>
+                      <strong>Non-headliner Proposals &amp; Selection</strong>
+                      <p>Smaller EIPs proposed alongside confirmed headliners. Remaining EIPs accepted or deferred — scope finalized.</p>
                     </div>
-                    <div className="lc-concurrent-divider" />
+                  </div>
+                  <div className="pipe-step pipe-step--parallel">
+                    <span className="pipe-tick pipe-tick--alt" />
                     <div>
-                      <span className="lc-title">Non-headliner Selections</span>
-                      <span className="lc-desc">Remaining EIPs accepted or deferred. Scope finalized.</span>
+                      <strong>EIP-specific Devnets <span className="pipe-concurrent">concurrent</span></strong>
+                      <p>Individual EIPs tested in isolation on dedicated devnets. Begins as soon as headliners are chosen; ends when generalized devnets start.</p>
                     </div>
                   </div>
                 </div>
-                {/* Parallel track: EIP-specific Devnets */}
-                <div className="lc-concurrent-box lc-concurrent-box-parallel" style={{ flex: 1 }}>
-                  <div className="lc-concurrent-label" style={{ color: "var(--coord-green)" }}>Runs concurrently</div>
-                  <span className="lc-title" style={{ color: "var(--coord-green)" }}>EIP-specific Devnets</span>
-                  <span className="lc-desc" style={{ marginBottom: "0.75rem" }}>
-                    Individual EIPs tested in isolation on dedicated devnets.
-                    Begins as soon as headliners are chosen and continues
-                    through the selection process.
-                  </span>
-                  <span className="lc-desc" style={{ fontStyle: "italic", color: "var(--color-text-muted)" }}>
-                    Ends when generalized devnets begin &#8595;
-                  </span>
+              </div>
+            </details>
+
+            {/* ── Phase 2: Implementation ── */}
+            <details className="pipe-phase">
+              <summary className="pipe-gate">
+                <span className="pipe-rail">
+                  <span className="pipe-node" />
+                  <span className="pipe-wire" />
+                </span>
+                <span className="pipe-label">
+                  <span className="pipe-tag">Phase 02</span>
+                  <span className="pipe-name">Implementation</span>
+                </span>
+                <span className="pipe-brief">Freeze, devnets, releases</span>
+                <span className="pipe-toggle">+</span>
+              </summary>
+              <div className="pipe-expand">
+                <div className="pipe-rail-cont"><span className="pipe-wire" /></div>
+                <div className="pipe-steps">
+                  <div className="pipe-step pipe-step--gate">
+                    <span className="pipe-tick pipe-tick--gate" />
+                    <div>
+                      <strong>Feature Freeze</strong>
+                      <p>No new features added. Existing features can still be removed if insufficiently ready.*</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Generalized Devnets</strong> <span className="pipe-dur">~30d</span>
+                      <p>All EIPs tested together on combined devnets. EIP-specific devnets merge into this phase.</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Client Releases</strong>
+                      <p>Client teams ship implementations of all included EIPs.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </details>
 
-            {/* PHASE: Implementation */}
-            <div className="lc-phase-label">Implementation</div>
-
-            <div className="lc-step lc-step-milestone">
-              <div className="lc-rail">
-                <div className="lc-node lc-node-milestone" style={{ borderColor: "var(--coord-pink)", background: "var(--coord-pink)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <span className="lc-title" style={{ color: "var(--coord-pink)" }}>Feature Freeze*</span>
-                <span className="lc-desc">No new features added. Existing features can still be removed if insufficiently ready.</span>
-              </div>
-            </div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-yellow)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
-                  <span className="lc-title">Generalized Devnets</span>
-                  <span className="lc-duration">30 days</span>
+            {/* ── Phase 3: Review ── */}
+            <details className="pipe-phase">
+              <summary className="pipe-gate">
+                <span className="pipe-rail">
+                  <span className="pipe-node" />
+                  <span className="pipe-wire" />
+                </span>
+                <span className="pipe-label">
+                  <span className="pipe-tag">Phase 03</span>
+                  <span className="pipe-name">Review</span>
+                </span>
+                <span className="pipe-brief">Audit &amp; testnet deployment</span>
+                <span className="pipe-toggle">+</span>
+              </summary>
+              <div className="pipe-expand">
+                <div className="pipe-rail-cont"><span className="pipe-wire" /></div>
+                <div className="pipe-steps">
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Security Review</strong> <span className="pipe-dur">~30d</span>
+                      <p>Dedicated security audit period before testnet deployment.</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Permissioned Testnet</strong> <span className="pipe-dur">min 14d</span>
+                      <p>Deployed to a controlled testnet with vetted validators.</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Permissionless Testnet</strong> <span className="pipe-dur">min 14d</span>
+                      <p>Activated on public testnets (Holesky, Sepolia) for open validation.</p>
+                    </div>
+                  </div>
                 </div>
-                <span className="lc-desc">All EIPs tested together on combined devnets. EIP-specific devnets merge into this phase.</span>
               </div>
-            </div>
+            </details>
 
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-green)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <span className="lc-title">Client Releases</span>
-                <span className="lc-desc">Client teams ship implementations of all included EIPs.</span>
-              </div>
-            </div>
-
-            {/* PHASE: Review */}
-            <div className="lc-phase-label">Review</div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-pink)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
-                  <span className="lc-title">Security Review</span>
-                  <span className="lc-duration">30 days</span>
+            {/* ── Phase 4: Deployment ── */}
+            <details className="pipe-phase">
+              <summary className="pipe-gate">
+                <span className="pipe-rail">
+                  <span className="pipe-node pipe-node--final" />
+                </span>
+                <span className="pipe-label">
+                  <span className="pipe-tag">Phase 04</span>
+                  <span className="pipe-name">Deployment</span>
+                </span>
+                <span className="pipe-brief">Mainnet activation</span>
+                <span className="pipe-toggle">+</span>
+              </summary>
+              <div className="pipe-expand">
+                <div className="pipe-rail-cont"><span className="pipe-wire" /></div>
+                <div className="pipe-steps">
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Mainnet Date Chosen</strong>
+                      <p>A specific epoch is locked in for the network upgrade.</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step">
+                    <span className="pipe-tick" />
+                    <div>
+                      <strong>Buffer</strong> <span className="pipe-dur">~30d</span>
+                      <p>Time for L2s and protocols to prepare once the mainnet date is announced.</p>
+                    </div>
+                  </div>
+                  <div className="pipe-step pipe-step--final">
+                    <span className="pipe-tick pipe-tick--final" />
+                    <div>
+                      <strong className="pipe-final-label">Mainnet Fork</strong>
+                      <p>The upgrade activates on the live Ethereum network.</p>
+                    </div>
+                  </div>
                 </div>
-                <span className="lc-desc">Dedicated security audit period before testnet deployment.</span>
               </div>
-            </div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-cyan-alt)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
-                  <span className="lc-title">Permissioned Testnet</span>
-                  <span className="lc-duration">minimum 14 days</span>
-                </div>
-                <span className="lc-desc">Deployed to a controlled testnet with vetted validators.</span>
-              </div>
-            </div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-cyan-alt)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
-                  <span className="lc-title">Permissionless Testnet</span>
-                  <span className="lc-duration">minimum 14 days</span>
-                </div>
-                <span className="lc-desc">Activated on public testnets (Holesky, Sepolia) for open validation.</span>
-              </div>
-            </div>
-
-            {/* PHASE: Deployment */}
-            <div className="lc-phase-label">Deployment</div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--coord-cyan)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <span className="lc-title">Mainnet Date Chosen</span>
-                <span className="lc-desc">A specific epoch is locked in for the network upgrade.</span>
-              </div>
-            </div>
-
-            <div className="lc-step">
-              <div className="lc-rail">
-                <div className="lc-node" style={{ borderColor: "var(--color-text-muted)" }} />
-                <div className="lc-line" />
-              </div>
-              <div className="lc-content">
-                <div className="flex items-center gap-2" style={{ marginBottom: "0.2rem" }}>
-                  <span className="lc-title">Buffer</span>
-                  <span className="lc-duration">30 days</span>
-                </div>
-                <span className="lc-desc">Time allocated for L2s and protocols to get ready for the fork once mainnet date announced.</span>
-              </div>
-            </div>
-
-            {/* Final milestone */}
-            <div className="lc-step lc-step-final">
-              <div className="lc-rail">
-                <div className="lc-node lc-node-milestone lc-node-final" style={{ borderColor: "var(--coord-cyan)", background: "var(--coord-cyan)" }} />
-              </div>
-              <div className="lc-content">
-                <span className="lc-title lc-title-final">Mainnet Fork</span>
-                <span className="lc-desc">The upgrade activates on the live Ethereum network.</span>
-              </div>
-            </div>
+            </details>
           </div>
-          <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginTop: "1.5rem" }}>
-            *Features can be removed after feature freeze if insufficiently ready, but no new features should be proposed.
-            Forkcast tracks each EIP across this entire pipeline.
+          <p style={{ fontSize: "0.7rem", color: "var(--color-text-muted)", marginTop: "1.25rem", fontFamily: "var(--font-mono)" }}>
+            * Features can be removed after freeze if insufficiently ready.
           </p>
         </section>
 

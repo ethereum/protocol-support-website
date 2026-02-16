@@ -215,8 +215,9 @@ export default async function Home() {
                     const isLeft = norm > 110 && norm < 250;
                     const anchor = isTopBottom ? "middle" : isLeft ? "end" : "start";
                     const rad = (angle) * Math.PI / 180;
-                    const tx = p.x + 18 * Math.cos(rad);
-                    const ty = p.y + 18 * Math.sin(rad);
+                    const offset = isTopBottom ? 26 : 18;
+                    const tx = p.x + offset * Math.cos(rad);
+                    const ty = p.y + offset * Math.sin(rad);
                     return (
                       <g key={arm.label} aria-hidden="true">
                         <circle cx={p.x} cy={p.y} r="5" style={{ fill: arm.color }} opacity="0.8" />
