@@ -238,10 +238,17 @@ body {
 }
 .card::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--color-blue), var(--color-purple));
-  opacity: 0; transition: opacity 0.25s;
-  border-radius: 8px 8px 0 0;
+  position: absolute;
+  inset: -1px;
+  border-radius: 9px;
+  padding: 1.5px;
+  background: linear-gradient(180deg, var(--color-blue) 0%, var(--color-purple) 15%, transparent 20%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
 }
 a.card:hover {
   border-color: var(--color-border-hover);
