@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import Card from "@/components/Card";
 import Link from "next/link";
-import { getPMRepoReadme, getRecentMeetings, getForkcastUpgrades } from "@/lib/github";
+import { getPMRepoReadme, getRecentMeetings, getForkcastUpgrades, getActiveBreakouts } from "@/lib/github";
 import {
   CalendarIcon, MessageCircleIcon, FileTextIcon,
   MapIcon, ArchiveIcon, GitHubIcon,
@@ -12,11 +12,12 @@ import {
 export const revalidate = 3600;
 
 export default async function PMRepoPage() {
-  const [readme, executionMeetings, consensusMeetings, upgrades] = await Promise.all([
+  const [readme, executionMeetings, consensusMeetings, upgrades, breakouts] = await Promise.all([
     getPMRepoReadme(),
     getRecentMeetings("execution", 3),
     getRecentMeetings("consensus", 3),
     getForkcastUpgrades(),
+    getActiveBreakouts(),
   ]);
 
   return (
@@ -59,17 +60,10 @@ export default async function PMRepoPage() {
                 Focused technical discussions on specific protocol topics. Anyone can propose a breakout for deep-dives on EIPs, research, or cross-team coordination.
               </p>
               <div className="flex flex-wrap gap-1.5" style={{ marginBottom: "1rem" }}>
-                {[
-                  { label: "EOF", status: "live" },
-                  { label: "PeerDAS", status: "live" },
-                  { label: "Verkle", status: "upcoming" },
-                  { label: "EIP-7702", status: "past" },
-                  { label: "4844", status: "past" },
-                  { label: "SSZ", status: "upcoming" },
-                ].map((b) => (
-                  <div key={b.label} className="flex items-center gap-1.5" style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", padding: "0.15rem 0.5rem", background: "var(--color-bg-deep)", borderRadius: "3px" }}>
-                    <div className={`breakout-dot breakout-dot-${b.status}`} />
-                    {b.label}
+                {breakouts.slice(0, 6).map((b) => (
+                  <div key={b.name} className="flex items-center gap-1.5" style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", padding: "0.15rem 0.5rem", background: "var(--color-bg-deep)", borderRadius: "3px" }}>
+                    <div className="breakout-dot breakout-dot-live" />
+                    {b.name}
                   </div>
                 ))}
               </div>

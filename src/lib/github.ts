@@ -70,22 +70,61 @@ export const getPMRepoReadme = unstable_cache(
   }
 );
 
-// Fetch and cache breakout room information
-export const getBreakoutRooms = unstable_cache(
-  async (): Promise<GitHubFile[]> => {
-    try {
-      const data = await fetchFromGitHub<GitHubFile[]>(
-        `/repos/${PM_REPO_OWNER}/${PM_REPO_NAME}/contents/Breakout-Room-Meetings`
-      );
+// Active breakout series parsed from the markdown table
+export interface ActiveBreakout {
+  name: string;
+  facilitator: string;
+  latestDate: string;
+  issueUrl: string;
+}
 
-      // Filter for directories only (each breakout room has its own folder)
-      return data.filter((item) => item.type === "dir");
+// Fetch and cache active breakout series from the markdown file
+export const getActiveBreakouts = unstable_cache(
+  async (): Promise<ActiveBreakout[]> => {
+    try {
+      const content = await getMarkdownFile(
+        "Breakout-Room-Meetings/active-breakout-series.md"
+      );
+      if (!content) return [];
+
+      const breakouts: ActiveBreakout[] = [];
+      const lines = content.split("\n");
+      let inTable = false;
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        // Skip header row and separator
+        if (trimmed.startsWith("| Call Series")) { inTable = true; continue; }
+        if (trimmed.startsWith("|---")) continue;
+        // Stop at Inactive section
+        if (trimmed.startsWith("## Inactive")) break;
+        if (!inTable || !trimmed.startsWith("|")) continue;
+
+        const cells = trimmed.split("|").map(c => c.trim()).filter(Boolean);
+        if (cells.length < 4) continue;
+
+        const nameMatch = cells[0];
+        const facilitatorMatch = cells[1].match(/@(\w[\w-]*)/);
+        const latestDate = cells[2];
+        const issueMatch = cells[3].match(/\(([^)]+)\)/);
+
+        if (nameMatch && issueMatch) {
+          breakouts.push({
+            name: nameMatch,
+            facilitator: facilitatorMatch?.[1] ?? "",
+            latestDate,
+            issueUrl: issueMatch[1],
+          });
+        }
+      }
+
+      return breakouts;
     } catch (error) {
-      console.error("Failed to fetch breakout rooms:", error);
+      console.error("Failed to fetch active breakouts:", error);
       return [];
     }
   },
-  ["breakout-rooms"],
+  ["active-breakouts"],
   {
     revalidate: 3600,
     tags: ["github", "breakouts"],

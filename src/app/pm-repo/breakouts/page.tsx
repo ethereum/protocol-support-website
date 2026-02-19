@@ -1,28 +1,12 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
+import { getActiveBreakouts } from "@/lib/github";
 
-const activeBreakouts = [
-  { name: "All Wallet Devs", href: "https://github.com/ethereum/pm/issues/1909" },
-  { name: "EIP Editing Office Hour", href: "https://github.com/ethereum/pm/issues/1906" },
-  { name: "EIP-7732 Breakout Room", href: "https://github.com/ethereum/pm/issues/1835" },
-  { name: "EIP-7928 Breakout Room", href: "https://github.com/ethereum/pm/issues/1897" },
-  { name: "EIPIP Meeting", href: "https://github.com/ethereum/pm/issues/1886" },
-  { name: "Ethproofs Community Call", href: "https://github.com/ethereum/pm/issues/1849" },
-  { name: "FCR Breakout Room", href: "https://github.com/ethereum/pm/issues/1887" },
-  { name: "FOCIL Breakout", href: "https://github.com/ethereum/pm/issues/1898" },
-  { name: "Glamsterdam Repricings", href: "https://github.com/ethereum/pm/issues/1910" },
-  { name: "L1-zkEVM Breakout", href: "https://github.com/ethereum/pm/issues/1900" },
-  { name: "L2 Interop Working Group", href: "https://github.com/ethereum/pm/issues/1899" },
-  { name: "PQ Interop", href: "https://github.com/ethereum/pm/issues/1905" },
-  { name: "PQ Transaction Signatures", href: "https://github.com/ethereum/pm/issues/1889" },
-  { name: "RPC Standards", href: "https://github.com/ethereum/pm/issues/1881" },
-  { name: "Stateless Implementers", href: "https://github.com/ethereum/pm/issues/1873" },
-  { name: "Trustless Agents (ERC-8004)", href: "https://github.com/ethereum/pm/issues/1789" },
-  { name: "Trustless Log Index", href: "https://github.com/ethereum/pm/issues/1911" },
-];
+export const revalidate = 3600;
 
-export default function BreakoutsPage() {
+export default async function BreakoutsPage() {
+  const activeBreakouts = await getActiveBreakouts();
 
   return (
     <>
@@ -149,8 +133,8 @@ export default function BreakoutsPage() {
           <div className="card-grid">
             {activeBreakouts.map((room) => (
               <a
-                key={room.href}
-                href={room.href}
+                key={room.issueUrl}
+                href={room.issueUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="card"
@@ -158,6 +142,9 @@ export default function BreakoutsPage() {
               >
                 <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "var(--color-text-bright)" }}>
                   {room.name}
+                </span>
+                <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", marginTop: "0.25rem" }}>
+                  Latest: {room.latestDate}
                 </span>
               </a>
             ))}
