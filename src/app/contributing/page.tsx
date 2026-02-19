@@ -60,7 +60,7 @@ const jobs = [
   {
     title: "EthStaker",
     description: "Join the community of Ethereum validators and home stakers. Help secure the network.",
-    href: "https://ethstaker.cc/",
+    href: "https://ethstaker.org/",
     external: true,
     icon: <ShieldIcon color="var(--coord-green)" />,
   },

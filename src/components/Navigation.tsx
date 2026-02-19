@@ -6,8 +6,8 @@ import { useState, useRef, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { href: "/forkcast", label: "Forkcast" },
   { href: "/team", label: "Team" },
+  { href: "/forkcast", label: "Forkcast" },
   {
     href: "/pm-repo",
     label: "PM Repo",
