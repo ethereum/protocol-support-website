@@ -59,12 +59,15 @@ export default async function PMRepoPage() {
               <p style={{ fontSize: "0.9rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem" }}>
                 Focused technical discussions on specific protocol topics. Anyone can propose a breakout for deep-dives on EIPs, research, or cross-team coordination.
               </p>
-              <div className="flex flex-wrap gap-x-2 gap-y-0.5" style={{ marginBottom: "1rem" }}>
-                {breakouts.slice(0, 6).map((b, i) => (
-                  <span key={b.name} style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
-                    {b.name}{i < Math.min(breakouts.length, 6) - 1 ? " ·" : ""}
-                  </span>
-                ))}
+              <div className="flex flex-wrap gap-x-1.5 gap-y-0" style={{ marginBottom: "1rem", lineHeight: 1.7 }}>
+                {breakouts.slice(0, 6).map((b, i) => {
+                  const short = b.name.replace(/ Breakout Room$| Breakout$| Meeting$| Community Call$| Working Group$/i, "");
+                  return (
+                    <span key={b.name} style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", whiteSpace: "nowrap" }}>
+                      {short}{i < Math.min(breakouts.length, 6) - 1 ? " ·" : ""}
+                    </span>
+                  );
+                })}
               </div>
               <Link href="/pm-repo/breakouts" className="card-btn">View Breakouts <span>&rarr;</span></Link>
             </div>
