@@ -146,7 +146,7 @@ export default async function PMRepoPage() {
           <h2 className="section-title">Recent Calls</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
             {([
-              { label: "Execution Layer (ACDE)", color: "var(--color-blue)", calls: acdeCalls },
+              { label: "Execution Layer (ACDE)", color: "var(--coord-yellow)", calls: acdeCalls },
               { label: "Consensus Layer (ACDC)", color: "var(--color-purple)", calls: acdcCalls },
               { label: "Testing (ACDT)", color: "var(--coord-green)", calls: acdtCalls },
             ] as const).map(({ label, color, calls }) => (
@@ -157,7 +157,7 @@ export default async function PMRepoPage() {
                     {calls.map((call: ArtifactCall) => (
                       <div key={`${call.type}-${call.number}`}
                         style={{ padding: "0.5rem 0.75rem", background: "var(--color-bg-deep)", borderRadius: 4, fontSize: "0.85rem" }}>
-                        <div style={{ color: "var(--color-text-secondary)", marginBottom: call.videoUrl || call.issueUrl ? "0.35rem" : 0 }}>
+                        <div style={{ color: "var(--color-text-muted)", marginBottom: call.videoUrl || call.issueUrl ? "0.35rem" : 0 }}>
                           #{call.number} — {call.date}
                         </div>
                         {(call.videoUrl || call.issueUrl) && (
