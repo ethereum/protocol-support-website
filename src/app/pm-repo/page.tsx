@@ -3,7 +3,8 @@ import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import Card from "@/components/Card";
 import Link from "next/link";
-import { getPMRepoReadme, getRecentMeetings, getForkcastUpgrades, getActiveBreakouts } from "@/lib/github";
+import { getPMRepoReadme, getForkcastUpgrades, getActiveBreakouts, getRecentArtifactCalls } from "@/lib/github";
+import type { ArtifactCall } from "@/lib/github";
 import {
   CalendarIcon, MessageCircleIcon, FileTextIcon,
   MapIcon, ArchiveIcon, GitHubIcon,
@@ -12,10 +13,11 @@ import {
 export const revalidate = 3600;
 
 export default async function PMRepoPage() {
-  const [readme, executionMeetings, consensusMeetings, upgrades, breakouts] = await Promise.all([
+  const [readme, acdeCalls, acdcCalls, acdtCalls, upgrades, breakouts] = await Promise.all([
     getPMRepoReadme(),
-    getRecentMeetings("execution", 3),
-    getRecentMeetings("consensus", 3),
+    getRecentArtifactCalls("acde", 3),
+    getRecentArtifactCalls("acdc", 3),
+    getRecentArtifactCalls("acdt", 3),
     getForkcastUpgrades(),
     getActiveBreakouts(),
   ]);
@@ -40,7 +42,7 @@ export default async function PMRepoPage() {
         <section className="section">
           <h2 className="section-title">What&apos;s in the PM Repo?</h2>
           <div className="card-grid">
-            <Card title="AllCoreDevs Meetings" description="Notes and recordings from bi-weekly execution and consensus layer calls." href="https://github.com/ethereum/pm/tree/master/AllCoreDevs-Meetings" external icon={<CalendarIcon color="var(--coord-cyan)" />} />
+            <Card title="AllCoreDevs Meetings" description="Notes and recordings from bi-weekly execution, consensus, and testing calls." href="https://github.com/ethereum/pm/tree/master/AllCoreDevs-Meetings" external icon={<CalendarIcon color="var(--coord-cyan)" />} />
             <Card title="Breakout Rooms" description="Focused technical discussions on specific topics. View active series or schedule one." href="/pm-repo/breakouts" icon={<MessageCircleIcon color="var(--coord-green)" />} />
             <Card title="Championing an EIP" description="A guide to shepherding an EIP through the process to protocol inclusion." href="https://github.com/ethereum/pm/blob/master/processes/2026_championing_an_EIP.md" external icon={<FileTextIcon color="var(--coord-yellow)" />} />
             <Card title="Protocol Upgrade Process" description="An overview of how the Ethereum network upgrade process works." href="https://github.com/ethereum/pm/blob/master/processes/protocol-upgrade.md" external icon={<MapIcon color="var(--coord-purple)" />} />
@@ -121,12 +123,13 @@ export default async function PMRepoPage() {
             </h3>
             <div style={{ color: "var(--color-text-body)", fontSize: "0.95rem", lineHeight: 1.7 }}>
               <p style={{ marginBottom: "0.75rem" }}>
-                AllCoreDevs (ACD) calls happen bi-weekly and alternate between
-                execution layer (ACDE) and consensus layer (ACDC) topics:
+                AllCoreDevs (ACD) calls happen bi-weekly and cover execution,
+                consensus, and testing topics:
               </p>
               <ul style={{ listStyle: "disc", paddingLeft: "1.5rem", marginBottom: "0.75rem" }}>
                 <li><strong style={{ color: "var(--color-text-bright)" }}>ACDE</strong> — Execution Layer (EVM, transaction processing, state management)</li>
                 <li><strong style={{ color: "var(--color-text-bright)" }}>ACDC</strong> — Consensus Layer (proof-of-stake, validators, finality)</li>
+                <li><strong style={{ color: "var(--color-text-bright)" }}>ACDT</strong> — Testing (devnets, interop testing, implementation specifics)</li>
               </ul>
               <p>
                 Anyone can watch live or view recordings on the{" "}
@@ -138,45 +141,47 @@ export default async function PMRepoPage() {
           </div>
         </section>
 
-        {/* Recent Meetings */}
+        {/* Recent Calls */}
         <section className="section">
-          <h2 className="section-title">Recent Meeting Notes</h2>
-          <div className="meetings-grid">
-            <div>
-              <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--color-blue)", marginBottom: "0.75rem" }}>Execution Layer (ACDE)</h3>
-              {executionMeetings.length > 0 ? (
-                <div className="flex flex-col gap-2">
-                  {executionMeetings.map((meeting) => (
-                    <a key={meeting.path} href={meeting.html_url} target="_blank" rel="noopener noreferrer"
-                      style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.75rem", background: "var(--color-bg-deep)", borderRadius: 4, fontSize: "0.85rem", color: "var(--color-text-secondary)", textDecoration: "none" }}>
-                      {meeting.name.replace(".md", "")}
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>Unable to load meeting notes.</p>
-              )}
-            </div>
-            <div>
-              <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--color-purple)", marginBottom: "0.75rem" }}>Consensus Layer (ACDC)</h3>
-              {consensusMeetings.length > 0 ? (
-                <div className="flex flex-col gap-2">
-                  {consensusMeetings.map((meeting) => (
-                    <a key={meeting.path} href={meeting.html_url} target="_blank" rel="noopener noreferrer"
-                      style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.75rem", background: "var(--color-bg-deep)", borderRadius: 4, fontSize: "0.85rem", color: "var(--color-text-secondary)", textDecoration: "none" }}>
-                      {meeting.name.replace(".md", "")}
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>Unable to load meeting notes.</p>
-              )}
-            </div>
-          </div>
-          <div style={{ marginTop: "1.5rem" }}>
-            <a href="https://github.com/ethereum/pm/tree/master/AllCoreDevs-Meetings" target="_blank" rel="noopener noreferrer" className="link-blue" style={{ fontSize: "0.9rem" }}>
-              View all meeting notes &rarr;
-            </a>
+          <h2 className="section-title">Recent Calls</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+            {([
+              { label: "Execution Layer (ACDE)", color: "var(--color-blue)", calls: acdeCalls },
+              { label: "Consensus Layer (ACDC)", color: "var(--color-purple)", calls: acdcCalls },
+              { label: "Testing (ACDT)", color: "var(--coord-green)", calls: acdtCalls },
+            ] as const).map(({ label, color, calls }) => (
+              <div key={label}>
+                <h3 style={{ fontSize: "0.95rem", fontWeight: 600, color, marginBottom: "0.75rem" }}>{label}</h3>
+                {calls.length > 0 ? (
+                  <div className="flex flex-col gap-2">
+                    {calls.map((call: ArtifactCall) => (
+                      <div key={`${call.type}-${call.number}`}
+                        style={{ padding: "0.5rem 0.75rem", background: "var(--color-bg-deep)", borderRadius: 4, fontSize: "0.85rem" }}>
+                        <div style={{ color: "var(--color-text-secondary)", marginBottom: call.videoUrl || call.issueUrl ? "0.35rem" : 0 }}>
+                          #{call.number} — {call.date}
+                        </div>
+                        {(call.videoUrl || call.issueUrl) && (
+                          <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem" }}>
+                            {call.videoUrl && (
+                              <a href={call.videoUrl} target="_blank" rel="noopener noreferrer" className="link-blue">
+                                Watch
+                              </a>
+                            )}
+                            {call.issueUrl && (
+                              <a href={call.issueUrl} target="_blank" rel="noopener noreferrer" className="link-blue">
+                                Agenda
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>Unable to load calls.</p>
+                )}
+              </div>
+            ))}
           </div>
         </section>
 

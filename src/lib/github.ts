@@ -339,7 +339,7 @@ export const getLatestEipChange = unstable_cache(
   { revalidate: 3600, tags: ["forkcast"] }
 );
 
-// Get AllCoreDevs meeting notes (most recent)
+// Get AllCoreDevs meeting notes (most recent) - legacy, from ethereum/pm markdown files
 export const getRecentMeetings = unstable_cache(
   async (layer: "execution" | "consensus", limit = 5): Promise<GitHubFile[]> => {
     try {
@@ -368,5 +368,79 @@ export const getRecentMeetings = unstable_cache(
   {
     revalidate: 3600,
     tags: ["github", "meetings"],
+  }
+);
+
+// Forkcast artifact-based call data (current system)
+export type AcdCallType = "acde" | "acdc" | "acdt";
+
+export interface ArtifactCall {
+  type: AcdCallType;
+  date: string;
+  number: string;
+  issueUrl: string | null;
+  videoUrl: string | null;
+}
+
+interface ArtifactConfig {
+  issue?: number;
+  videoUrl?: string;
+}
+
+const FORKCAST_REPO = "ethereum/forkcast";
+
+// Fetch recent calls from forkcast artifacts for a given ACD call type
+export const getRecentArtifactCalls = unstable_cache(
+  async (type: AcdCallType, limit = 3): Promise<ArtifactCall[]> => {
+    try {
+      const dirs = await fetchFromGitHub<GitHubFile[]>(
+        `/repos/${FORKCAST_REPO}/contents/public/artifacts/${type}`
+      );
+
+      // Each dir is named like "2026-02-12_230" (date_number)
+      const sorted = dirs
+        .filter((d) => d.type === "dir")
+        .sort((a, b) => b.name.localeCompare(a.name))
+        .slice(0, limit);
+
+      const calls: ArtifactCall[] = await Promise.all(
+        sorted.map(async (dir) => {
+          const [date, number] = dir.name.split("_");
+
+          // Fetch config.json (manifest) for video URL and issue link
+          let config: ArtifactConfig = {};
+          try {
+            const configData = await fetchFromGitHub<GitHubContent>(
+              `/repos/${FORKCAST_REPO}/contents/public/artifacts/${type}/${dir.name}/config.json`
+            );
+            config = JSON.parse(
+              Buffer.from(configData.content, "base64").toString("utf-8")
+            );
+          } catch {
+            // config.json may not exist for all calls
+          }
+
+          return {
+            type,
+            date,
+            number: number ?? "",
+            issueUrl: config.issue
+              ? `https://github.com/ethereum/pm/issues/${config.issue}`
+              : null,
+            videoUrl: config.videoUrl ?? null,
+          };
+        })
+      );
+
+      return calls;
+    } catch (error) {
+      console.error(`Failed to fetch ${type} artifact calls:`, error);
+      return [];
+    }
+  },
+  ["artifact-calls"],
+  {
+    revalidate: 3600,
+    tags: ["github", "forkcast", "artifacts"],
   }
 );
