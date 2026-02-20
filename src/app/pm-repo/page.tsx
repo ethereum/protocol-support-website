@@ -157,23 +157,19 @@ export default async function PMRepoPage() {
                     {calls.map((call: ArtifactCall) => (
                       <div key={`${call.type}-${call.number}`}
                         style={{ padding: "0.5rem 0.75rem", background: "var(--color-bg-deep)", borderRadius: 4, fontSize: "0.85rem" }}>
-                        <div style={{ color: "var(--color-text-muted)", marginBottom: call.videoUrl || call.issueUrl ? "0.35rem" : 0 }}>
+                        <div style={{ color: "var(--color-text-muted)", marginBottom: "0.35rem" }}>
                           #{call.number} — {call.date}
                         </div>
-                        {(call.videoUrl || call.issueUrl) && (
-                          <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem" }}>
-                            {call.videoUrl && (
-                              <a href={call.videoUrl} target="_blank" rel="noopener noreferrer" className="link-blue">
-                                Watch
-                              </a>
-                            )}
-                            {call.issueUrl && (
-                              <a href={call.issueUrl} target="_blank" rel="noopener noreferrer" className="link-blue">
-                                Agenda
-                              </a>
-                            )}
-                          </div>
-                        )}
+                        <div style={{ display: "flex", gap: "0.75rem", fontSize: "0.8rem" }}>
+                          <a href={`https://forkcast.org/calls/${call.type}/${call.number}`} target="_blank" rel="noopener noreferrer" className="link-blue">
+                            Watch
+                          </a>
+                          {call.issueUrl && (
+                            <a href={call.issueUrl} target="_blank" rel="noopener noreferrer" className="link-blue">
+                              Agenda
+                            </a>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
