@@ -14,6 +14,7 @@ const teamMembers = [
   {
     name: "Josh Davis",
     role: "Protocol Support",
+    image: "/team-josh.png",
     twitter: "joshdavislight",
     github: "joshdavislight",
   },
