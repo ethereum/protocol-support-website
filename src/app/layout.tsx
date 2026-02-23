@@ -26,6 +26,21 @@ export const metadata: Metadata = {
     description:
       "Your gateway to Ethereum protocol governance and development",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Protocol Support — Ethereum Foundation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Protocol Support",
+    description:
+      "Your gateway to Ethereum protocol governance and development",
+    images: ["/og-image.png"],
   },
 };
 
