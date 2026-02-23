@@ -56,7 +56,7 @@ const resourceCategories = [
       {
         title: "Study Group",
         description: "Educational materials and weekly sessions for learning about Ethereum protocol development.",
-        href: "https://epf.wiki/#/eps/schedule",
+        href: "https://epf.wiki/#/eps/intro",
         external: true,
         icon: <CalendarIcon color="var(--coord-yellow)" />,
       },

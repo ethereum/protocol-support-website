@@ -216,6 +216,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  overflow: visible;
 }
 @media (max-width: 768px) {
   .bento-grid { grid-template-columns: 1fr; }
@@ -235,20 +236,21 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .card::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: 9px;
-  padding: 1.5px;
-  background: linear-gradient(180deg, var(--color-blue) 0%, var(--color-purple) 15%, transparent 20%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 0;
+  background: linear-gradient(90deg, var(--color-blue), var(--color-purple));
   opacity: 0;
   transition: opacity 0.25s;
   pointer-events: none;
+  z-index: 1;
 }
 a.card:hover {
   border-color: var(--color-border-hover);
@@ -273,19 +275,21 @@ a.card:active { transform: scale(0.98); }
 .card-featured {
   background: linear-gradient(160deg, var(--color-bg-surface) 0%, rgba(0,212,255,0.06) 100%);
   border: none;
-  box-shadow: 0 0 30px rgba(0,212,255,0.06);
-}
-.card-featured::before {
-  content: '';
-  position: absolute; inset: 0;
-  height: auto;
   border-radius: 8px;
-  padding: 1.5px;
+  box-shadow: 0 0 30px rgba(0,212,255,0.06);
+  overflow: visible;
+}
+.card-featured::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 2px;
   background: conic-gradient(from var(--border-angle), var(--color-blue), var(--color-purple), var(--color-blue), var(--color-purple), var(--color-blue));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  opacity: 1;
   pointer-events: none;
   animation: border-rotate 4s linear infinite;
 }

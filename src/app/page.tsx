@@ -101,7 +101,7 @@ export default async function Home() {
               <p style={{ fontSize: "0.95rem", color: "var(--color-text-body)", lineHeight: 1.6, marginBottom: "1rem", flex: 1 }}>
                 Weekly educational sessions covering Ethereum protocol development — from EVM fundamentals to consensus mechanisms.
               </p>
-              <a href="https://epf.wiki/#/eps/schedule" target="_blank" rel="noopener noreferrer" className="card-btn">View Schedule <span style={{ fontSize: "0.75rem", opacity: 0.5 }}>{"\u2197"}</span></a>
+              <a href="https://epf.wiki/#/eps/intro" target="_blank" rel="noopener noreferrer" className="card-btn">View Schedule <span style={{ fontSize: "0.75rem", opacity: 0.5 }}>{"\u2197"}</span></a>
             </div>
 
             {/* Quick Links */}
