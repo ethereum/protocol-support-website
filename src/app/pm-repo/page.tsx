@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import Card from "@/components/Card";
 import Link from "next/link";
 import { getPMRepoReadme, getForkcastUpgrades, getActiveBreakouts, getRecentArtifactCalls } from "@/lib/github";
+
+export const metadata: Metadata = {
+  title: "PM Repository",
+  description:
+    "Central hub for Ethereum protocol coordination. AllCoreDevs call notes, breakout rooms, EIP championing, and governance in the open.",
+};
 import type { ArtifactCall } from "@/lib/github";
 import {
   CalendarIcon, MessageCircleIcon, FileTextIcon,

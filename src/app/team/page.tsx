@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import TeamMemberCard from "@/components/TeamMemberCard";
+
+export const metadata: Metadata = {
+  title: "Team",
+  description:
+    "Meet the Protocol Support team coordinating Ethereum core development, AllCoreDevs calls, and contributor onboarding.",
+};
 
 const teamMembers = [
   {

@@ -11,21 +11,31 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Protocol Support",
+  metadataBase: new URL("https://ps.ethereum.foundation"),
+  title: {
+    default: "Protocol Support — Ethereum Foundation",
+    template: "%s | Protocol Support",
+  },
   description:
-    "The Protocol Support team manages Ethereum protocol governance, AllCoreDevs coordination, and helps contributors navigate the ethereum/pm repository.",
+    "Coordinating Ethereum protocol development. We facilitate AllCoreDevs calls, track network upgrades, and support core contributors building Ethereum.",
   keywords: [
     "Ethereum",
     "Protocol Support",
+    "Ethereum Foundation",
     "EIP",
     "AllCoreDevs",
-    "governance",
+    "Forkcast",
+    "protocol governance",
+    "core development",
+    "network upgrades",
   ],
   openGraph: {
-    title: "Protocol Support",
+    title: "Protocol Support — Ethereum Foundation",
     description:
-      "Your gateway to Ethereum protocol governance and development",
+      "Coordinating Ethereum protocol development. We facilitate AllCoreDevs calls, track network upgrades, and support core contributors building Ethereum.",
     type: "website",
+    siteName: "Protocol Support",
+    locale: "en_US",
     images: [
       {
         url: "/og-image.png",
@@ -37,9 +47,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Protocol Support",
+    site: "@efprotocol",
+    title: "Protocol Support — Ethereum Foundation",
     description:
-      "Your gateway to Ethereum protocol governance and development",
+      "Coordinating Ethereum protocol development. We facilitate AllCoreDevs calls, track network upgrades, and support core contributors building Ethereum.",
     images: ["/og-image.png"],
   },
 };

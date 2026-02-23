@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
@@ -6,6 +7,12 @@ import {
   ForkIcon, GitHubIcon, YouTubeIcon, BookIcon,
   DiscordIcon, GlobeIcon, LinkIcon, CalendarIcon,
 } from "@/components/Icons";
+
+export const metadata: Metadata = {
+  title: "Resources",
+  description:
+    "Essential tools, documentation, and community channels for Ethereum protocol developers. Forkcast, PM repo, Discord, and more.",
+};
 
 const resourceCategories = [
   {

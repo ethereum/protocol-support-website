@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import Card from "@/components/Card";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Forkcast",
+  description:
+    "Track Ethereum network upgrades in real time. Monitor EIP inclusion, testnet activations, and mainnet readiness across every fork.",
+};
 import {
   ForkIcon, MapIcon, GitHubIcon, CalendarIcon,
   CodeIcon, FileTextIcon, UsersIcon, MessageCircleIcon,

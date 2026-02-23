@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import BlogPostCard from "@/components/BlogPostCard";
 import { getAllPosts } from "@/lib/posts";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Updates from the Protocol Support team on Ethereum governance, network upgrades, and core development coordination.",
+};
 
 export default function BlogPage() {
   const posts = getAllPosts();

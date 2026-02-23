@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
 import { getActiveBreakouts } from "@/lib/github";
+
+export const metadata: Metadata = {
+  title: "Breakout Rooms",
+  description:
+    "Active breakout room discussions for Ethereum protocol development. Focused working groups on specific EIPs and technical topics.",
+};
 
 export const revalidate = 3600;
 

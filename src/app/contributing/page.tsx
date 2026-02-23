@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FloatingOcto from "@/components/FloatingOcto";
@@ -7,6 +8,12 @@ import {
   ForkIcon, CodeIcon, BookIcon, GraduationCapIcon,
   CalendarIcon, BriefcaseIcon, ShieldIcon,
 } from "@/components/Icons";
+
+export const metadata: Metadata = {
+  title: "Contributing",
+  description:
+    "Get involved in Ethereum protocol development. Learn how to contribute to core development, join AllCoreDevs, and participate in the Protocol Fellowship.",
+};
 
 const openSourceProjects = [
   {
