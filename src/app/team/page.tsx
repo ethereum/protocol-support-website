@@ -49,6 +49,7 @@ const teamMembers = [
   {
     name: "Dionysuz",
     role: "Protocol Support",
+    image: "/team-dionysuz.png",
     twitter: "dionysuzx",
     github: "dionysuzx",
   },
@@ -97,9 +98,9 @@ export default function TeamPage() {
               @efprotocol
             </a>
             <span style={{ color: "var(--color-text-dim)" }}>·</span>
-            <a href="mailto:protocol-support@ethereum.org" className="link-blue" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem" }}>
+            <a href="mailto:protocolsupport@ethereum.org" className="link-blue" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.95rem" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              protocol-support@ethereum.org
+              protocolsupport@ethereum.org
             </a>
           </div>
         </section>

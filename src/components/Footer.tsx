@@ -4,7 +4,7 @@ export default function Footer() {
       <div style={{ fontSize: "0.75rem", color: "var(--color-text-dim)" }}>
         <a href="https://ethereum.foundation" target="_blank" rel="noopener noreferrer" className="link-muted">Ethereum Foundation</a>
         {" — Protocol Support · "}
-        <a href="mailto:protocol-support@ethereum.org" className="link-muted">protocol-support@ethereum.org</a>
+        <a href="mailto:protocolsupport@ethereum.org" className="link-muted">protocolsupport@ethereum.org</a>
       </div>
       <div className="footer-links">
         <a href="https://x.com/efprotocol" target="_blank" rel="noopener noreferrer">Twitter</a>
