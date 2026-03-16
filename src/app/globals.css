@@ -967,7 +967,7 @@ a.card:active { transform: scale(0.98); }
   }
   .fellowship-header-img {
     width: 100%;
-    max-width: 320px;
+    max-width: none;
     order: -1;
   }
 }
