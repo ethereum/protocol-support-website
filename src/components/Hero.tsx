@@ -42,7 +42,7 @@ export default function Hero({ updates }: HeroProps) {
           margin: "0 auto 3rem",
         }}>
           Coordinating Ethereum protocol development. We manage
-          AllCoreDevs, facilitate breakout discussions, and
+          AllCoreDevs, enable breakout discussions, and
           build the infrastructure for building infrastructure.
         </p>
 
