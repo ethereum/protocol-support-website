@@ -222,16 +222,6 @@ export default function FellowshipPage() {
             className="fellowship-header-img"
           />
 
-          {/* Social proof — below the grid, full width */}
-          <div className="fellowship-header-proof">
-            <div className="hero-proof-divider" />
-            <div className="hero-quote">
-              <span className="hero-quote-text">
-                &ldquo;We&apos;ve hired 3 people either directly or indirectly out of EPF.&rdquo;
-              </span>
-              <span className="hero-quote-attr">&mdash; Dustin, Nimbus</span>
-            </div>
-          </div>
         </div>
 
         <div className="page-divider" />
