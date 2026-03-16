@@ -455,7 +455,7 @@ export default function FellowshipPage() {
                     </div>
                   ))}
                 </div>
-                <a href="https://epf.wiki/#/eps/schedule" target="_blank" rel="noopener noreferrer" className="card-btn card-btn--green" style={{ marginTop: "auto" }}>
+                <a href="https://epf.wiki/#/eps/intro" target="_blank" rel="noopener noreferrer" className="card-btn card-btn--green" style={{ marginTop: "auto" }}>
                   View the 2026 schedule <span style={{ fontSize: "0.7rem" }}>{"\u2197"}</span>
                 </a>
               </div>
