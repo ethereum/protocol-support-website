@@ -17,6 +17,7 @@ const navLinks = [
     ],
   },
   { href: "/blog", label: "Blog" },
+  { href: "/guides", label: "Guides" },
   { href: "/contributing", label: "Contributing" },
   { href: "/resources", label: "Resources" },
 ];
