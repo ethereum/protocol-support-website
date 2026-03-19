@@ -38,6 +38,27 @@ function parseMarkdown(markdown: string): string {
     '<code style="padding:0.15rem 0.4rem;border-radius:3px;background:var(--color-bg-elevated);color:var(--color-text-secondary);font-size:0.85em">$1</code>'
   );
 
+  // Tables
+  html = html.replace(
+    /(?:^|\n)(\|.+\|)\n(\|[\s:|-]+\|)\n((?:\|.+\|\n?)+)/g,
+    (_match, headerRow: string, _separator: string, bodyRows: string) => {
+      const headers = headerRow.split('|').filter((c: string) => c.trim()).map((c: string) => c.trim());
+      const thCells = headers.map((h: string) =>
+        `<th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-text-bright);border-bottom:2px solid var(--color-border)">${h}</th>`
+      ).join('');
+
+      const rows = bodyRows.trim().split('\n').map((row: string) => {
+        const cells = row.split('|').filter((c: string) => c.trim()).map((c: string) => c.trim());
+        const tdCells = cells.map((c: string) =>
+          `<td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-border);color:var(--color-text-body)">${c}</td>`
+        ).join('');
+        return `<tr>${tdCells}</tr>`;
+      }).join('');
+
+      return `<table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem"><thead><tr>${thCells}</tr></thead><tbody>${rows}</tbody></table>`;
+    }
+  );
+
   // Unordered lists
   html = html.replace(/^\s*[-*]\s+(.*)$/gm, '<li style="margin-left:1rem;margin-bottom:0.25rem">$1</li>');
   html = html.replace(/(<li.*<\/li>\n?)+/g, '<ul style="list-style:disc;list-style-position:inside;margin-bottom:1rem;color:var(--color-text-body)">$&</ul>');
