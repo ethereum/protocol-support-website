@@ -116,13 +116,33 @@ export default function ChampionGuidePage() {
           </div>
 
           <h1 className="page-title">EIP Champion&apos;s Handbook</h1>
-          <p className="page-desc">
+          <p className="page-desc" style={{ marginBottom: "1rem" }}>
             Championing an EIP is how protocol changes move from idea to
-            mainnet. As a champion, you&apos;re the point person who keeps your
-            proposal moving — coordinating implementations, surfacing concerns,
-            and building shared understanding across client teams. This handbook
-            covers what you need to know.
+            mainnet. As a champion, you&apos;re the point person who keeps it moving:
           </p>
+          <ul style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.4rem",
+            fontSize: "0.95rem",
+            color: "var(--color-text-body)",
+            lineHeight: 1.6,
+          }}>
+            {[
+              "Coordinate implementation progress across client teams",
+              "Surface concerns and drive them to resolution",
+              "Keep information current and easy to find",
+              "Engage in predictable venues (calls + Discord) when your EIP is discussed",
+            ].map((item) => (
+              <li key={item} style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
+                <span style={{ color: "var(--color-blue)", fontSize: "0.7rem", flexShrink: 0 }}>▸</span>
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="page-divider" />
 

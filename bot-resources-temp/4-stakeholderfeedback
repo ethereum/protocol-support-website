@@ -1,0 +1,111 @@
+---
+title: "Guideline on how to create stronger EIPs"
+date: "2026-03-19"
+author: "Protocol Support Team"
+excerpt: "Guidance for EIP champions seeking stronger paths to inclusion — how to validate demand, gather stakeholder evidence, and build a compelling case before proposing for CFI."
+tags: ["EIP", "governance", "protocol", "guideline"]
+---
+
+*Guidance for EIP champions seeking stronger paths to inclusion*
+
+## 1. Why This Guidance Exists
+
+The EIP process is rigorous on technical spec, security, and implementation quality. This guidance addresses a gap it doesn't cover: helping champions validate whether their EIP has real ecosystem demand before committing months of work.
+
+EIPs that need **voluntary** adoption from wallets, dApps, L2s, and infra providers benefit from early stakeholder engagement. Without it, champions risk reaching CFI on technical merit alone, only to discover that the teams who need to integrate haven't been consulted.
+
+This guide recommends flipping the typical order: gather stakeholder feedback first, shape your research around real needs, then build with committed stakeholders already lined up. The result is an EIP that's harder to argue against at CFI and more likely to see adoption after mainnet.
+
+## 2. EIP Tiering Framework
+
+Not all EIPs relate to market demand the same way. Some need active ecosystem buy-in to be used. Others introduce primitives users can't articulate a need for yet. Some are purely protocol-internal or driven by security preparedness rather than user demand. Understanding which kind of EIP you're championing helps you figure out what kind of evidence will strengthen your case.
+
+Some EIPs **should** move forward on technical intuition and research conviction alone, no demonstrated user demand required. Exploratory proposals often tackle problems nobody has named yet, or unlock things the ecosystem can't imagine wanting. That path should stay open. It just can't be the default that everything quietly falls into.
+
+| Tier | Description | Examples | User feedback |
+| :---- | :---- | :---- | :---- |
+| **Tier A** **Demand-Dependent** | Features that only work if wallets, dApps, or infra providers integrate them. No voluntary buy-in, no adoption. | maxEB, EIP-7702 | **Brief recommended** |
+| **Tier B** **Exploratory** | New primitives where users can't articulate demand yet because the thing doesn't exist. Inclusion is thesis-driven, not evidence-driven. | Account abstraction, Merge, Lean Staking | **Brief recommended (lighter bar)** |
+| **Tier C** **Protocol-Internal** **& Security** | Changes invisible to end users, and security EIPs driven by external threat models and standards rather than user demand. | Faster finality, opcode repricing, post-quantum cryptography | **No brief needed** |
+
+**Classification:** EIP authors self-classify. ACD validates during the CFI discussion and can challenge the call (e.g., "This is clearly Tier A, not Tier B. *You need stakeholder evidence before we consider this for inclusion*").
+
+## 3. Brief Template
+
+If your EIP is Tier A or Tier B, put together a short **Brief** (~1 page) and submit it alongside your technical spec when you propose for CFI. Start with the stakeholders you can reach directly. Once your EIP is CFI'd, the EF Protocol Support team can help extend that reach. Tier C EIPs can skip this entirely.
+
+The same template works for both Tier A and Tier B, but the emphasis shifts. Tier A is about demonstrated demand. Tier B is about a compelling thesis.
+
+### What This Enables
+
+Two to three sentences from the *user's perspective*, not the protocol's. What can someone do after this EIP ships that they can't do today?
+
+- **Tier A:** Describe a concrete capability that specific stakeholders gain.
+- **Tier B:** Describe the new design space this opens up, even if exact use cases are still emerging.
+
+### Stakeholder Evidence
+
+Tier A and Tier B can take different approaches to use feedback. Tier A EIPs address problems stakeholders already experience, so the evidence comes from structured conversations. Tier B EIPs tackle problems that haven't materialized yet, so the evidence is a compelling thesis.
+
+### Tier A
+
+Talk to at least 10 entities across the value chain (wallets, dApps, L2s, infra providers, protocols) who would need to build on or integrate your EIP. Document what they said. The "saturation point" is when further discussions fail to generate new perspectives. Ten is a good starting point. If you're still hearing new concerns at that point, keep going. If the feedback starts repeating, you have a clear picture.
+
+*Structure your conversations in two parts*
+
+**Part 1: Validate the problem.** Don't lead with your solution. Start by understanding whether stakeholders actually experience the problem your EIP addresses, how important it is to them, and what workarounds they currently use.
+
+*Example questions:*
+
+- "What are your biggest challenges with [area your EIP addresses]?"
+- "How are you working around this today?"
+- "How important is solving this relative to other priorities?"
+
+**Part 2: Validate the solution.** Once you understand the problem from their perspective, present your proposed approach. Don't ask whether they like it. Ask how they'd use it and what adoption would look like.
+
+*Example questions:*
+
+- "If this shipped on mainnet, what would your integration timeline look like?"
+- "What would need to change on your end to support this?"
+- "What concerns would you have about adopting this?"
+
+***Tier A example:** "We spoke with MetaMask, Fireblocks, Safe, Coinbase Wallet, and Ambire. All five confirmed they maintain custom relayer infrastructure as a workaround, spending significant engineering resources on it. MetaMask estimated they'd integrate within one release cycle and could deprecate their current workaround. Coinbase Wallet raised concerns about backwards compatibility with existing 4337 deployments and estimated a longer timeline of 4 to 6 months."*
+
+### Tier B
+
+You won't have 10 teams ready to integrate something that doesn't exist yet, and that's fine. Make the case for why this will unlock value, what the adoption path looks like once the primitive exists, and what comparable attempts have been tried elsewhere. Where possible, validate the underlying problem even if the solution is still theoretical.
+
+***Tier B example:** "Reducing validator hardware requirements has been a long-standing goal across PoS networks. Efforts to build lighter-weight clients across various networks and Ethereum's own portal network both point to demand for lighter-weight participation. While no staking provider has committed to this specific approach yet, Lido and Rocket Pool have both published research notes on the need for reduced operator overhead. The thesis is that lowering the barrier creates a larger, more decentralized validator set."*
+
+### Adoption Path
+
+- **Tier A:** Who integrates first? What's the realistic timeline for meaningful adoption after mainnet?
+- **Tier B:** What needs to happen in the ecosystem for this primitive to see adoption? What's the most likely first use case?
+
+### Tips for better conversations
+
+**Do:** Ask open-ended questions that surface real priorities, constraints, and timelines.
+
+**Do:** Start with the problem before presenting your solution.
+
+**Don't:** Ask yes/no questions. "Would you use this?" invites easy agreement with no commitment.
+
+**Don't:** Lead with your solution and ask if they like it.
+
+**Don't:** Treat "sounds cool" as validation. Look for specifics: timelines, trade-offs, concerns.
+
+## 4. FAQ
+
+Every EIP that reaches CFI costs the ecosystem real money: client team engineering hours, devnet infrastructure, tooling updates, and stakeholder integration work. When that investment goes into EIPs that see little adoption post-fork, those resources could have gone toward features the ecosystem is actively asking for. We've seen this pattern before. Doing the demand work upfront is cheaper than finding out nobody wanted it after mainnet.
+
+**"Does this add bureaucracy?"**
+
+It's a one-page document, not a committee. You submit it alongside your spec. If anything, it saves time by surfacing adoption problems early instead of after months of implementation.
+
+**"What if I can't find 10 stakeholders?"**
+
+That's worth knowing before you invest months in implementation. It might mean your EIP is Tier B and the brief should reflect that. Or it might mean the EIP solves a problem nobody has.
+
+**"Is crypto twitter sentiment valid evidence?"**
+
+Sentiment is useful context, but it's not the same as a wallet team telling you they'd integrate. The brief asks for evidence of real conversations with real teams, not engagement metrics.

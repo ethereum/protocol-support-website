@@ -1,0 +1,359 @@
+# Ethereum Upgrade Process Documentation
+
+_This document captures how Ethereum protocol upgrades actually work in practice — the unwritten rules, tribal knowledge, and coordination patterns that aren't formally documented elsewhere. It was created in October 2025 through an in-depth Q&A between nixo and ChatGPT, based on her understanding of the ACD process from working on protocol coordination. It's maintained as a living reference and updated as the process evolves._
+
+---
+
+## Core Principles
+
+- Ethereum upgrades happen in public
+- The process is collaborative across multiple client teams
+- Consensus is sought but not always formally recorded
+- Documentation is improving but still has gaps
+- **Recency is critical** - the most recent information is the most up-to-date, as directions can change drastically in just a couple of weeks
+
+## Call Structure
+
+### Three Main Call Series
+
+All calls happen at 14:00 UTC ("Eth o'clock")
+
+**ACDE (All Core Devs - Execution)**
+
+- Every other Thursday
+- Execution layer focus
+- Facilitated by: Ansgar Dietrichs (interim, Oct '25)
+- Previous facilitator: Tim Beiko (2021-2025)
+
+**ACDC (All Core Devs - Consensus)**
+
+- Every other Thursday (alternates with ACDE)
+- Consensus layer focus
+- Facilitated by: Alex Stokes (Sep '24)
+- Previous facilitator: Danny Ryan (until Sep '24)
+
+**ACDT (All Core Devs - Testing)**
+
+- Every Monday
+- Implementation and testing focus with deep technical detail
+- Facilitated by: EthPandaOps (EF devops team) and STEEL (EF testing team), alternating
+
+### What Gets Discussed Where
+
+**ACDT:** Specific implementation decisions, debugging, technical synchronization across client teams. Decisions about HOW to implement something.
+
+**ACDE/ACDC:** Both implementation/testing updates AND higher-level planning. Decisions about WHAT should be included in forks. Example: "Should EIP-XXXX be moved to CFI status for the next fork?"
+
+The boundary is fuzzy - issues bubble up from ACDT to ACDE/C if they're recurring or big-picture, or discussion happens on ACDE/C if there's time since everyone's already there.
+
+### Facilitator Roles
+
+- ACDT facilitators (EthPandaOps/STEEL): Technical, hands-on with code, help troubleshoot and project-manage
+- ACDE/C facilitators: Don't work directly on code, but good at follow-up and staying informed
+- Both Ansgar Dietrichs and Alex Stokes attend both ACDE and ACDC, but whoever is the named facilitator "has the reins"
+
+### Facilitator History
+
+| Call | Current | Since | Previous |
+|------|---------|-------|----------|
+| ACDE | Ansgar Dietrichs (interim) | Oct '25 | Tim Beiko (2021-2025) |
+| ACDC | Alex Stokes | Sep '24 | Danny Ryan (until Sep '24) |
+| ACDT | EthPandaOps/STEEL | — | — |
+
+**Tim Beiko transition (Jan '26):** Shifted to advisory role at EF to explore "frontier use cases." Took leave Sep '25, Ansgar filled in as interim. Tim: "the protocol is approaching its endgame" — expressed confidence in governance processes, wanted to explore what can only exist on Ethereum. Ansgar remains interim while they establish long-term configuration.
+
+### Call Organization
+
+- All calls organized through issues in the ethereum/pm repo
+- Template exists with whitelisted call series
+- Call organizers can request to be added to whitelist
+- EF-owned zoombot creates zoom links and YouTube livestreams based on checkboxes in the issue
+- ACD calls are always livestreamed
+- Breakout calls are usually recorded and uploaded
+- Ethereum Cat Herders help with recording/uploading
+
+## Communication Channels
+
+### Primary Async Venue: Eth R&D Discord
+
+- Public server
+- Many channels (see channel list below)
+- Main hub for cross-client async discussion
+- Channels are bridged to Telegram for those who prefer it
+
+### Other Venues
+
+- **Telegram:** Quick discussions, sometimes private DMs for sensitive topics or to avoid "bothering" a group
+- **GitHub issues:** Technical discussion, spec work
+- **Ethereum Magicians:** "Further out" discussions, not really implementation-focused. Used for fork planning proposals.
+- **EthResear.ch:** Deep research, academic-quality work, future-oriented. Implementers are rarely here - it's primarily researchers publishing academic-paper-quality posts.
+- **Individual client Discord servers:** Less cross-client, more user troubleshooting
+
+### Documentation Tools
+
+- **Forkcast:** Lists ACD calls with transcripts, zoom chats, and summaries (doesn't cover breakout calls yet)
+- **Post-call summaries:** Maintainers sometimes create these for ACD calls; moving toward AI-generated summaries from zoom-bot
+- **YouTube recordings:** Always available, often the only record of decisions for breakout calls
+
+### How Facilitators Stay Informed
+
+- Attend ACDT calls
+- Monitor Eth R&D Discord channels
+- Track GitHub issues
+- Some visibility into Telegram discussions
+- Must be "very high context"
+
+## Breakout Calls
+
+- Organized via issues in ethereum/pm repo
+- Focus on specific features (e.g., ePBS for Fusaka)
+- Often facilitated by client devs themselves
+- Frequency varies (e.g., weekly for active features)
+- **Documentation weakness:** Decisions often only exist in recordings, then materialize as code changes in client repos
+- If not scheduled for an upgrade, breakout series may just die if progress stalls
+- If scheduled for an upgrade, pushed by client devs and ACD facilitators
+
+## EIP Lifecycle
+
+### Historical Context: How Forks Coalesce
+
+Early forks organized around urgent needs:
+
+- **The Merge:** Transition to proof of stake
+- **Withdrawals:** "Completed" PoS transition by allowing stakers to withdraw
+- **Dencun:** Introduced blobs for L2 scalability
+
+**Pectra problem:** Became bloated without a clear headliner, many competing priorities
+
+**New approach (starting with Glamsterdam):** Choose "headliners" first, then add smaller EIPs that won't slow down headliners
+
+### Headliner-First Process (Post-Pectra Model)
+
+The process for each fork now follows this pattern:
+
+1. **Headliner selection window:** Proposals posted on Ethereum Magicians with a fork-specific tag during a time window announced by the facilitator
+2. **Headliners chosen:** Typically 1-3 major features that define the fork's goals (e.g., Glamsterdam chose ePBS and block-level access lists; Hegotá chose FOCIL as CL headliner with EL headliner TBD)
+3. **Other EIPs proposed:** Open PR against the fork's Meta EIP to add EIP to "PFI" list
+
+_For current fork status, see [forkcast.xyz](https://forkcast.xyz) or the fork Meta EIPs at [eips.ethereum.org/meta](https://eips.ethereum.org/meta)._
+
+### EIP Status Progression
+
+Stages defined in EIP-7723: PFI → CFI → SFI
+
+**PFI (Proposed for Inclusion):**
+
+- EIP is proposed by opening a PR against the fork's Meta EIP
+
+**CFI (Considered for Inclusion):**
+
+- According to EIP-7723: Client developers review and signal positivity
+- SHOULD have Python implementation in execution-specs (open PR)
+- SHOULD have tests in execution-specs (formerly execution-spec-tests, now merged)
+- Will be implemented in future devnets
+- Similar to "concept ACK" in open source
+- NOT sufficient for mainnet deployment guarantee
+
+**Reality vs. Ideal:**
+
+- EIP-7723 describes goals; reality is messier due to human behavior across 100+ developers
+- Getting reviewed: Item on ACD agenda, facilitator reminds teams to look at it. If urgent or proactive champion, teams pinged in R&D Discord
+- Moving to CFI: Must be brought up during ACD call, decision made with little/no opposition
+- Facilitator executes change after call by updating ethereum/EIPs repo
+- **Silence as consent:** Can work for procedural changes that don't need much review. Never works for security implications or things requiring client support
+- **Explicit agreement needed:** For security-sensitive or client-dependent changes, facilitator does a roll call (sometimes all clients, sometimes just experienced teams depending on change significance)
+
+**SFI (Scheduled for Inclusion):**
+
+- According to EIP-7723: EIP is committed for inclusion in the fork
+- MUST have stable devnet with minimal cross-client issues
+- MUST have spec tests passing across clients
+- Signals that the EIP will ship with this fork barring major issues
+- Moving to SFI typically happens on ACDE/ACDC after devnet stability is demonstrated
+
+**Reality vs. Ideal:**
+
+- SFI criteria are actively being refined (discussions ongoing as of 2026)
+- "Stable devnet" definition varies — generally means multi-client devnet running without critical bugs for 1-2 weeks
+- Late-stage removals from SFI are rare but possible if blocking issues emerge
+- The bar for SFI is higher than CFI — CFI is "we want to try this," SFI is "we're confident this will ship"
+
+### Moving a Fork Meta EIP to Final
+
+When a fork goes live on mainnet, the Meta EIP should be moved from Last Call → Final. Checklist:
+
+1. **All included EIPs must be Final first** - Each Core/Networking EIP in the fork needs its own PR to move to Final status
+2. **Remove `last-call-deadline` header** - No longer needed once Final
+3. **Update language:** "formally Scheduled for Inclusion" → "included"
+4. **Section header format:** Use "Included EIPs" (not "EIPs Included") to match prior forks (Pectra/Dencun)
+5. **Remove definitions line** - The CFI/PFI/DFI reference to EIP-7723 is no longer needed
+
+Example PR: https://github.com/ethereum/EIPs/pull/11237 (Fusaka to Final)
+
+**Dependencies to track:**
+- Core EIPs must be Final before Meta can be Final
+- Procedural EIPs (like EIP-7723) may be excluded if they have open questions and aren't in Living/Final status
+
+### The Champion Problem
+
+- Every EIP needs a technical champion who understands client implementations
+- Can write spec tests, keep process moving
+- More motivated when community voices strong desire
+- **Example failure:** EIP-7907 removed from Fusaka because it wasn't ready and lacked a champion
+- Without champion: Community must write tests themselves or find a willing client dev
+
+### What Makes an EIP More Likely to be Included
+
+- Has a proactive champion
+- Has implementations in clients
+- Has devnets running
+- Community is vocally supportive
+
+## Testing & Deployment Pipeline
+
+### Devnet Progression
+
+**Feature-specific devnets:** Individual features tested in isolation (e.g., `{feature}-devnet-0`)
+
+**Cross-feature devnets:** Multiple features combined as they approach fork readiness
+
+**Fork devnets:** Full fork scope with bug fixes and additional EIPs added iteratively (`{fork}-devnet-1`, `{fork}-devnet-2`, etc.)
+
+Devnet repos are typically at `github.com/ethpandaops/{feature}-devnets` or `github.com/ethpandaops/{fork}-devnets`.
+
+**Public testnets:** After devnets stabilize
+
+### Testnet Landscape
+
+**Active testnets:** Sepolia and Hoodi (Holesky was deprecated in 2025)
+
+**Pattern:** New forks are tested on Sepolia first, then Hoodi, then mainnet.
+
+_For current testnet status and upcoming fork activations, check [forkcast.xyz](https://forkcast.xyz) or the ethpandaops devnet repos._
+
+### Timeline Constraints (Post-Pectra)
+
+Two 30-day buffers now standard:
+
+1. **30 days between spec freeze and first testnet:** Requested by EF Protocol Security team to run audit competitions and security reviews
+2. **30 days notice before mainnet:** Requested by L2s and bridges who need time for their own processes (stakeholder votes, time-locked upgrades)
+
+**Between testnets:** ~2 weeks to evaluate, identify issues, coordinate fixes
+
+**Total minimum timeline:** ~3 months from spec freeze to mainnet if everything goes smoothly
+
+### Moving Between Stages
+
+**Devnets → Testnets:** When there's a full-feature devnet that's mostly bug-free and specs can be frozen
+
+**Spec freeze:** EIPs are locked (aiming for strict adherence, though small changes may occasionally happen)
+
+**Issue detection:** EthPandaOps/STEEL are first gatekeepers, seeing issues on devnets/testnets
+
+**Delay decisions:** Happen on ACD calls, typically ACDE
+
+## Key Teams & Roles
+
+### EF Teams
+
+- **EthPandaOps:** Devops, spin up devnets/testnets, debug, create data, run nodes, manage testing software like Kurtosis
+- **STEEL:** Testing team
+- **Protocol Security:** Run audit competitions, need 30-day window
+- **Ethereum Cat Herders:** Recording and uploading calls
+
+### Client Teams
+
+**Execution Layer (expected to attend ACDE):**
+
+- Geth: https://github.com/ethereum/go-ethereum
+- Besu: https://github.com/hyperledger/besu
+- Reth: https://github.com/paradigmxyz/reth
+- Nethermind: https://github.com/NethermindEth/nethermind/
+- Erigon: https://github.com/erigontech/erigon
+
+**Consensus Layer (expected to attend ACDC):**
+
+- Prysm: https://github.com/prysmaticlabs/prysm/
+- Lighthouse: https://github.com/sigp/lighthouse/
+- Lodestar: https://github.com/ChainSafe/lodestar
+- Nimbus: https://github.com/status-im/nimbus-eth2/
+- Teku: https://github.com/Consensys/teku/
+- Grandine: https://github.com/grandinetech/grandine
+
+**EthPandaOps Organization:**
+
+- https://github.com/ethpandaops/ - Contains important information about testing and implementation
+
+**Testing, core** **dev** **tooling**:
+
+- Spec tests: https://github.com/ethereum/execution-specs (includes tests, formerly separate execution-spec-tests repo)
+- Integration tests: https://github.com/ethereum/hive/
+- Node monitor: https://github.com/ethereum/nodemonitor
+- JIT & AOT compiler: https://github.com/paradigmxyz/revmc
+- Sunnyside labs testing: https://github.com/testinprod-io/ethereum-devnets/
+- Sunnyside labs testing fusaka: https://github.com/testinprod-io/fusaka-devnets
+
+## Information Sources & Prioritization
+
+### Information Hierarchy by Recency/Definiteness
+
+**Most Recent & Definite (highest priority):**
+
+1. **Call transcripts** - Especially ACD calls. Most recent call always has most up-to-date information, regardless of call type.
+2. **R&D Discord discussions** - Active channels with recent messages
+3. **Client repo commits** - For the relevant fork, shows actual implementation progress
+
+**Historical/Motivational Context (lower priority for status, higher for understanding):**
+4. **Fork Meta EIPs** - Official list of included EIPs and their status
+5. **Individual EIP text** - Technical proposal and motivation
+6. **Ethereum Magicians posts** - Planning discussions, proposals
+7. **Ethresear.ch posts** - Deep research, future-oriented
+
+### Key Rules for Prioritization
+
+**Recency Trumps Everything:**
+
+- Most recent call wins over older calls, even if the older call was "more official"
+- When call transcript conflicts with Meta EIP status, call transcript wins (but note the discrepancy: "a decision was made to do this, but it hasn't been done yet")
+
+**Discord Channel Prioritization:**
+
+- Prioritize by activity/recency across channels
+- Ignore: #spam-reports
+- All other channels are relevant based on activity
+- Within discussions, weight participants by:
+    - Activity level in R&D Discord
+    - How often they're responded to
+    - How often people emoji react to their messages
+
+**Checking EIP Status (in order):**
+
+1. Most recent ACD call mentioning the EIP
+2. Fork Meta EIP to see if it's listed as PFI/CFI/SFI
+3. Recent Discord chatter about it
+4. Client repo commits referencing it
+
+### Finding Fork Meta EIPs
+
+- Located at: https://eips.ethereum.org/meta
+- Named with "Hardfork Meta:" prefix
+- One Meta EIP per fork
+- **Determining if a fork is live:**
+    - Check Meta EIP status in GitHub (Final = live)
+    - Check activation date in Meta EIP vs current date
+    - Fallback: Check if constituent EIPs are Final
+    - Assumption: Everything pre-Pectra is live (this tool was built post-Pectra)
+
+### Multiple Forks in Parallel
+
+- Often two forks are worked on simultaneously: one in implementation, one in planning
+- Example pattern: Fork N is in devnet/testnet phase while Fork N+1 is in headliner selection
+- **When asked about "what's being worked on":** Clarify whether they want the fork currently in implementation or the one being planned
+- EIPs are often in different parts of their lifecycles simultaneously
+
+_For current fork status, see [forkcast.xyz](https://forkcast.xyz)._
+
+## Agenda Management
+
+- Anyone can propose agenda items by commenting on the ethereum/pm event issue
+- Facilitator curates: adds items, defers them, or asks for more preparation

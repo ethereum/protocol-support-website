@@ -36,8 +36,8 @@ export default async function PMRepoPage() {
         <div className="page-header">
           <h1 className="page-title">The PM Repository</h1>
           <p className="page-desc">
-            The ethereum/pm repository is the central hub for Ethereum protocol
-            coordination, meeting notes, and scheduling.
+            The ethereum/pm repository is a hub for Ethereum protocol
+            coordination and scheduling.
           </p>
           <a href="https://github.com/ethereum/pm" target="_blank" rel="noopener noreferrer" className="card-btn" style={{ marginTop: "1.5rem" }}>
             View on GitHub <span>&rarr;</span>

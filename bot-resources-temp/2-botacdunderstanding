@@ -1,0 +1,145 @@
+# ACD Call Understanding
+
+_Living document — updated as I learn more_
+
+## Call Structure
+
+| Call | Focus | Frequency | Day | Time |
+|------|-------|-----------|-----|------|
+| **ACDE** | Execution Layer | Bi-weekly | Thursday | 14:00 UTC |
+| **ACDC** | Consensus Layer | Bi-weekly | Thursday | 14:00 UTC |
+| **ACDT** | Testing/Implementation | Weekly | Monday | 14:00 UTC |
+
+ACDE and ACDC alternate Thursdays. ACDT happens every Monday.
+
+### Recent Schedule
+```
+Mar 16 (Mon) - ACDT #74
+Mar 12 (Thu) - ACDE #232
+Mar 9  (Mon) - ACDT #73
+Mar 5  (Thu) - ACDC #176
+Mar 2  (Mon) - ACDT #72
+Feb 26 (Thu) - ACDE #231
+```
+
+## Typical Agenda Structure
+
+### ACDE (Execution Layer)
+From recent calls, topics include:
+- **Current fork status** (devnet progress, client readiness)
+- **EIP discussions** (EL-specific: gas repricing, EVM changes, state access)
+- **Client updates** (implementation status, optimizations)
+- **Future forks** (headliner proposals, scope discussions)
+- **Breakout calls** (specialized topics: repricing, zkEVM, post-quantum)
+- **Organizational** (schedules, deadlines)
+
+EL-specific topics:
+- Gas repricing, opcode costs
+- BAL optimizations (batch reads, etc.)
+- EVM changes
+- State access patterns
+- Engine API changes
+
+### ACDC (Consensus Layer)
+From recent calls, topics include:
+- **Current fork status** (devnet progress, spec freezes)
+- **ePBS updates** (major current focus)
+- **FOCIL** (fork choice enforced inclusion lists — Hegotá headliner candidate)
+- **Timing/schedule** (fork timelines, deadlines)
+- **BAL/CL changes** (header fields, attestations)
+- **Client incidents** (production issues, mitigations)
+- **Testing progress** (devnet launches, spec tests)
+
+CL-specific topics:
+- ePBS (enshrined proposer-builder separation) — EIP-7732
+- PeerDAS / data availability
+- Fork choice
+- Validator duties
+- Beacon API changes
+- Attestation/committee selection
+
+### ACDT (Testing)
+From recent calls, topics include:
+- **Fork status** (devnet-specific details)
+- **Testing progress** (hive, spec tests, releases)
+- **EIP implementation details** (more granular than ACDE/ACDC)
+- **ePBS implementation** (devnet scope, spec changes)
+- **Process** (what goes in devnets, coordination)
+- **EIP status process** (SFI criteria, stage transitions)
+
+More implementation-focused than ACDE/ACDC. Digs into:
+- Specific PR reviews
+- Test failures and fixes
+- Devnet launch criteria
+- Spec clarifications
+
+## Current Fork Timeline (as of Mar 2026)
+
+### Glamsterdam (EL) + Gloas (CL)
+- **Status:** Devnet testing
+- **Target:** Q3-Q4 2026 (estimated)
+- **Headliners:** ePBS (EIP-7732), Block Access Lists (BAL), FOCIL
+
+**Active devnets:**
+- bal-devnet-3 (current BAL testing)
+- bal-devnet-2 (previous iteration)
+- epbs-devnet-0 (ePBS interop testing)
+
+**Key EIPs being tracked:**
+- EIP-7732 (ePBS)
+- EIP-8037 (BAL-related)
+- EIP-7637
+
+### Fusaka
+- Shipped December 2025
+- Blob devnets still active for related work (fusaka-blob-devnet-0)
+
+### Hegotá
+- Future fork after Glamsterdam
+- Headliner selection in progress
+- FOCIL is a candidate headliner
+
+## Key Data Sources
+
+| Source | What | Path/URL |
+|--------|------|----------|
+| Forkcast | Call summaries, transcripts | `/shared/repos/forkcast/public/artifacts/{acde,acdc,acdt}/` |
+| R&D Discord | Real-time discussions | `/shared/repos/eth-rnd-archive/` |
+| ethereum/pm | Agendas, issues | GitHub API / `/shared/repos/pm/` |
+| hot_topics.json | Tracked topics + decay | `projects/acd-prep/hot_topics.json` |
+
+### Key Discord Channels
+
+**EL-focused:**
+- #execution-dev
+- #el-testing
+- #allcoredevs
+
+**CL-focused:**
+- #consensus-dev
+- #cl-testing
+- #epbs
+- #peerdas-breakout
+- #interop-🌃
+
+**Testing-focused:**
+- #testing-general
+- #hive
+
+**Both:**
+- #allcoredevs (general)
+- #interop channels
+
+## Open Questions
+
+- [x] What's the exact cadence for ACDE vs ACDC? **Alternating Thursdays at 14:00 UTC**
+- [x] What's the relationship between bal-devnet and glamsterdam-devnet? **BAL devnets are the Glamsterdam implementation devnets; BAL is the main EL feature**
+- [x] What are the typical Discord channels for each call type? **Documented above**
+- [ ] How are breakout calls tracked? Do they have their own pm issues?
+
+---
+
+## Revision History
+
+- 2026-03-17: Refreshed with current call numbers (ACDE #232, ACDT #74), updated fork timeline (bal-devnet-3, epbs-devnet-0), resolved open questions, added hot_topics.json as data source
+- 2026-02-02: Initial doc created based on forkcast summaries and Discord activity
