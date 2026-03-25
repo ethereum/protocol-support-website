@@ -300,9 +300,15 @@ export default function StrengthenPage() {
                 Do
               </strong>
               <ul style={{ ...questionList, gap: "0.5rem" }}>
-                <li>Ask open-ended questions that surface real priorities and constraints</li>
-                <li>Start with the problem before presenting your solution</li>
-                <li>Look for specifics: timelines, trade-offs, concerns</li>
+                {["Ask open-ended questions that surface real priorities and constraints",
+                  "Start with the problem before presenting your solution",
+                  "Look for specifics: timelines, trade-offs, concerns",
+                ].map((item) => (
+                  <li key={item} style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+                    <span style={{ color: "var(--coord-green)", fontSize: "0.65rem", flexShrink: 0 }}>▸</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="card" style={{ padding: "1.25rem", borderTopColor: "var(--coord-pink)", borderTopWidth: 2 }}>
@@ -310,9 +316,15 @@ export default function StrengthenPage() {
                 Don&apos;t
               </strong>
               <ul style={{ ...questionList, gap: "0.5rem" }}>
-                <li>Ask yes/no questions — &ldquo;Would you use this?&rdquo; invites easy agreement with no commitment</li>
-                <li>Lead with your solution and ask if they like it</li>
-                <li>Treat &ldquo;sounds cool&rdquo; as validation</li>
+                {["Ask yes/no questions \u2014 \u201CWould you use this?\u201D invites easy agreement with no commitment",
+                  "Lead with your solution and ask if they like it",
+                  "Treat \u201Csounds cool\u201D as validation",
+                ].map((item) => (
+                  <li key={item} style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+                    <span style={{ color: "var(--coord-pink)", fontSize: "0.65rem", flexShrink: 0 }}>▸</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
