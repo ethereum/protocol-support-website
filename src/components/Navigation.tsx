@@ -10,10 +10,11 @@ const navLinks = [
   { href: "/forkcast", label: "Forkcast" },
   {
     href: "/pm-repo",
-    label: "PM Repo",
+    label: "Governance",
     children: [
-      { href: "/pm-repo", label: "Overview" },
+      { href: "/pm-repo", label: "PM Repo" },
       { href: "/pm-repo/breakouts", label: "Breakouts" },
+      { href: "/guides", label: "Guides" },
     ],
   },
   { href: "/blog", label: "Blog" },
@@ -33,7 +34,7 @@ export default function Navigation() {
     return pathname.startsWith(href);
   };
 
-  const isPmActive = pathname.startsWith("/pm-repo");
+  const isPmActive = pathname.startsWith("/pm-repo") || pathname.startsWith("/guides");
 
   const openDropdown = () => {
     if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
@@ -128,8 +129,10 @@ export default function Navigation() {
                       boxShadow: "0 8px 24px rgba(0, 212, 255, 0.06)",
                       animation: "fadeSlideDown 0.15s ease-out",
                     }}>
-                      {link.children.map((child, i) => {
-                        const childActive = pathname === child.href;
+                      {link.children.map((child, i, arr) => {
+                        const childActive = child.href === "/pm-repo"
+                          ? pathname === "/pm-repo"
+                          : pathname.startsWith(child.href);
                         return (
                           <Link
                             key={child.href}
@@ -153,7 +156,7 @@ export default function Navigation() {
                             }}
                           >
                             <span style={{ color: "var(--color-text-dim)", marginRight: "0.4rem", fontSize: "0.7rem" }}>
-                              {i === 0 ? "├─" : "└─"}
+                              {i === arr.length - 1 ? "└─" : "├─"}
                             </span>
                             {child.label}
                           </Link>
