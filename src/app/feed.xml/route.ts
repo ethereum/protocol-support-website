@@ -16,27 +16,27 @@ export function GET() {
 
   const items = posts
     .map(
-      (post) => `    <item>
-      <title>${escapeXml(post.frontmatter.title)}</title>
-      <link>${SITE_URL}/blog/${post.slug}</link>
-      <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
-      <description>${escapeXml(post.frontmatter.excerpt)}</description>
-      <author>${escapeXml(post.frontmatter.author)}</author>
-      <pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
-    </item>`
+      (post) => `<item>
+<title>${escapeXml(post.frontmatter.title)}</title>
+<link>${SITE_URL}/blog/${post.slug}</link>
+<guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
+<description>${escapeXml(post.frontmatter.excerpt)}</description>
+<author>${escapeXml(post.frontmatter.author)}</author>
+<pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
+</item>`,
     )
     .join("\n");
 
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Protocol Support — Ethereum Foundation</title>
-    <link>${SITE_URL}/blog</link>
-    <description>Updates from the Ethereum Foundation Protocol Support team</description>
-    <language>en-us</language>
-    <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+<channel>
+<title>Protocol Support — Ethereum Foundation</title>
+<link>${SITE_URL}/blog</link>
+<description>Updates from the Ethereum Foundation Protocol Support team</description>
+<language>en-us</language>
+<atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
 ${items}
-  </channel>
+</channel>
 </rss>`;
 
   return new Response(feed, {
