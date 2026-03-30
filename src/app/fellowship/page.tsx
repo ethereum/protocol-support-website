@@ -18,15 +18,14 @@ export const metadata: Metadata = {
 
 const heroStats = [
   { number: "~50", label: "Long-term protocol contributors produced" },
-  { number: "~$28K", label: "Cost per contributor" },
+  { number: "110", label: "Projects delivered" },
 ];
 
 const supportingStats = [
   { number: "~500", label: "Average applicants per cohort" },
-  { number: "~25", label: "Selected fellows per cohort" },
-  { number: "82", label: "Total alumni across all cohorts" },
-  { number: "92", label: "Projects completed" },
-  { number: "7", label: "Protocol Guild members" },
+  { number: "~20", label: "Selected fellows per cohort" },
+  { number: "120", label: "Total alumni across all cohorts" },
+  { number: "10", label: "Protocol Guild members" },
 ];
 
 const workAreas = [

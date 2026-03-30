@@ -1156,19 +1156,19 @@ a.card:active { transform: scale(0.98); }
   .stats-band { margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
 }
 
-/* Bento grid: 2 hero cells on row 1 (span wider), 5 cells on row 2 */
+/* Bento grid: 2 hero cells on row 1 (span wider), 4 cells on row 2 */
 .stats-bento {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
-/* Hero stats: each spans 5 of 10 columns = row 1 */
+/* Hero stats: each spans 2 of 4 columns = row 1 */
 .stats-bento .stat-block--hero {
-  grid-column: span 5;
-}
-/* Supporting stats: each spans 2 of 10 columns = row 2 (5 items) */
-.stats-bento .stat-block:not(.stat-block--hero) {
   grid-column: span 2;
+}
+/* Supporting stats: each spans 1 of 4 columns = row 2 (4 items) */
+.stats-bento .stat-block:not(.stat-block--hero) {
+  grid-column: span 1;
 }
 @media (max-width: 768px) {
   .stats-bento {
