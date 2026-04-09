@@ -58,8 +58,8 @@ export default function BreakoutGuidePage() {
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
             {[
               "Get the right people to attend and keep discussions productive",
-              "Curate the agenda \u2014 surface open spec questions, parameter changes, competing proposals, and implementation blockers. Publish the agenda in the GitHub issue before the call so participants can come prepared",
-              "Facilitate, don\u2019t dictate \u2014 you source agenda items and keep things moving, but participants should feel comfortable pushing back and raising alternatives",
+              "Curate the agenda - surface open spec questions, parameter changes, competing proposals, and implementation blockers. Publish the agenda in the GitHub issue before the call so participants can come prepared",
+              "Facilitate, don't dictate - you source agenda items and keep things moving, but participants should feel comfortable pushing back and raising alternatives",
             ].map((item) => (
               <li key={item} style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", fontSize: "0.95rem", color: "var(--color-text-body)" }}>
                 <span style={{ color: "var(--coord-purple)", fontSize: "0.7rem", flexShrink: 0 }}>▸</span>
