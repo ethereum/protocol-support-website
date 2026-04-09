@@ -1,6 +1,6 @@
 # Default owners for everything in the repo
-* @nixorokish @dionysuzx @Buttaa
+* @nixorokish @dionysuzx @Buttaa @wolovim
 
 # Critical files — dependency changes require owner review
-package.json @nixorokish @dionysuzx @Buttaa
-package-lock.json @nixorokish @dionysuzx @Buttaa
+package.json @nixorokish @dionysuzx @Buttaa @wolovim
+package-lock.json @nixorokish @dionysuzx @Buttaa @wolovim
