@@ -7,6 +7,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/team", label: "Team" },
+  { href: "/fellowship", label: "Fellowship" },
   { href: "/forkcast", label: "Forkcast" },
   {
     href: "/pm-repo",
