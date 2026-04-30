@@ -287,7 +287,7 @@ export default function ProcessPage() {
                   </li>
                   <li>
                     Reference the{" "}
-                    <a href="https://github.com/ethereum/execution-specs/blob/master/EIP_AUTHORS_MANUAL.md" target="_blank" rel="noopener noreferrer" className="link-blue">
+                    <a href="https://github.com/ethereum/execution-specs/blob/bf9dbb4dfe86298d54b07816fc1bd36ec062b004/docs/specs/adding_a_new_eip.md" target="_blank" rel="noopener noreferrer" className="link-blue">
                       EIP Author&apos;s Manual
                     </a>.
                   </li>
@@ -296,7 +296,7 @@ export default function ProcessPage() {
                   </li>
                   <li>
                     Reach out to the{" "}
-                    <a href="https://steel.ethereum.foundation/" target="_blank" rel="noopener noreferrer" className="link-blue">
+                    <a href="https://steel.ethereum.foundation/team/" target="_blank" rel="noopener noreferrer" className="link-blue">
                       STEEL Team
                     </a>{" "}
                     in R&amp;D Discord <code style={code}>#el-testing</code> for help.
