@@ -12,18 +12,18 @@ export const metadata: Metadata = {
 
 const teamMembers = [
   {
-    name: "Josh Davis",
-    role: "EPF / EF Internship",
-    image: "/team-josh.jpg",
-    twitter: "joshdavislight",
-    github: "joshdavislight",
-  },
-  {
     name: "Marc Garreau",
     role: "Team Lead",
     image: "/team-wolovim.png",
     twitter: "wolovim",
     github: "wolovim",
+  },
+  {
+    name: "Josh Davis",
+    role: "EPF / EF Internship",
+    image: "/team-josh.jpg",
+    twitter: "joshdavislight",
+    github: "joshdavislight",
   },
   {
     name: "Mario Havel",
