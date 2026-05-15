@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
 
 const STORAGE_KEY = "ps-theme";
+const THEME_CHANGE_EVENT = "ps-theme-change";
 
 function getSystemTheme(): Theme {
   if (typeof window === "undefined") return "dark";
@@ -18,39 +19,50 @@ function getStoredTheme(): Theme | null {
   return null;
 }
 
+function getCurrentTheme(): Theme {
+  return getStoredTheme() ?? getSystemTheme();
+}
+
+function getServerTheme(): Theme {
+  return "dark";
+}
+
+function subscribeToThemeChanges(onStoreChange: () => void) {
+  if (typeof window === "undefined") return () => {};
+
+  const mql = window.matchMedia("(prefers-color-scheme: light)");
+  const handlePreferenceChange = () => {
+    if (!getStoredTheme()) onStoreChange();
+  };
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY) onStoreChange();
+  };
+  const handleLocalChange = () => onStoreChange();
+
+  mql.addEventListener("change", handlePreferenceChange);
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(THEME_CHANGE_EVENT, handleLocalChange);
+
+  return () => {
+    mql.removeEventListener("change", handlePreferenceChange);
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(THEME_CHANGE_EVENT, handleLocalChange);
+  };
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(subscribeToThemeChanges, getCurrentTheme, getServerTheme);
 
   useEffect(() => {
-    const stored = getStoredTheme();
-    const initial = stored ?? getSystemTheme();
-    setTheme(initial);
-    setMounted(true);
-
-    const mql = window.matchMedia("(prefers-color-scheme: light)");
-    const handleChange = () => {
-      if (!getStoredTheme()) {
-        const next = mql.matches ? "light" : "dark";
-        setTheme(next);
-        document.documentElement.setAttribute("data-theme", next);
-      }
-    };
-    mql.addEventListener("change", handleChange);
-    return () => mql.removeEventListener("change", handleChange);
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const toggle = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
-    setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem(STORAGE_KEY, next);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   };
-
-  // Render placeholder with same dimensions to avoid layout shift
-  if (!mounted) {
-    return <div style={{ width: 44, height: 44 }} />;
-  }
 
   return (
     <button
